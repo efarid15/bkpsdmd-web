@@ -1,0 +1,31 @@
+.ant-layout-header {
+    padding: 0 16px;
+}
+
+.ant-drawer-content-wrapper {
+    box-shadow: none !important;
+    & .ant-drawer-header {
+        & .ant-btn {
+            background: #f5f5f5;
+            border: none;
+        }
+    }
+    & .ant-drawer-body {
+        & .name-user {
+            line-height: normal;
+        }
+        & .ant-menu {
+            border: none;
+            & .ant-menu-item {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                &::after {
+                    display: none;
+                }
+            }
+        }
+        & .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+            background-color: transparent !important;
+        }
+    }
+}

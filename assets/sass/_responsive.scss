@@ -1,0 +1,60 @@
+/* 
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+@media (min-width: 1025px) {}
+
+
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {}
+
+
+/* 
+  ##Device = Hide
+  ##Screen = 767px
+*/
+
+@media (min-width: 769px) {
+    .hidden-dekstop {
+        display: none;
+    }
+}
+
+
+/* 
+  ##Device = Show
+  ##Screen = 768px
+*/
+
+@media (max-width: 768px) {
+    .hidden-dekstop {
+        display: inline-block !important;
+    }
+    .hidden-mobile {
+        display: none !important;
+    }
+    .ant-layout-sider {
+        display: none;
+    }
+    .ant-modal {
+        margin: 0 !important;
+        width: 100% !important;
+        padding: 16px !important;
+    }
+    .full-calendar-header {
+        & .header-center {
+            flex: auto !important;
+            & .title {
+                font-size: 15px !important;
+            }
+        }
+    }
+    .ant-menu-inline .ant-menu-submenu-title {
+        padding-left: 0 !important;
+    }
+}
