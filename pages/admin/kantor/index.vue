@@ -158,7 +158,7 @@ export default {
   },
 
   mounted () {
-    axios('http://localhost:3333/auth/bkd', {
+    axios.get('auth/bkd', {
       crossDomain: false
     }).then( ({ data }) => {
       this.results = data.results

@@ -5,6 +5,6 @@ export default {
         login: (data) => axios.post('auth/login', data)
     },
     bkd: {
-      list: () => axios.get('bkd/all'),
+      list: () => axios.get('bkd'),
     }
 }
