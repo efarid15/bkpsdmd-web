@@ -18,7 +18,7 @@
           class="hidden-dekstop"
           style="backgroundColor:#fafafa"
           size="large"
-          src="/user.png"
+          src="/logo-sulsel.png"
         />
       </div>
     </div>
@@ -35,7 +35,7 @@
 
       <div class="avatar d-flex align-items-center" style="margin-bottom: 16px">
         <div class="avatar-item" style="margin-right: 8px">
-          <a-avatar size="large" src="/user.png" />
+          <a-avatar size="large" src="/logo-sulsel.png" />
         </div>
         <div class="name-user fs-14 cr-black">Jordi Alba Mustafa</div>
       </div>
