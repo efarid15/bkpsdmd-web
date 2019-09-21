@@ -13,12 +13,12 @@
         >Tambah</a-button>
       </a-col>
     </a-row>
-    <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }">
+    <a-table :columns="columns" :dataSource="results" :scroll="{ x: 980 }">
       <span slot="action" slot-scope="text, record">
         <a-button size="small" type="link" class="color-blue" @click="showEdit">Edit</a-button>
         <a-divider type="vertical"></a-divider>
         <a-popconfirm
-          v-if="data.length"
+          v-if="results.length"
           title="Sure to delete?"
           @confirm="() => onDelete(record.key)">
           <a-button size="small" type="link" class="color-red">Hapus</a-button>
@@ -93,19 +93,20 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
 const columns = [
   {
     title: "No",
-    dataIndex: "key",
-    key: "key"
+    dataIndex: "id",
+    key: "id"
   },
   {
     title: "Nama BKD",
-    dataIndex: "name",
-    key: "name"
+    dataIndex: "namabkd",
+    key: "namabkd"
   },
-  { title: "Alamat", dataIndex: "address", key: "address" },
-  { title: "Telepon", dataIndex: "telp", key: "telp" },
+  { title: "Alamat", dataIndex: "alamat", key: "alamat" },
+  { title: "Telepon", dataIndex: "notelp", key: "notelp" },
   {
     title: "Action",
     fixed: "right",
@@ -114,7 +115,8 @@ const columns = [
   }
 ];
 
-const data = [
+
+/* const data = [
   {
     key: "1",
     name: "Badan Pemberdayaan Masyarakat",
@@ -133,9 +135,10 @@ const data = [
     address: "Jl. Urip Sumihardjo No.8",
     telp: "436488"
   }
-];
+];*/
 
 export default {
+
   name: "skpd",
   beforeCreate() {
     this.form = this.$form.createForm(this);
@@ -149,11 +152,23 @@ export default {
     return {
       visibleAdd: false,
       visibleEdit: false,
-      data,
+      results: [],
       columns
     };
   },
+
+  mounted () {
+    axios('http://localhost:3333/auth/bkd', {
+      crossDomain: false
+    }).then( ({ data }) => {
+      this.results = data.results
+      console.log(data.results)
+    })
+  },
+
+
   methods: {
+
     showAdd() {
       this.visibleAdd = true;
     },
