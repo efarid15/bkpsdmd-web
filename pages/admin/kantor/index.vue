@@ -13,12 +13,12 @@
         >Tambah</a-button>
       </a-col>
     </a-row>
-    <a-table :columns="columns" :dataSource="results" :scroll="{ x: 980 }">
+    <a-table id="tableBkd" :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
       <span slot="action" slot-scope="text, record">
-        <a-button size="small" type="link" class="color-blue" @click="showEdit">Edit</a-button>
+        <a-button size="small" type="link" class="color-blue" @click="showEdit(record.id)">Edit</a-button>
         <a-divider type="vertical"></a-divider>
         <a-popconfirm
-          v-if="results.length"
+          v-if="data.length"
           title="Sure to delete?"
           @confirm="() => onDelete(record.key)">
           <a-button size="small" type="link" class="color-red">Hapus</a-button>
@@ -67,11 +67,11 @@
     </a-modal>
 
     <!-- if edit bkd show modal -->
-    <a-modal title="Edit" :footer="false" v-model="visibleEdit" @ok="handleEdit" centered>
+    <a-modal title="Edit" :footer="false" v-model="visibleEdit" @ok="handleEdit"  centered>
       <a-form layout="vertical" :form="form" @submit="handleSubmitEdit" hideRequiredMark>
         <a-form-item label="Nama / Kantor" has-feedback>
           <a-input
-            v-decorator="['nameEdit',{initialValue: 'Badan Pemberdayaan Masyarakat', rules: [{ required: true, message: 'Harus di isi!' }]}]"
+            v-decorator="['nameEdit',{initialValue: 'Dinas Pelayanan Kota Makassar', rules: [{ required: true, message: 'Harus di isi!' }]}]"
           />
         </a-form-item>
 
@@ -94,6 +94,10 @@
 </template>
 <script>
   import axios from 'axios'
+  import * as store from "lodash";
+  import nuxt from "../../../.nuxt/components/nuxt";
+  import {mapMutations} from "vuex";
+
 const columns = [
   {
     title: "No",
@@ -152,22 +156,38 @@ export default {
     return {
       visibleAdd: false,
       visibleEdit: false,
-      results: [],
-      columns
+      data: [],
+      columns,
     };
   },
 
+  computed: {
+    bkds: {
+      get() {
+        return this.$store.state.bkd
+      },
+      set(val) {
+        this.$store.commit('bkd/set', val)
+      }
+    }
+  },
+
+
   mounted () {
-    axios.get('auth/bkd', {
-      crossDomain: false
-    }).then( ({ data }) => {
-      this.results = data.results
-      console.log(data.results)
+    this.$store.dispatch('bkd/bkdfetch').then( ({ data }) => {
+      this.data = data.data
+      this.$store.commit('bkd/set', data)
+      console.log(data)
     })
+
   },
 
 
   methods: {
+
+    ...mapMutations({
+      setBkds: 'bkd/set'
+    }),
 
     showAdd() {
       this.visibleAdd = true;
@@ -178,13 +198,51 @@ export default {
     handleSubmitAdd(e) {
       e.preventDefault();
       this.form.validateFields((err, values) => {
-        if (!err) {
-          this.visibleAdd = false;
+
+          if (!err) {
+            //this.alert = null
+            this.$store.dispatch('bkd/bkdadd', {
+              bkdnama: values.name,
+              bkdalamat: values.address,
+              bkdkabupaten: 'makassar',
+              bkdnotelp: values.telp,
+
+            }).then(result => {
+              this.alert = {type: 'success', message: result.data.message}
+              this.$store.commit('bkd/set', message)
+              this.loading = true
+              this.visibleAdd = false
+              //location.reload()
+
+
+            }).catch(error => {
+              this.loading = false
+              if (error.response && error.response.data) {
+                //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+              }
+            })
+
         }
       });
     },
 
-    showEdit() {
+    showEdit(key) {
+
+      axios.get(`auth/bkd/${key}`).then(result => {
+        let res = result.data.data[0]
+        let namaBkd = res['namabkd']
+        let alamatBkd = res['alamat']
+        let notelpBkd = res['notelp']
+
+        this.form.setFieldsValue({
+          nameEdit: namaBkd,
+          telpEdit: notelpBkd,
+          addressEdit: alamatBkd,
+        });
+
+        console.log(res['namabkd'])
+      })
+
       this.visibleEdit = true;
     },
     handleEdit() {

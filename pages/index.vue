@@ -25,7 +25,7 @@
 
             v-decorator="[
           'password',
-          { rules: [{initialValue: 'password', required: true, message: 'Harus di isi!' }] }
+          { rules: [{required: true, message: 'Harus di isi!' }] }
         ]"
             type="password"
             placeholder="Password"
