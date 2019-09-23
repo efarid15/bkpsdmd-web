@@ -69,7 +69,9 @@
     <!-- if edit bkd show modal -->
     <a-modal title="Edit" :footer="false" v-model="visibleEdit" @ok="handleEdit"  centered>
       <a-form layout="vertical" :form="form" @submit="handleSubmitEdit" hideRequiredMark>
+
         <a-form-item label="Nama / Kantor" has-feedback>
+
           <a-input
             v-decorator="['nameEdit',{initialValue: 'Dinas Pelayanan Kota Makassar', rules: [{ required: true, message: 'Harus di isi!' }]}]"
           />
@@ -183,6 +185,8 @@ export default {
   },
 
 
+
+
   methods: {
 
     ...mapMutations({
@@ -212,7 +216,7 @@ export default {
               this.$store.commit('bkd/set', message)
               this.loading = true
               this.visibleAdd = false
-              //location.reload()
+              location.reload()
 
 
             }).catch(error => {
@@ -229,7 +233,9 @@ export default {
     showEdit(key) {
 
       axios.get(`auth/bkd/${key}`).then(result => {
-        let res = result.data.data[0]
+        this.$store.commit('bkd/setBkd', result.data)
+        let res = this.$store.state.bkd.bkd.data[0]
+
         let namaBkd = res['namabkd']
         let alamatBkd = res['alamat']
         let notelpBkd = res['notelp']
@@ -238,9 +244,10 @@ export default {
           nameEdit: namaBkd,
           telpEdit: notelpBkd,
           addressEdit: alamatBkd,
+
         });
 
-        console.log(res['namabkd'])
+        console.log(res)
       })
 
       this.visibleEdit = true;
@@ -250,9 +257,35 @@ export default {
     },
     handleSubmitEdit(e) {
       e.preventDefault();
+
       this.form.validateFields((err, values) => {
         if (!err) {
-          this.visibleEdit = false;
+          //console.log(key)
+          let resid = this.$store.state.bkd.bkd.data[0]['id']
+
+          this.$store.dispatch('bkd/bkdedit', {
+            bkdnama: values.nameEdit,
+            bkdalamat: values.addressEdit,
+            bkdkabupaten: 'makassar',
+            bkdnotelp: values.telpEdit,
+            bkdid: resid,
+
+          }).then(result => {
+            this.alert = {type: 'success', message: result.data.message}
+            this.$store.commit('bkd/setBkd', result.data.message)
+            //this.loading = true
+            this.visibleEdit = false
+           // console.log(result.config.data)
+            location.reload()
+
+
+          }).catch(error => {
+            this.loading = false
+            if (error.response && error.response.data) {
+              //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+            }
+          })
+
         }
       });
     },

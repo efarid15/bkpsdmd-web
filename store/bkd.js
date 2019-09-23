@@ -39,13 +39,11 @@ export const actions = {
                 }
             })
     },
-    async set({commit}, bkd) {
-        await commit('set', bkd)
-    },
+
 
     async nuxtServerInit ({commit}) {
         let {data} = await api.bkd.getBkd().then(response => {data})
-        commit('setBkd', values(data))
+        commit('set', values(data))
     },
 
    /* async GET_BKD ({ commit }) {
@@ -81,7 +79,7 @@ export const actions = {
     bkdedit ({commit}, data) {
         return api.bkd.editBkd(data)
             .then(response => {
-                commit('setBkd', response.data.data)
+                commit('setBkd', response.data)
                 return response
             })
     },
