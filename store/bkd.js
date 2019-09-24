@@ -54,7 +54,7 @@ export const actions = {
     bkdfetch ({commit}) {
         return api.bkd.getBkd()
             .then(response => {
-                commit('set', response.data.data)
+                commit('set', response.data.values)
                 return response
             })
             .catch(error => {
@@ -63,7 +63,7 @@ export const actions = {
             })
     },
     bkdfind ({commit}, params) {
-        return axios.get('auth/bkd/')
+        return axios.get('bkd/')
             .then(response => {
                 commit('setBkd', response.data)
                 return response

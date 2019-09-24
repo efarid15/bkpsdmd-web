@@ -3,7 +3,7 @@ import {setAuthToken, resetAuthToken} from '~/utils/auth'
 import cookies from 'js-cookie'
 
 export const state = () => ({
-    user: null
+    user: {}
 })
 
 export const mutations = {
@@ -19,7 +19,7 @@ export const actions = {
     fetch ({commit}) {
         return api.auth.me()
             .then(response => {
-                commit('set_user', response.data.result)
+                commit('set_user', response.data.user)
                 return response
             })
             .catch(error => {

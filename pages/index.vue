@@ -9,7 +9,7 @@
       >
         <a-form-item>
 
-          <a-alert v-if="alert" :type="alert.type" :message="alert.message" :show-icon="alert.type" />
+          <a-alert v-if="alert" :type="alert.type" :message="alert.message" />
           <a-input
             v-decorator="[
           'email',
@@ -73,6 +73,8 @@ export default {
              this.alert = {type: 'success', message: result.data.message}
                this.loading = false
             this.$router.push('/dashboard')
+            this.$store.commit('auth/set_user', data)
+            console.log(data)
           }).catch(error => {
                this.loading = false
             if (error.response && error.response.data) {

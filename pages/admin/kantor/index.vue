@@ -177,7 +177,7 @@ export default {
 
   mounted () {
     this.$store.dispatch('bkd/bkdfetch').then( ({ data }) => {
-      this.data = data.data
+      this.data = data.values
       this.$store.commit('bkd/set', data)
       console.log(data)
     })
@@ -232,9 +232,9 @@ export default {
 
     showEdit(key) {
 
-      axios.get(`auth/bkd/${key}`).then(result => {
+      axios.get(`bkd/${key}`).then(result => {
         this.$store.commit('bkd/setBkd', result.data)
-        let res = this.$store.state.bkd.bkd.data[0]
+        let res = this.$store.state.bkd.bkd.values[0]
 
         let namaBkd = res['namabkd']
         let alamatBkd = res['alamat']
@@ -261,7 +261,7 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           //console.log(key)
-          let resid = this.$store.state.bkd.bkd.data[0]['id']
+          let resid = this.$store.state.bkd.bkd.values[0]['id']
 
           this.$store.dispatch('bkd/bkdedit', {
             bkdnama: values.nameEdit,
