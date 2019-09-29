@@ -19,7 +19,15 @@ export default {
         addKegiatan: (data) => axios.post('kegiatan', data),
         editKegiatan: (data) => axios.put('kegiatan', data),
         deleteKegiatan: (data) => axios.delete('kegiatan', data),
-    }
+    },
+    diklat: {
+        findDiklat: (params) => axios.get('jenisdiklat/', params),
+        getDiklat: () => axios.get('jenisdiklat'),
+        addDiklat: (data) => axios.post('jenisdiklat', data),
+        editDiklat: (data) => axios.put('jenisdiklat', data),
+        deleteDiklat: (data) => axios.delete('jenisdiklat', data),
+    },
+
 
    
 }

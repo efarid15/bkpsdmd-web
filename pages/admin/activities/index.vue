@@ -72,7 +72,7 @@ export default {
     this.$store.dispatch('kegiatan/kegiatanfetch').then( ({ data }) => {
       this.data = data.values
       for (let index = 0; index < this.data.length; index++) {
-        const tglevent = moment(this.data[index]['tglkegiatan']).format('LL')
+        const tglevent = moment(this.data[index]['tglkegiatan']).format('dddd, D MMMM YYYY')
         this.$set(this.data[index], 'tglkegiatan', tglevent)
 
       }
