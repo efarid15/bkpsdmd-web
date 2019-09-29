@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export default {
     auth: {
-        me: () => axios.get('auth/me'),
+        me: () => axios.get('me'),
         login: (data) => axios.post('login', data)
     },
     bkd: {
@@ -12,5 +12,14 @@ export default {
         addBkd: (data) => axios.post('bkd', data),
         editBkd: (data) => axios.put('bkd', data),
         deleteBkd: (data) => axios.delete('bkd', data),
+    },
+    kegiatan: {
+        findKegiatan: (params) => axios.get('kegiatan/', params),
+        getKegiatan: () => axios.get('kegiatan'),
+        addKegiatan: (data) => axios.post('kegiatan', data),
+        editKegiatan: (data) => axios.put('kegiatan', data),
+        deleteKegiatan: (data) => axios.delete('kegiatan', data),
     }
+
+   
 }

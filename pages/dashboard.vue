@@ -51,11 +51,9 @@
 </template>
 <script>
 export default {
-  computed: {
-    user () { return this.$store.state.auth ? this.$store.state.auth.user : null }
-  },
+  
   fetch ({store, redirect}) {
-    if (!store.state.auth.user) {
+    if (!store.state.auth.authLogin) {
       redirect('/')
     }
   },

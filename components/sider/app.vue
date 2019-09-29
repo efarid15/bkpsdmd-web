@@ -7,7 +7,7 @@
     <div class="avatar d-flex align-items-center">
       <div class="avatar-item">
         <a-avatar :size="64" src="/user.png" />
-        <div class="name-user">{{ $store.state.auth.user.nama }}</div>
+        <div class="name-user">{{ $store.state.auth.authLogin.email }}</div>
       </div>
     </div>
     <a-menu :defaultSelectedKeys="['1']" mode="inline">
