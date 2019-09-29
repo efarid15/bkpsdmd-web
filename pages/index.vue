@@ -1,8 +1,7 @@
 <template>
-  <a-row type="flex" justify="space-around" align="middle" :style="{ height: '100vh' }">
-    <a-col :span="6">
+  <a-row type="flex" justify="space-around" align="middle" :style="{ height: '100vh',padding: '24px' }">
+    <a-col :xs="24" :sm="12" :md="12" :lg="6">
       <a-form
-        id="components-form-demo-normal-login"
         :form="form"
         class="login-form"
         @submit="handleSubmit"
