@@ -13,14 +13,14 @@
         >Tambah</a-button>
       </a-col>
     </a-row>
-    <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }">
+    <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
       <span slot="action" slot-scope="text, record">
-        <a-button size="small" type="link" class="color-blue" @click="showEdit">Edit</a-button>
+        <a-button size="small" type="link" class="color-blue" @click="showEdit(record.id)">Edit</a-button>
         <a-divider type="vertical"></a-divider>
         <a-popconfirm
           v-if="data.length"
           title="Sure to delete?"
-          @confirm="() => onDelete(record.key)">
+          @confirm="() => onDelete(record.id)">
           <a-button size="small" type="link" class="color-red">Hapus</a-button>
         </a-popconfirm>
       </span>
@@ -93,19 +93,22 @@
   </div>
 </template>
 <script>
+
+import axios from 'axios'
 const columns = [
   {
     title: "No",
-    dataIndex: "key",
-    key: "key"
+    dataIndex: "id",
+    key: "id"
   },
   {
     title: "Nama SKPD",
-    dataIndex: "name",
-    key: "name"
+    dataIndex: "namaskpd",
+    key: "namaskpd"
   },
-  { title: "Alamat", dataIndex: "address", key: "address" },
-  { title: "Telepon", dataIndex: "telp", key: "telp" },
+  { title: "Alamat", dataIndex: "alamat", key: "alamat" },
+  { title: "Kab/Kota", dataIndex: "kabupaten", key: "kabupaten" },
+  { title: "Telepon", dataIndex: "notelp", key: "notelp" },
   {
     title: "Action",
     fixed: "right",
@@ -149,10 +152,20 @@ export default {
     return {
       visibleAdd: false,
       visibleEdit: false,
-      data,
+      data: [],
       columns
     };
   },
+  
+  mounted () {
+    this.$store.dispatch('skpd/skpdfetch').then( ({ data }) => {
+      this.data = data.values
+      this.$store.commit('skpd/set', data.values)
+      console.log(data)
+    })
+
+  },
+
   methods: {
     showAdd() {
       this.visibleAdd = true;
@@ -164,13 +177,66 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          this.visibleAdd = false;
+         
+          this.$store.dispatch('skpd/skpdadd', {
+              namaSkpd: values.name,
+              alamatSkpd: values.address,
+              kabupatenSkpd: 'makassar',
+              notelpSkpd: values.telp,
+
+            }).then(result => {
+              this.alert = {type: 'success', message: result.data.message}
+            
+              this.$store.dispatch('skpd/skpdfetch').then( ({ data }) => {
+                this.data = data.values
+                this.$store.commit('skpd/set', data.values)
+                this.visibleAdd = false
+            
+               }).catch(error => {
+                this.loading = false
+                if (error.response && error.response.data) {
+              //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+                 }
+              })
+              
+
+
+            }).catch(error => {
+              this.loading = false
+              if (error.response && error.response.data) {
+                //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+              }
+            })
+
+          
         }
       });
     },
 
-    showEdit() {
+    showEdit(key) {
+
+       axios.get(`skpd/${key}`).then(result => {
+        
+        let res = result.data.values[0]
+        this.$store.commit('skpd/setSkpd', result.data.values[0])
+        
+        
+        let namaSkpd = res['namaskpd']
+        let alamatSkpd = res['alamat']
+        let notelpSkpd = res['notelp']
+        
+        this.form.setFieldsValue({
+          nameEdit: namaSkpd,
+          telpEdit: notelpSkpd,
+          addressEdit: alamatSkpd,
+
+        });
+
+        
+      })
+
       this.visibleEdit = true;
+     
     },
     handleEdit() {
       this.visibleEdit = false;
@@ -179,14 +245,49 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          this.visibleEdit = false;
+          const resid = this.$store.state.skpd.skpd['id']
+          console.log(resid)
+          this.$store.dispatch('skpd/skpdedit', {
+            namaSkpd: values.nameEdit,
+            alamatSkpd: values.addressEdit,
+            kabupatenSkpd: 'makassar',
+            notelpSkpd: values.telpEdit,
+            skpdId: resid,
+
+          }).then(result => {
+            this.alert = {type: 'success', message: result.data.message}
+            
+            this.$store.dispatch('skpd/skpdfetch').then( ({ data }) => {
+            this.data = data.values
+            this.$store.commit('skpd/set', data.values)
+            console.log(data)
+            this.visibleEdit = false
+              })
+
+          }).catch(error => {
+            this.loading = false
+            if (error.response && error.response.data) {
+              //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+            }
+          })
+
+          
         }
       });
     },
 
     onDelete (key) {
-      const data = [...this.data]
-      this.data = data.filter(item => item.key !== key)
+      axios.delete(`skpd/${key}`).then(result => {
+         this.$store.dispatch('skpd/skpdfetch').then( ({ data }) => {
+            this.data = data.values
+            this.$store.commit('skpd/set', data.values)
+      })  
+      }).catch(error => {
+            this.loading = false
+            if (error.response && error.response.data) {
+              this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+            }
+          })
     },
   }
 };

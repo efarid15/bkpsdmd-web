@@ -13,6 +13,13 @@ export default {
         editBkd: (data) => axios.put('bkd', data),
         deleteBkd: (data) => axios.delete('bkd', data),
     },
+    skpd: {
+        findSkpd: (params) => axios.get('skpd/', params),
+        getSkpd: () => axios.get('skpd'),
+        addSkpd: (data) => axios.post('skpd', data),
+        editSkpd: (data) => axios.put('skpd', data),
+        deleteSkpd: (data) => axios.delete('skpd', data),
+    },
     kegiatan: {
         findKegiatan: (params) => axios.get('kegiatan/', params),
         getKegiatan: () => axios.get('kegiatan'),
