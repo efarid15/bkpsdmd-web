@@ -16,12 +16,9 @@
           <a-avatar class="hidden-mobile" icon="poweroff" style="margin-right: 8px" />
         </a>
 
-        <a-avatar
-          class="hidden-dekstop"
-          style="backgroundColor:#fafafa"
-          size="large"
-          src="/logo-sulsel.png"
-        />
+        <a-avatar class="hidden-dekstop" size="large">
+          <div class="brand" style="backgroundImage: url('/logo-sulsel.png')"></div>
+        </a-avatar>
       </div>
     </div>
 
@@ -37,7 +34,9 @@
 
       <div class="avatar d-flex align-items-center" style="margin-bottom: 16px">
         <div class="avatar-item" style="margin-right: 8px">
-          <a-avatar size="large" src="/logo-sulsel.png" />
+          <a-avatar size="large">
+            <div class="brand" style="backgroundImage: url('/logo-sulsel.png')"></div>
+          </a-avatar>
         </div>
         <div class="name-user fs-14 cr-black">Jordi Alba Mustafa</div>
       </div>
@@ -73,13 +72,13 @@
             <span>Manajemen</span>
           </span>
           <a-menu-item key="sub2-1">
-            <nuxt-link to="/admin/manajemen/diklat">Diklat/Kegiatan</nuxt-link>
+            <nuxt-link to="/admin/manajemen/diklat"><a-icon type="right" /> Diklat/Kegiatan</nuxt-link>
           </a-menu-item>
           <a-menu-item key="sub2-2">
-            <nuxt-link to="/admin/manajemen/room">Tempat Kegiatan</nuxt-link>
+            <nuxt-link to="/admin/manajemen/room"><a-icon type="right" /> Tempat Kegiatan</nuxt-link>
           </a-menu-item>
           <a-menu-item key="sub2-3">
-            <nuxt-link to="/admin/manajemen/widiasuara">Widiasuara/Pengajar</nuxt-link>
+            <nuxt-link to="/admin/manajemen/widiasuara"><a-icon type="right" /> Widiasuara/Pengajar</nuxt-link>
           </a-menu-item>
         </a-sub-menu>
         <a-menu-item key="5">

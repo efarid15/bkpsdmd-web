@@ -16,12 +16,9 @@
           <a-avatar class="hidden-mobile" icon="poweroff" style="margin-right: 8px" />
         </a>
 
-        <a-avatar
-          class="hidden-dekstop"
-          style="backgroundColor:#fafafa"
-          size="large"
-          src="/logo-sulsel.png"
-        />
+        <a-avatar class="hidden-dekstop" size="large">
+          <div class="brand" style="backgroundImage: url('/logo-sulsel.png')"></div>
+        </a-avatar>
       </div>
     </div>
 
@@ -37,7 +34,9 @@
 
       <div class="avatar d-flex align-items-center" style="margin-bottom: 16px">
         <div class="avatar-item" style="margin-right: 8px">
-          <a-avatar size="large" src="/logo-sulsel.png" />
+          <a-avatar size="large">
+            <div class="brand" style="backgroundImage: url('/logo-sulsel.png')"></div>
+          </a-avatar>
         </div>
         <div class="name-user fs-14 cr-black">Member</div>
       </div>
@@ -76,7 +75,7 @@ export default {
     showDrawer() {
       this.visible = true;
     },
-    logOut() { },
+    logOut() {},
     onClose() {
       this.visible = false;
     },

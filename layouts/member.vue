@@ -1,7 +1,7 @@
 <template>
   <a-layout style="min-height: 100vh">
     <client-only placeholder="Loading...">
-      <a-layout-sider collapsible v-model="collapsed">
+      <a-layout-sider>
         <sider-member />
       </a-layout-sider>
       <a-layout>
@@ -25,11 +25,6 @@ import headerMember from "~/components/header/member.vue";
 import siderMember from "~/components/sider/member.vue";
 import footerApp from "~/components/footer/app.vue";
 export default {
-  data() {
-    return {
-      collapsed: false
-    };
-  },
   components: {
     headerMember,
     siderMember,

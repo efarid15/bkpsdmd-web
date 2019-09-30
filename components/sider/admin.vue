@@ -6,7 +6,7 @@
     </div>
     <div class="avatar d-flex align-items-center">
       <div class="avatar-item">
-        <a-avatar :size="64" src="/user.png" />
+        <a-avatar :size="64"><div class="brand" style="backgroundImage: url('/logo-sulsel.png')"></div></a-avatar>
         <div class="name-user">{{ $store.state.auth.user.nama }}</div>
       </div>
     </div>
@@ -42,13 +42,13 @@
             <span>Manajemen</span>
           </span>
           <a-menu-item key="sub2-1">
-            <nuxt-link to="/admin/manajemen/diklat">Diklat/Kegiatan</nuxt-link>
+            <nuxt-link to="/admin/manajemen/diklat"><a-icon type="right" /> Diklat/Kegiatan</nuxt-link>
           </a-menu-item>
           <a-menu-item key="sub2-2">
-            <nuxt-link to="/admin/manajemen/room">Tempat Kegiatan</nuxt-link>
+            <nuxt-link to="/admin/manajemen/room"><a-icon type="right" /> Tempat Kegiatan</nuxt-link>
           </a-menu-item>
           <a-menu-item key="sub2-3">
-            <nuxt-link to="/admin/manajemen/widiasuara">Widiasuara/Pengajar</nuxt-link>
+            <nuxt-link to="/admin/manajemen/widiasuara"> <a-icon type="right" /> Widiasuara/Pengajar</nuxt-link>
           </a-menu-item>
         </a-sub-menu>
         <a-menu-item key="5">

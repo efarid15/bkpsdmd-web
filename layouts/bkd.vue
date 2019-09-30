@@ -1,7 +1,7 @@
 <template>
   <a-layout style="min-height: 100vh">
     <client-only placeholder="Loading...">
-      <a-layout-sider collapsible v-model="collapsed">
+      <a-layout-sider>
         <sider-bkd />
       </a-layout-sider>
       <a-layout>
@@ -25,11 +25,6 @@ import headerBkd from "~/components/header/bkd.vue";
 import siderBkd from "~/components/sider/bkd.vue";
 import footerApp from "~/components/footer/app.vue";
 export default {
-  data() {
-    return {
-      collapsed: false
-    };
-  },
   components: {
     headerBkd,
     siderBkd,

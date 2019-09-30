@@ -1,7 +1,7 @@
 <template>
   <a-layout style="min-height: 100vh">
     <client-only placeholder="Loading...">
-      <a-layout-sider>
+      <a-layout-sider class="ant-layout-sider--admin">
         <sider-admin />
       </a-layout-sider>
       <a-layout>

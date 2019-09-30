@@ -6,7 +6,7 @@
     </div>
     <div class="avatar d-flex align-items-center">
       <div class="avatar-item">
-        <a-avatar :size="64" src="/user.png" />
+        <a-avatar :size="64"><div class="brand" style="backgroundImage: url('/logo-sulsel.png')"></div></a-avatar>
         <div class="name-user">Admin Member</div>
       </div>
     </div>
