@@ -34,6 +34,13 @@ export default {
         editTempat: (data) => axios.put('tempat', data),
         deleteTempat: (data) => axios.delete('tempat', data),
     },
+    widyaiswara: {
+        findWidyaiswara: (params) => axios.get('widyaiswara/', params),
+        getWidyaiswara: () => axios.get('widyaiswara'),
+        addWidyaiswara: (data) => axios.post('widyaiswara', data),
+        editWidyaiswara: (data) => axios.put('widyaiswara', data),
+        deleteWidyaiswara: (data) => axios.delete('widyaiswara', data),
+    },
 
 
    
