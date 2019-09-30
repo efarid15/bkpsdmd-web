@@ -1,13 +1,13 @@
 <template>
   <a-layout style="min-height: 100vh">
     <client-only placeholder="Loading...">
-      <a-layout-sider>
-        <sider-admin />
+      <a-layout-sider collapsible v-model="collapsed">
+        <sider-bkd />
       </a-layout-sider>
       <a-layout>
         <a-affix :offsetTop="0">
           <a-layout-header style="background: #fff;">
-            <header-admin />
+            <header-bkd />
           </a-layout-header>
         </a-affix>
         <a-layout-content style="margin: 16px">
@@ -21,13 +21,18 @@
   </a-layout>
 </template>
 <script>
-import headerAdmin from "~/components/header/admin.vue";
-import siderAdmin from "~/components/sider/admin.vue";
+import headerBkd from "~/components/header/bkd.vue";
+import siderBkd from "~/components/sider/bkd.vue";
 import footerApp from "~/components/footer/app.vue";
 export default {
+  data() {
+    return {
+      collapsed: false
+    };
+  },
   components: {
-    headerAdmin,
-    siderAdmin,
+    headerBkd,
+    siderBkd,
     footerApp
   }
 };

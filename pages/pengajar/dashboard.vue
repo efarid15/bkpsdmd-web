@@ -52,18 +52,10 @@
 <script>
 export default {
   name: "dashboard",
-  computed: {
-    user () { return this.$store.state.auth ? this.$store.state.auth.user : null }
-  },
-  fetch ({store, redirect}) {
-    if (!store.state.auth.user) {
-      redirect('/')
-    }
-  },
+  layout: "pengajar",
   head() {
     return {
-      title:
-        "Dashboard Badan Kepegawaian Dan Sumber Daya Manusia Daerah Kota Makassar - BKPSDMD"
+      title: "Dashboard Badan Kepegawaian Dan Sumber Daya Manusia Daerah Kota Makassar - BKPSDMD"
     };
   }
 };

@@ -45,6 +45,7 @@ const data = [
 ];
 export default {
   name: "submission",
+  layout: "bkd",
   head() {
     return {
       title: "Laporan Kegiatan - BKD"

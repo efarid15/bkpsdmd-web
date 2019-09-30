@@ -7,42 +7,24 @@
     <div class="avatar d-flex align-items-center">
       <div class="avatar-item">
         <a-avatar :size="64" src="/user.png" />
-        <div class="name-user">BKD Admin</div>
+        <div class="name-user">Admin Member</div>
       </div>
     </div>
     <a-menu :defaultSelectedKeys="['1']" mode="inline">
       <a-menu-item key="1">
-        <nuxt-link to="/bkd/dashboard">
+        <nuxt-link to="/member/dashboard">
           <a-icon type="dashboard" />
           <span>Dashboard</span>
         </nuxt-link>
       </a-menu-item>
       <a-menu-item key="2">
-        <nuxt-link to="/bkd/submission">
-          <a-icon type="tags" />
-          <span>Pengajuan Kegiatan</span>
-        </nuxt-link>
-      </a-menu-item>
-      <a-menu-item key="3">
-        <nuxt-link to="/bkd/activities">
+        <nuxt-link to="/member/activities">
           <a-icon type="book" />
           <span>Daftar Kegiatan</span>
         </nuxt-link>
       </a-menu-item>
-      <a-menu-item key="4">
-        <nuxt-link to="/bkd/skpd">
-          <a-icon type="bars" />
-          <span>Daftar SKPD</span>
-        </nuxt-link>
-      </a-menu-item>
-      <a-menu-item key="5">
-        <nuxt-link to="/bkd/report">
-          <a-icon type="printer" />
-          <span>Laporan</span>
-        </nuxt-link>
-      </a-menu-item>
-      <a-menu-item key="6">
-        <nuxt-link to="/bkd/profile">
+      <a-menu-item key="3">
+        <nuxt-link to="/member/profile">
           <a-icon type="user" />
           <span>Pengaturan Akun</span>
         </nuxt-link>
