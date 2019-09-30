@@ -324,25 +324,6 @@ export default {
               this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
             }
           })
-          /* this.$store.dispatch('bkd/bkddelete', {
-             bkdId: '3'
-          }).then(result => {
-            this.alert = {type: 'success', message: result.data}
-            this.$store.dispatch('bkd/bkdfetch').then( ({ data }) => {
-            this.data = data.values
-            this.$store.commit('bkd/set', data.values)
-            
-            })
-          }).catch(error => {
-            this.loading = false
-            if (error.response && error.response.data) {
-              this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
-            }
-          })*/
-
-      
-      
-      
 
       //this.$store.commit('bkd/setBkd', result.data.message)
     },

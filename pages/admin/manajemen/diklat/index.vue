@@ -75,10 +75,12 @@
   </div>
 </template>
 <script>
+
 import axios from 'axios'
+
 const columns = [
   {
-    title: "No",
+    title: "ID",
     dataIndex: "id",
     key: "id"
   },
@@ -144,7 +146,6 @@ export default {
     this.$store.dispatch('diklat/diklatfetch').then( ({ data }) => {
       this.data = data.values
       this.$store.commit('diklat/set', data.values)
-      console.log(data)
     })
 
   },

@@ -27,6 +27,13 @@ export default {
         editDiklat: (data) => axios.put('jenisdiklat', data),
         deleteDiklat: (data) => axios.delete('jenisdiklat', data),
     },
+    tempat: {
+        findTempat: (params) => axios.get('tempat/', params),
+        getTempat: () => axios.get('tempat'),
+        addTempat: (data) => axios.post('tempat', data),
+        editTempat: (data) => axios.put('tempat', data),
+        deleteTempat: (data) => axios.delete('tempat', data),
+    },
 
 
    
