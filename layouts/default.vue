@@ -2,7 +2,7 @@
   <a-layout style="min-height: 100vh">
     <client-only placeholder="Loading...">
       <a-layout-sider collapsible v-model="collapsed">
-        <sider-app />
+        <sider-admin />
       </a-layout-sider>
       <a-layout>
         <a-affix :offsetTop="0">
@@ -22,7 +22,7 @@
 </template>
 <script>
 import headerApp from "~/components/header/app.vue";
-import siderApp from "~/components/sider/app.vue";
+import siderAdmin from "~/components/sider/admin.vue";
 import footerApp from "~/components/footer/app.vue";
 export default {
   data() {
@@ -32,7 +32,7 @@ export default {
   },
   components: {
     headerApp,
-    siderApp,
+    siderAdmin,
     footerApp
   }
 };
