@@ -22,8 +22,8 @@ moment.locale("id");
 const columns = [
   {
     title: "Nama Kegiatan",
-    dataIndex: "namakegiatan",
-    key: "namakegiatan"
+    dataIndex: "jenisdiklat",
+    key: "jenisdiklat"
   },
   { title: "BKD", dataIndex: "namabkd", key: "namabkd" },
   { title: "Peserta", dataIndex: "jmlpeserta", key: "jmlpeserta" },
@@ -69,14 +69,14 @@ export default {
   },
   
   mounted () {
-    this.$store.dispatch('kegiatan/kegiatanfetch').then( ({ data }) => {
+    this.$store.dispatch('pengajuan/approvefetch').then( ({ data }) => {
       this.data = data.values
       for (let index = 0; index < this.data.length; index++) {
         const tglevent = moment(this.data[index]['tglkegiatan']).format('dddd, D MMMM YYYY')
         this.$set(this.data[index], 'tglkegiatan', tglevent)
 
       }
-      this.$store.commit('kegiatan/set', data.values)
+      this.$store.commit('pengajuan/set', data.values)
       
     })
 

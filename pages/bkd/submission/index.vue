@@ -13,7 +13,7 @@
         >Buat Pengajuan</a-button>
       </a-col>
     </a-row>
-    <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }">
+    <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
       <span slot="status" slot-scope="text, record">
         <span class="color-red">{{record.status}}</span>
       </span>
@@ -33,7 +33,7 @@
             v-decorator="['kegiatan',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
             placeholder="Pilih Jenis Kegiatan" setFieldsValue="selectKegiatan" @change="handleChangeOption" 
           >
-          <a-select-option v-for="(item, value) in events" :value="item.id" v-bind:key="item.id">{{ item.jenisdiklat }}</a-select-option>
+          <a-select-option v-for="(item) in events" :value="item.id" v-bind:key="item.id">{{ item.jenisdiklat }}</a-select-option>
             <!-- <a-select-option value="1">Kegiatan 1</a-select-option>
             <a-select-option value="2">Kegiatan 2</a-select-option>-->
           </a-select>
@@ -44,7 +44,7 @@
             style="width: 100%"
             :placeholder="['Tanggal Mulai', 'Tanggal Berakhir']"
             :disabledDate="disabledDate"
-            v-decorator="['date-picker', config]"
+            v-decorator="['tgladd', config]"
           />
         </a-form-item>
 
@@ -83,18 +83,20 @@ import jsonp from "fetch-jsonp";
 import querystring from "querystring";
 import axios from "axios";
 
+moment.locale("id");
+
 const columns = [
   {
     title: "Jenis Kegiatan",
-    dataIndex: "name",
-    key: "name"
+    dataIndex: "jenisdiklat",
+    key: "jenisdiklat"
   },
-  { title: "Peserta", dataIndex: "member", key: "member" },
-  { title: "Tanggal Kegiatan", dataIndex: "tgl_kegiatan", key: "tgl_kegiatan" },
+  { title: "Peserta", dataIndex: "jmlpeserta", key: "jmlpeserta" },
+  { title: "Tanggal Kegiatan", dataIndex: "tglkegiatan", key: "tglkegiatan" },
   {
     title: "Tanggal Pengajuan",
-    dataIndex: "tgl_pengajuan",
-    key: "tgl_pengajuan"
+    dataIndex: "tglpengajuan",
+    key: "tglpengajuan"
   },
   {
     title: "Status Pengajuan",
@@ -148,6 +150,27 @@ export default {
       }
     };
   },
+
+  mounted () {
+    this.$store.dispatch('pengajuan/pengajuanfetch').then( ({ data }) => {
+      this.data = data.values
+      for (let index = 0; index < this.data.length; index++) {
+
+        const tglevent = moment(this.data[index]['tglkegiatan']).format('dddd, D MMMM YYYY')
+        const tglsubmit = moment(this.data[index]['tglpengajuan']).format('dddd, D MMMM YYYY')
+        this.$set(this.data[index], 'tglkegiatan', tglevent)
+        this.$set(this.data[index], 'tglpengajuan', tglsubmit)
+        const statpengajuan = this.data[index]['status']
+        if(statpengajuan === 'R'){ 
+          this.$set(this.data[index], 'status', 'Menunggu Verifikasi')
+          }
+
+      }
+      this.$store.commit('pengajuan/set', data.values)
+      
+    })
+
+  },
   
   methods: {
     /*handleSearch (value) {
@@ -194,10 +217,56 @@ export default {
     handleSubmit(e) {
       e.preventDefault();
       this.form.validateFields((err, values) => {
+        
         if (!err) {
-          const idDiklat = values.kegiatan
-          console.log(idDiklat)
-          this.visibleSubmission = false;
+         const tglku = moment(values.tgladd[0].format('YYYY-MM-DD')) 
+         this.$store.dispatch('pengajuan/pengajuanadd', {
+              idSkpd: 4,
+              idBkd: 1,
+              namaKegiatan: values.kegiatan,
+              jmlPeserta: values.jumlahpeserta,
+              tglKegiatan: tglku,
+
+            }).then(result => {
+              this.alert = {type: 'success', message: result.data.message}
+            
+              this.$store.dispatch('pengajuan/pengajuanfetch').then( ({ data }) => {
+                this.data = data.values
+
+                for (let index = 0; index < this.data.length; index++) {
+
+                    const tglevent = moment(this.data[index]['tglkegiatan']).format('dddd, D MMMM YYYY')
+                    const tglsubmit = moment(this.data[index]['tglpengajuan']).format('dddd, D MMMM YYYY')
+                    this.$set(this.data[index], 'tglkegiatan', tglevent)
+                    this.$set(this.data[index], 'tglpengajuan', tglsubmit)
+                    const statpengajuan = this.data[index]['status']
+                    if(statpengajuan === 'R'){ 
+                      this.$set(this.data[index], 'status', 'Menunggu Verifikasi')
+                    }
+
+                }
+
+                this.$store.commit('pengajuan/set', data.values)
+                this.visibleAdd = false
+            
+               }).catch(error => {
+                this.loading = false
+                if (error.response && error.response.data) {
+              //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+                 }
+              })
+              
+
+
+            }).catch(error => {
+              this.loading = false
+              if (error.response && error.response.data) {
+                //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+              }
+            })
+           
+
+          this.visibleSubmission = false
         }
       });
     }

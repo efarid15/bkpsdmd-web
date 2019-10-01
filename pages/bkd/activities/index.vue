@@ -3,23 +3,23 @@
     <div class="container">
       <div class="title">Daftar Kegiatan</div>
 
-      <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }">
-        <span slot="status" slot-scope="text, record">
-          <span v-if="record.status === 'Progress'">
-            <a-badge status="processing" :text="record.status" />
+      <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
+        <span slot="progress" slot-scope="text, record">
+          <span v-if="record.progress === 'Progress'">
+            <a-badge status="processing" :text="record.progress" />
           </span>
-          <span v-if="record.status === 'Finish'">
-            <a-badge status="success" :text="record.status" />
+          <span v-if="record.progress === 'Finish'">
+            <a-badge status="success" :text="record.progress" />
           </span>
         </span>
 
         <span slot="action" slot-scope="text, record">
-          <span v-if="record.status === 'Progress'">
+          <span v-if="record.progress === 'Progress'">
             <nuxt-link to="/bkd/activities/rundown">Rundown</nuxt-link>
             <a-divider type="vertical"></a-divider>
             <nuxt-link to="/bkd/activities/formulir">Formulir</nuxt-link>
           </span>
-          <span v-if="record.status === 'Finish'">
+          <span v-if="record.progress === 'Finish'">
             <nuxt-link to="/bkd/activities/rundown">Rundown</nuxt-link>
             <a-divider type="vertical"></a-divider>
             <nuxt-link to="/bkd/activities/detail">Detail</nuxt-link>
@@ -30,19 +30,24 @@
   </div>
 </template>
 <script>
+
+import moment from "moment"
+moment.locale("id");
+
 const columns = [
   {
     title: "Jenis Kegiatan",
-    dataIndex: "name",
-    key: "name"
+    dataIndex: "jenisdiklat",
+    key: "jenisdiklat"
   },
-  { title: "Peserta", dataIndex: "member", key: "member" },
-  { title: "Tanggal Kegiatan", dataIndex: "startDate", key: "startDate" },
+  { title: "Peserta", dataIndex: "jmlpeserta", key: "jmlpeserta" },
+  { title: "Tanggal Kegiatan", dataIndex: "tglkegiatan", key: "tglkegiatan" },
   {
     title: "Status Kegiatan",
     width: 160,
-    key: "status",
-    scopedSlots: { customRender: "status" }
+    dataIndex: "progress",
+    key: "progress",
+    scopedSlots: { customRender: "progress" }
   },
   {
     title: "Action",
@@ -78,9 +83,44 @@ export default {
   },
   data() {
     return {
-      data,
+      data: [],
       columns
     };
-  }
+  },
+
+  mounted () {
+    this.$store.dispatch('pengajuan/approvefetch').then( ({ data }) => {
+      this.data = data.values
+      for (let index = 0; index < this.data.length; index++) {
+
+        let tglevent = moment(this.data[index]['tglkegiatan']).format('dddd, D MMMM YYYY')
+        let eventstatus = this.data[index]['progress']
+
+        switch(eventstatus){
+            case 'P':
+            this.$set(this.data[index], 'progress', 'Progress')
+            break;
+            case 'F':
+            this.$set(this.data[index], 'progress', 'Finish')
+            break;
+            
+        }
+
+        /*if(eventstatus === 'A'){
+          this.$set(this.data[index], 'status', 'Progress')  
+        }
+        else if(eventstatus === 'F'){
+          this.$set(this.data[index], 'status', 'Finish')
+        }*/
+
+        this.$set(this.data[index], 'tglkegiatan', tglevent)
+
+      }
+      this.$store.commit('pengajuan/set', data.values)
+      
+    })
+
+  },
+
 };
 </script>

@@ -50,6 +50,13 @@ export default {
         deleteWidyaiswara: (data) => axios.delete('widyaiswara', data),
     },
 
+    pengajuan: {
+        findPengajuan: (params) => axios.get('pengajuan/', params),
+        getPengajuan: () => axios.get('pengajuan'),
+        getApprove: () => axios.get('pengajuan/approve'),
+        addPengajuan: (data) => axios.post('pengajuan', data),
+        editPengajuan: (data) => axios.put('pengajuan', data),
+    },
 
    
 }

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="title">Daftar Pengajuan</div>
 
-    <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }">
+    <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
       <span slot="action" slot-scope="text, record">
         <a @click="showApprove" class="color-blue">Approve</a>
         <a-divider type="vertical" />
@@ -94,15 +94,17 @@
   </div>
 </template>
 <script>
+import moment from "moment"
+moment.locale("id");
 const columns = [
   {
     title: "Nama Kegiatan",
-    dataIndex: "name",
-    key: "name"
+    dataIndex: "jenisdiklat",
+    key: "jenisdiklat"
   },
-  { title: "BKD", dataIndex: "bkd", key: "bkd" },
-  { title: "Peserta", dataIndex: "jumlah", key: "jumlah" },
-  { title: "Tanggal Kegiatan", dataIndex: "createdAt", key: "createdAt" },
+  { title: "BKD", dataIndex: "namabkd", key: "namabkd" },
+  { title: "Peserta", dataIndex: "jmlpeserta", key: "jmlpeserta" },
+  { title: "Tanggal Kegiatan", dataIndex: "tglkegiatan", key: "tglkegiatan" },
   {
     title: "Action",
     key: "operation",
@@ -148,10 +150,32 @@ export default {
     return {
       visibleReject: false,
       visibleApprove: false,
-      data,
+      data: [],
       columns
     };
   },
+
+ mounted () {
+    this.$store.dispatch('pengajuan/pengajuanfetch').then( ({ data }) => {
+      this.data = data.values
+      for (let index = 0; index < this.data.length; index++) {
+
+        const tglevent = moment(this.data[index]['tglkegiatan']).format('dddd, D MMMM YYYY')
+        const tglsubmit = moment(this.data[index]['tglpengajuan']).format('dddd, D MMMM YYYY')
+        this.$set(this.data[index], 'tglkegiatan', tglevent)
+        this.$set(this.data[index], 'tglpengajuan', tglsubmit)
+        const statpengajuan = this.data[index]['status']
+        if(statpengajuan === 'R'){ 
+          this.$set(this.data[index], 'status', 'Menunggu Verifikasi')
+          }
+
+      }
+      this.$store.commit('pengajuan/set', data.values)
+      
+    })
+
+  },
+
   methods: {
     showApprove() {
       this.visibleApprove = true;
