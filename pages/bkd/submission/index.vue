@@ -31,10 +31,11 @@
         <a-form-item label="Jenis Kegiatan" has-feedback>
           <a-select
             v-decorator="['kegiatan',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
-            placeholder="Pilih Jenis Kegiatan"
+            placeholder="Pilih Jenis Kegiatan" setFieldsValue="selectKegiatan" @change="handleChangeOption" 
           >
-            <a-select-option value="1">Kegiatan 1</a-select-option>
-            <a-select-option value="2">Kegiatan 2</a-select-option>
+          <a-select-option v-for="(item, value) in events" :value="item.id" v-bind:key="item.id">{{ item.jenisdiklat }}</a-select-option>
+            <!-- <a-select-option value="1">Kegiatan 1</a-select-option>
+            <a-select-option value="2">Kegiatan 2</a-select-option>-->
           </a-select>
         </a-form-item>
 
@@ -68,7 +69,7 @@
             <p class="ant-upload-drag-icon">
               <a-icon type="inbox" />
             </p>
-            <p class="ant-upload-text fs-14 cr-gray">Click or drag file to this area to upload</p>
+            <p class="ant-upload-text fs-14 cr-gray">Click atau drag dokumen pengajuan disini</p>
           </a-upload-dragger>
         </a-form-item>
         <a-button type="primary" html-type="submit">Kirim Pengajuan</a-button>
@@ -78,6 +79,10 @@
 </template>
 <script>
 import moment from "moment";
+import jsonp from "fetch-jsonp";
+import querystring from "querystring";
+import axios from "axios";
+
 const columns = [
   {
     title: "Jenis Kegiatan",
@@ -132,17 +137,42 @@ export default {
   data() {
     return {
       visibleSubmission: false,
-      data,
+      selectKegiatan: '',
+      events: {},
+      selectTempat: '',
+      tempats: {},
+      data: [],
       columns,
       config: {
         rules: [{ type: "array", required: true, message: "Harus di isi!" }]
       }
     };
   },
+  
   methods: {
+    /*handleSearch (value) {
+      fetch(value, data => this.data = data);
+    },*/
+    handleChangeOption(value) {
+      var idkegiatan = `${value}`
+       console.log(idkegiatan)
+    },
     moment,
     showSubmission() {
+      this.$store.dispatch('diklat/diklatfetch').then( ({ data }) => {
+      this.events = data.values
+      this.$store.commit('diklat/set', data.values)
+
       this.visibleSubmission = true;
+      console.log(this.events)
+    })
+
+    this.$store.dispatch('tempat/tempatfetch').then( ({ data }) => {
+      this.tempats = data.values
+      this.$store.commit('tempat/set', data.values)
+      console.log(this.tempats)
+    })
+      
     },
     handleSubmission() {
       this.visibleSubmission = false;
@@ -165,6 +195,8 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
+          const idDiklat = values.kegiatan
+          console.log(idDiklat)
           this.visibleSubmission = false;
         }
       });

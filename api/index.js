@@ -27,6 +27,7 @@ export default {
         editKegiatan: (data) => axios.put('kegiatan', data),
         deleteKegiatan: (data) => axios.delete('kegiatan', data),
     },
+    
     diklat: {
         findDiklat: (params) => axios.get('jenisdiklat/', params),
         getDiklat: () => axios.get('jenisdiklat'),
