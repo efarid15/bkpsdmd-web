@@ -104,6 +104,7 @@ const data = [
 ];
 export default {
   name: "details",
+  layout: "bkd",
   head() {
     return {
       title: "Detail Kegiatan - BKD"

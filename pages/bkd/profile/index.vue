@@ -189,6 +189,7 @@ function getBase64(img, callback) {
 }
 export default {
   name: "profile",
+  layout: "bkd",
   beforeCreate() {
     this.form = this.$form.createForm(this);
   },

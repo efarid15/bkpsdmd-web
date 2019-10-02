@@ -220,6 +220,7 @@ import moment from "moment";
 let id = 0;
 export default {
   name: "rundown",
+  layout: "bkd",
   beforeCreate() {
     this.form = this.$form.createForm(this);
     this.form.getFieldDecorator("keys", { initialValue: [], preserve: true });

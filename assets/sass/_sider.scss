@@ -3,7 +3,7 @@
     max-width: 225px !important;
     min-width: 225px !important;
     width: 225px !important;
-    background-color: #1e90ff;
+    background-image: linear-gradient(-225deg, #3D4E81 0%, #5753C9 48%, #6E7FF3 100%);
     & .brand-sider {
         line-height: 64px;
         height: 64px;
@@ -14,7 +14,7 @@
             width: 40px;
         }
         & .logo-text {
-            font-size: 24px;
+            font-size: 22px;
             color: rgba($color: #ffffff, $alpha: 1);
             margin: 0 auto;
         }
@@ -24,10 +24,24 @@
         & .avatar-item {
             text-align: center;
             margin: 0 auto;
+            & .ant-avatar {
+                background-color: #ffffff;
+                & .ant-avatar-string {
+                    height: 100%;
+                    width: 100%;
+                    & .brand {
+                        background-position: center center;
+                        background-repeat: no-repeat;
+                        background-size: cover;
+                        height: 100%;
+                        width: 100%;
+                    }
+                }
+            }
             & .name-user {
                 font-size: 15px;
                 margin-top: 8px;
-                color: rgba($color: #ffffff, $alpha: .8);
+                color: rgba($color: #ffffff, $alpha: .85);
             }
         }
     }
@@ -35,19 +49,37 @@
         background: transparent;
         border: none;
         & .ant-menu-item-group-title {
-            color: rgba($color: #ffffff, $alpha: .5);
+            color: rgba($color: #ffffff, $alpha: .45);
         }
         & .ant-menu-item,
         & .ant-menu-submenu-title {
-            color: rgba($color: #ffffff, $alpha: .8);
+            color: rgba($color: #ffffff, $alpha: .45);
+            font-weight: normal;
             & a {
-                color: rgba($color: #ffffff, $alpha: .8);
+                color: rgba($color: #ffffff, $alpha: .45);
+                font-weight: normal;
+                & i {
+                    color: rgba($color: #ffffff, $alpha: .45);
+                }
+            }
+        }
+        & .ant-menu-submenu {
+            & .ant-menu-sub {
+                & .ant-menu-item {
+                    padding-left: 24px !important;
+                    & i {
+                        font-size: 10px;
+                    }
+                }
             }
         }
         & .ant-menu-item-selected {
             color: rgba($color: #ffffff, $alpha: 1);
             & a {
                 color: rgba($color: #ffffff, $alpha: 1);
+                & i {
+                    color: rgba($color: #ffffff, $alpha: 1);
+                }
             }
         }
     }
@@ -58,6 +90,10 @@
         background-color: #1e90ff;
         width: 225px !important;
     }
+}
+
+.ant-layout-sider--admin {
+    background-image: linear-gradient(to top, #4481eb 0%, #04befe 100%);
 }
 
 .ant-menu-vertical .ant-menu-item:after,

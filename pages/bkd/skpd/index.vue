@@ -140,6 +140,7 @@ const data = [
 
 export default {
   name: "skpd",
+  layout: "bkd",
   beforeCreate() {
     this.form = this.$form.createForm(this);
   },

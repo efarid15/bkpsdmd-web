@@ -1,3 +1,3 @@
 <template>
-    <span>&copy; 2019 BKPSDMD</span>
+    <span>&copy; 2019 SIPP BPSDM</span>
 </template>

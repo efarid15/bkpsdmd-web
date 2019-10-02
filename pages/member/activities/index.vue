@@ -71,6 +71,7 @@ const data = [
 
 export default {
   name: "activities",
+  layout: "member",
   head() {
     return {
       title: "Daftar Kegiatan - BKD"

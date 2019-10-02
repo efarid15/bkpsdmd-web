@@ -130,6 +130,7 @@
 <script>
 export default {
   name: "rundown",
+  layout: "member",
   head() {
     return {
       title: "Rundown Kegiatan"

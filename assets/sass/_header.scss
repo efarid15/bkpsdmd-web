@@ -1,5 +1,19 @@
 .ant-layout-header {
     padding: 0 16px;
+    & .ant-avatar {
+        background-color: #ffffff;
+        & .ant-avatar-string {
+            height: 100%;
+            width: 100%;
+            & .brand {
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
 }
 
 .ant-drawer-content-wrapper {
@@ -11,6 +25,20 @@
         }
     }
     & .ant-drawer-body {
+        & .ant-avatar {
+            background-color: #ffffff;
+            & .ant-avatar-string {
+                height: 100%;
+                width: 100%;
+                & .brand {
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    height: 100%;
+                    width: 100%;
+                }
+            }
+        }
         & .name-user {
             line-height: normal;
         }
@@ -21,6 +49,15 @@
                 padding-right: 0 !important;
                 &::after {
                     display: none;
+                }
+            }
+            & .ant-menu-submenu {
+                & .ant-menu-sub {
+                    & .ant-menu-item {
+                        & i {
+                            font-size: 10px;
+                        }
+                    }
                 }
             }
         }

@@ -110,6 +110,7 @@ const data = [
 ];
 export default {
   name: "details",
+  layout: "pengajar",
   head() {
     return {
       title: "Detail Kegiatan - BKD"

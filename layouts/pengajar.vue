@@ -1,13 +1,13 @@
 <template>
   <a-layout style="min-height: 100vh">
     <client-only placeholder="Loading...">
-      <a-layout-sider class="ant-layout-sider--admin">
-        <sider-admin />
+      <a-layout-sider>
+        <sider-pengajar />
       </a-layout-sider>
       <a-layout>
         <a-affix :offsetTop="0">
           <a-layout-header style="background: #fff;">
-            <header-admin />
+            <header-pengajar />
           </a-layout-header>
         </a-affix>
         <a-layout-content style="margin: 16px">
@@ -21,13 +21,13 @@
   </a-layout>
 </template>
 <script>
-import headerAdmin from "~/components/header/admin.vue";
-import siderAdmin from "~/components/sider/admin.vue";
+import headerPengajar from "~/components/header/pengajar.vue";
+import siderPengajar from "~/components/sider/pengajar.vue";
 import footerApp from "~/components/footer/app.vue";
 export default {
   components: {
-    headerAdmin,
-    siderAdmin,
+    headerPengajar,
+    siderPengajar,
     footerApp
   }
 };
