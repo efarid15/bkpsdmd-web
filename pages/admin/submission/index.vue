@@ -18,14 +18,24 @@
       @ok="handleApprove"
     >
       <a-form layout="vertical" :form="form" @submit="handleSubmitApprove" hideRequiredMark>
+        <a-form-item label="Tanggal Kegiatan" has-feedback>
+          <a-range-picker
+            style="width: 100%"
+            :placeholder="['Tanggal Mulai', 'Tanggal Berakhir']"
+            :disabledDate="disabledDate"
+            v-decorator="['tglkeg', config]"
+          />
+        </a-form-item>
+
         <a-form-item label="Tempat Kegiatan">
           <a-select
             v-decorator="['tempat',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
             placeholder="Pilih Tempat Kegiatan"
             showSearch
           >
-            <a-select-option :value="1">Campus I</a-select-option>
-            <a-select-option :value="2">Campus II</a-select-option>
+            <a-select-option v-for="(item) in venue" :value="item.id" v-bind:key="item.id">{{ item.namatempat }}{{ item.ruangan }}</a-select-option>
+            <!-- <a-select-option :value="1">Campus I</a-select-option>
+            <a-select-option :value="2">Campus II</a-select-option> -->
           </a-select>
         </a-form-item>
 
@@ -150,6 +160,8 @@ export default {
     return {
       visibleReject: false,
       visibleApprove: false,
+      venue: {},
+      mentor: {},
       data: [],
       columns
     };
@@ -178,7 +190,15 @@ export default {
 
   methods: {
     showApprove() {
+      
+      this.$store.dispatch('tempat/tempatfetch').then( ({ data }) => {
+      this.venue = data.values
+      this.$store.commit('tempat/set', data.values)
+
       this.visibleApprove = true;
+      console.log(this.events)
+    })
+
     },
     handleApprove() {
       this.visibleApprove = false;
