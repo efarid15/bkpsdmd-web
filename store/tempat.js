@@ -6,29 +6,29 @@ import axios from "axios";
 
 export const state = () => ({
     list: [],
-    bkd: {},
+    tempat: {},
 })
 
 export const mutations = {
-    set(state, bkds) {
-        state.list = bkds
+    set(state, tempats) {
+        state.list = tempats
     },
     add(state, value) {
         merge(state.list, value)
     },
-    remove(state, {bkd}) {
-        state.list.splice(state.list.indexOf(bkd), 1)
+    remove(state, {tempat}) {
+        state.list.splice(state.list.indexOf(tempat), 1)
     },
-    setBkd(state, bkd) { state.bkd = bkd },
+    setTempat(state, tempat) { state.tempat = tempat },
 
-    removeBkd(state, bkd) { 
-        state.list.splice(state.list.indexOf(bkd), 1)
+    removeTempat(state, tempat) { 
+        state.list.splice(state.list.indexOf(tempat), 1)
      }
 }
 
 export const actions = {
     async get({commit}) {
-        await api.getBkd()
+        await api.tempat.getTempat()
             .then((res) => {
                 if (res.status === 200) {
                     commit('set', res.values)
@@ -36,17 +36,17 @@ export const actions = {
             })
     },
     async show({commit}, params) {
-        await api.findBkd(params.bkd_id)
+        await api.tempat.findTempat(params.jenisId)
             .then((res) => {
                 if (res.status === 200) {
-                    commit('setBkd', res.values)
+                    commit('setTempat', res.values)
                 }
             })
     },
 
 
     async nuxtServerInit ({commit}) {
-        let {data} = await api.bkd.getBkd().then(response => {data})
+        let {data} = await api.tempat.getTempat().then(response => {data})
         commit('set', values(data))
     },
 
@@ -55,42 +55,42 @@ export const actions = {
         commit('SET_BKD', data)
     },*/
 
-    bkdfetch ({commit}) {
-        return api.bkd.getBkd()
+    tempatfetch ({commit}) {
+        return api.tempat.getTempat()
             .then(response => {
                 commit('set', response.values)
                 return response
             })
             .catch(error => {
-                commit('reset_bkd')
+                commit('remove')
                 return error
             })
     },
-    bkdfind ({commit}, params) {
-        return axios.get('bkd/')
+    tempatfind ({commit}, params) {
+        return axios.get('tempat/')
             .then(response => {
-                commit('setBkd', response.values)
+                commit('setTempat', response.values)
                 return response
             })
     },
-    bkdadd ({commit}, data) {
-        return api.bkd.addBkd(data)
+    tempatadd ({commit}, data) {
+        return api.tempat.addTempat(data)
             .then(response => {
-                commit('setBkd', response.data)
+                commit('setTempat', response.data)
                 return response
             })
     },
-    bkdedit ({commit}, data) {
-        return api.bkd.editBkd(data)
+    tempatedit ({commit}, data) {
+        return api.tempat.editTempat(data)
             .then(response => {
-                commit('setBkd', response.data)
-                console.log(response)
+                commit('setTempat', response.data)
+                console.log(response.data)
                 return response
             })
     },
-    bkddelete ({commit}, data) {
+    tempatdelete ({commit}, data) {
         console.log(data)
-        return api.bkd.deleteBkd(data)
+        return api.tempat.deleteTempat(data)
             .then(response => {
                 //commit('removeBkd', response.data)
                 return response

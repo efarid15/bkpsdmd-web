@@ -6,29 +6,29 @@ import axios from "axios";
 
 export const state = () => ({
     list: [],
-    bkd: {},
+    skpd: {},
 })
 
 export const mutations = {
-    set(state, bkds) {
-        state.list = bkds
+    set(state, skpds) {
+        state.list = skpds
     },
     add(state, value) {
         merge(state.list, value)
     },
-    remove(state, {bkd}) {
-        state.list.splice(state.list.indexOf(bkd), 1)
+    remove(state, {skpd}) {
+        state.list.splice(state.list.indexOf(skpd), 1)
     },
-    setBkd(state, bkd) { state.bkd = bkd },
+    setSkpd(state, skpd) { state.skpd = skpd },
 
-    removeBkd(state, bkd) { 
-        state.list.splice(state.list.indexOf(bkd), 1)
+    removeSkpd(state, skpd) { 
+        state.list.splice(state.list.indexOf(skpd), 1)
      }
 }
 
 export const actions = {
     async get({commit}) {
-        await api.getBkd()
+        await api.skpd.getSkpd()
             .then((res) => {
                 if (res.status === 200) {
                     commit('set', res.values)
@@ -36,17 +36,17 @@ export const actions = {
             })
     },
     async show({commit}, params) {
-        await api.findBkd(params.bkd_id)
+        await api.skpd.findSkpd(params.skpd_id)
             .then((res) => {
                 if (res.status === 200) {
-                    commit('setBkd', res.values)
+                    commit('setSkpd', res.values)
                 }
             })
     },
 
 
     async nuxtServerInit ({commit}) {
-        let {data} = await api.bkd.getBkd().then(response => {data})
+        let {data} = await api.skpd.getSkpd().then(response => {data})
         commit('set', values(data))
     },
 
@@ -55,42 +55,42 @@ export const actions = {
         commit('SET_BKD', data)
     },*/
 
-    bkdfetch ({commit}) {
-        return api.bkd.getBkd()
+    skpdfetch ({commit}) {
+        return api.skpd.getSkpd()
             .then(response => {
                 commit('set', response.values)
                 return response
             })
             .catch(error => {
-                commit('reset_bkd')
+                commit('remove')
                 return error
             })
     },
-    bkdfind ({commit}, params) {
-        return axios.get('bkd/')
+    skpdfind ({commit}, params) {
+        return axios.get('skpd/')
             .then(response => {
-                commit('setBkd', response.values)
+                commit('setSkpd', response.values)
                 return response
             })
     },
-    bkdadd ({commit}, data) {
-        return api.bkd.addBkd(data)
+    skpdadd ({commit}, data) {
+        return api.skpd.addSkpd(data)
             .then(response => {
-                commit('setBkd', response.data)
+                commit('setSkpd', response.data)
                 return response
             })
     },
-    bkdedit ({commit}, data) {
-        return api.bkd.editBkd(data)
+    skpdedit ({commit}, data) {
+        return api.skpd.editSkpd(data)
             .then(response => {
-                commit('setBkd', response.data)
+                commit('setSkpd', response.data)
                 console.log(response)
                 return response
             })
     },
-    bkddelete ({commit}, data) {
+    skpddelete ({commit}, data) {
         console.log(data)
-        return api.bkd.deleteBkd(data)
+        return api.skpd.deleteSkpd(data)
             .then(response => {
                 //commit('removeBkd', response.data)
                 return response

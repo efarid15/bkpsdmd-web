@@ -6,29 +6,29 @@ import axios from "axios";
 
 export const state = () => ({
     list: [],
-    bkd: {},
+    diklat: {},
 })
 
 export const mutations = {
-    set(state, bkds) {
-        state.list = bkds
+    set(state, diklats) {
+        state.list = diklats
     },
     add(state, value) {
         merge(state.list, value)
     },
-    remove(state, {bkd}) {
-        state.list.splice(state.list.indexOf(bkd), 1)
+    remove(state, {diklat}) {
+        state.list.splice(state.list.indexOf(diklat), 1)
     },
-    setBkd(state, bkd) { state.bkd = bkd },
+    setDiklat(state, diklat) { state.diklat = diklat },
 
-    removeBkd(state, bkd) { 
-        state.list.splice(state.list.indexOf(bkd), 1)
+    removeDiklat(state, diklat) { 
+        state.list.splice(state.list.indexOf(diklat), 1)
      }
 }
 
 export const actions = {
     async get({commit}) {
-        await api.getBkd()
+        await api.diklat.getDiklat()
             .then((res) => {
                 if (res.status === 200) {
                     commit('set', res.values)
@@ -36,7 +36,7 @@ export const actions = {
             })
     },
     async show({commit}, params) {
-        await api.findBkd(params.bkd_id)
+        await api.diklat.findDiklat(params.jenisId)
             .then((res) => {
                 if (res.status === 200) {
                     commit('setBkd', res.values)
@@ -46,7 +46,7 @@ export const actions = {
 
 
     async nuxtServerInit ({commit}) {
-        let {data} = await api.bkd.getBkd().then(response => {data})
+        let {data} = await api.diklat.getDiklat().then(response => {data})
         commit('set', values(data))
     },
 
@@ -55,42 +55,42 @@ export const actions = {
         commit('SET_BKD', data)
     },*/
 
-    bkdfetch ({commit}) {
-        return api.bkd.getBkd()
+    diklatfetch ({commit}) {
+        return api.diklat.getDiklat()
             .then(response => {
                 commit('set', response.values)
                 return response
             })
             .catch(error => {
-                commit('reset_bkd')
+                commit('remove')
                 return error
             })
     },
-    bkdfind ({commit}, params) {
-        return axios.get('bkd/')
+    diklatfind ({commit}, params) {
+        return axios.get('diklat/')
             .then(response => {
-                commit('setBkd', response.values)
+                commit('setDiklat', response.values)
                 return response
             })
     },
-    bkdadd ({commit}, data) {
-        return api.bkd.addBkd(data)
+    diklatadd ({commit}, data) {
+        return api.diklat.addDiklat(data)
             .then(response => {
-                commit('setBkd', response.data)
+                commit('setDiklat', response.data)
                 return response
             })
     },
-    bkdedit ({commit}, data) {
-        return api.bkd.editBkd(data)
+    diklatedit ({commit}, data) {
+        return api.diklat.editDiklat(data)
             .then(response => {
-                commit('setBkd', response.data)
+                commit('setDiklat', response.data)
                 console.log(response)
                 return response
             })
     },
-    bkddelete ({commit}, data) {
+    diklatdelete ({commit}, data) {
         console.log(data)
-        return api.bkd.deleteBkd(data)
+        return api.diklat.deleteDiklat(data)
             .then(response => {
                 //commit('removeBkd', response.data)
                 return response

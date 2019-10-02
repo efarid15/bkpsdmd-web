@@ -2,7 +2,7 @@
   <div class="container">
     <div class="title">Semua Kegiatan</div>
 
-    <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }">
+    <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
       <span slot="action" slot-scope="text">
         <nuxt-link to="/admin/activities/rundown">Rundown</nuxt-link>
         <a-divider type="vertical"></a-divider>
@@ -12,15 +12,22 @@
   </div>
 </template>
 <script>
+
+import moment from 'moment'
+
+moment.locale("id"); 
+
+
+
 const columns = [
   {
     title: "Nama Kegiatan",
-    dataIndex: "name",
-    key: "name"
+    dataIndex: "jenisdiklat",
+    key: "jenisdiklat"
   },
-  { title: "BKD", dataIndex: "bkd", key: "bkd" },
-  { title: "Peserta", dataIndex: "jumlah", key: "jumlah" },
-  { title: "Tanggal Kegiatan", dataIndex: "createdAt", key: "createdAt" },
+  { title: "BKD", dataIndex: "namabkd", key: "namabkd" },
+  { title: "Peserta", dataIndex: "jmlpeserta", key: "jmlpeserta" },
+  { title: "Tanggal Kegiatan", dataIndex: "tglkegiatan", key: "tgl" },
   {
     title: "Action",
     key: "operation",
@@ -56,10 +63,25 @@ export default {
   },
   data() {
     return {
-      data,
+      data: [],
       columns
     };
   },
+  
+  mounted () {
+    this.$store.dispatch('pengajuan/approvefetch').then( ({ data }) => {
+      this.data = data.values
+      for (let index = 0; index < this.data.length; index++) {
+        const tglevent = moment(this.data[index]['tglkegiatan']).format('dddd, D MMMM YYYY')
+        this.$set(this.data[index], 'tglkegiatan', tglevent)
+
+      }
+      this.$store.commit('pengajuan/set', data.values)
+      
+    })
+
+  },
+
   methods: {}
 };
 </script>

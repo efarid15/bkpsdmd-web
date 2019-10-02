@@ -51,12 +51,16 @@
 </template>
 <script>
 export default {
+<<<<<<< HEAD
   name: "dashboard",
   computed: {
     user () { return this.$store.state.auth ? this.$store.state.auth.user : null }
   },
+=======
+  
+>>>>>>> master
   fetch ({store, redirect}) {
-    if (!store.state.auth.user) {
+    if (!store.state.auth.authLogin) {
       redirect('/')
     }
   },

@@ -4,12 +4,12 @@
       <div class="title">Daftar Kegiatan Saya</div>
 
       <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }">
-        <span slot="status" slot-scope="text, record">
-          <span v-if="record.status === 'Progress'">
-            <a-badge status="processing" :text="record.status" />
+        <span slot="progress" slot-scope="text, record">
+          <span v-if="record.progress === 'Progress'">
+            <a-badge status="processing" :text="record.progress" />
           </span>
-          <span v-if="record.status === 'Finish'">
-            <a-badge status="success" :text="record.status" />
+          <span v-if="record.progress === 'Finish'">
+            <a-badge status="success" :text="record.progress" />
           </span>
         </span>
 
@@ -23,20 +23,24 @@
   </div>
 </template>
 <script>
+import moment from "moment"
+moment.locale("id");
+
 const columns = [
   {
     title: "Jenis Kegiatan",
-    dataIndex: "name",
-    key: "name"
+    dataIndex: "jenisdiklat",
+    key: "jenisdiklat"
   },
-  { title: "Peserta", dataIndex: "member", key: "member" },
-  { title: "Tanggal Mulai", dataIndex: "startDate", key: "startDate" },
-  { title: "Tanggal Berakhir", dataIndex: "endDate", key: "endDate" },
+  { title: "Peserta", dataIndex: "jmlpeserta", key: "jmlpeserta" },
+  { title: "Tanggal Mulai", dataIndex: "tglkegiatan", key: "tglkegiatan" },
+  { title: "Tanggal Berakhir", dataIndex: "tglkegiatan", key: "tglkegiatan" },
   {
     title: "Status Kegiatan",
     width: 160,
-    key: "status",
-    scopedSlots: { customRender: "status" }
+    dataIndex: "progress",
+    key: "progress",
+    scopedSlots: { customRender: "progress" }
   },
   {
     title: "Action",
@@ -75,9 +79,36 @@ export default {
   },
   data() {
     return {
-      data,
+      data: [],
       columns
     };
-  }
+  },
+
+  mounted () {
+    this.$store.dispatch('pengajuan/approvefetch').then( ({ data }) => {
+      this.data = data.values
+      for (let index = 0; index < this.data.length; index++) {
+
+        let tglevent = moment(this.data[index]['tglkegiatan']).format('dddd, D MMMM YYYY')
+        let eventstatus = this.data[index]['progress']
+
+        switch(eventstatus){
+            case 'P':
+            this.$set(this.data[index], 'progress', 'Progress')
+            break;
+            case 'F':
+            this.$set(this.data[index], 'progress', 'Finish')
+            break;
+            
+        }
+
+        this.$set(this.data[index], 'tglkegiatan', tglevent)
+
+      }
+      this.$store.commit('pengajuan/set', data.values)
+      
+    })
+
+  },
 };
 </script>

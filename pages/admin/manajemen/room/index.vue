@@ -13,14 +13,14 @@
         >Tambah</a-button>
       </a-col>
     </a-row>
-    <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }">
+    <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
       <span slot="action" slot-scope="text, record">
-        <a-button size="small" type="link" class="color-blue" @click="showEdit">Edit</a-button>
+        <a-button size="small" type="link" class="color-blue" @click="showEdit(record.id)">Edit</a-button>
         <a-divider type="vertical"></a-divider>
         <a-popconfirm
           v-if="data.length"
           title="Sure to delete?"
-          @confirm="() => onDelete(record.key)">
+          @confirm="() => onDelete(record.id)">
           <a-button size="small" type="link" class="color-red">Hapus</a-button>
         </a-popconfirm>
       </span>
@@ -68,26 +68,27 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
 const columns = [
   {
     title: "No",
-    dataIndex: "key",
-    key: "key"
+    dataIndex: "id",
+    key: "id"
   },
   {
     title: "Tempat Kegiatan",
-    dataIndex: "name",
-    key: "name"
+    dataIndex: "namatempat",
+    key: "namatempat"
   },
   {
     title: "Ruangan",
-    dataIndex: "room",
-    key: "room"
+    dataIndex: "ruangan",
+    key: "ruangan"
   },
   {
     title: "Alamat",
-    dataIndex: "address",
-    key: "address"
+    dataIndex: "alamat",
+    key: "alamat"
   },
   {
     title: "Action",
@@ -113,6 +114,13 @@ const data = [
 ];
 
 export default {
+
+ fetch ({store, redirect}) {
+    if (!store.state.auth.authLogin) {
+      redirect('/')
+    }
+  },
+
   name: "room",
   beforeCreate() {
     this.form = this.$form.createForm(this);
@@ -126,10 +134,19 @@ export default {
     return {
       visibleAdd: false,
       visibleEdit: false,
-      data,
+      data: [],
       columns
     };
   },
+
+  mounted () {
+    this.$store.dispatch('tempat/tempatfetch').then( ({ data }) => {
+      this.data = data.values
+      this.$store.commit('tempat/set', data.values)
+    })
+
+  },
+
   methods: {
     showAdd() {
       this.visibleAdd = true;
@@ -141,12 +158,65 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
+
+        this.$store.dispatch('tempat/tempatadd', {
+              namaTempat: values.nameAdd,
+              ruanganTempat: values.roomAdd,
+              alamatTempat: values.addressAdd,
+              
+
+            }).then(result => {
+              this.alert = {type: 'success', message: result.data.message}
+            
+              this.$store.dispatch('tempat/tempatfetch').then( ({ data }) => {
+                this.data = data.values
+                this.$store.commit('tempat/set', data.values)
+                this.visibleAdd = false
+            
+               }).catch(error => {
+                this.loading = false
+                if (error.response && error.response.data) {
+              //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+                 }
+              })
+              
+
+
+            }).catch(error => {
+              this.loading = false
+              if (error.response && error.response.data) {
+                //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+              }
+            })
+         
+
+
           this.visibleAdd = false;
         }
       });
     },
 
-    showEdit() {
+    showEdit(key) {
+      axios.get(`tempat/${key}`).then(result => {
+        
+        let res = result.data.values[0]
+        this.$store.commit('tempat/setTempat', result.data.values[0])
+        
+        
+        let namaTempat = res['namatempat']
+        let ruanganTempat = res['ruangan']
+        let alamatTempat = res['alamat']
+
+        this.form.setFieldsValue({
+          nameEdit: namaTempat,
+          roomEdit: ruanganTempat,
+          addressEdit: alamatTempat,
+          
+
+        });
+
+        
+      })
       this.visibleEdit = true;
     },
     handleEdit() {
@@ -156,15 +226,50 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          this.visibleEdit = false;
+          const resid = this.$store.state.tempat.tempat['id']
+          console.log(resid)
+          this.$store.dispatch('tempat/tempatedit', {
+            namaTempat: values.nameEdit,
+            ruanganTempat: values.roomEdit,
+            alamatTempat: values.addressEdit,
+            tempatId: resid,
+
+          }).then(result => {
+            this.alert = {type: 'success', message: result.data.message}
+            
+            this.$store.dispatch('tempat/tempatfetch').then( ({ data }) => {
+            this.data = data.values
+            this.$store.commit('tempat/set', data.values)
+            console.log(data)
+            this.visibleEdit = false
+              })
+
+          }).catch(error => {
+            this.loading = false
+            if (error.response && error.response.data) {
+              //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+            }
+          })
+
+          
         }
       });
     },
 
     onDelete (key) {
-      const data = [...this.data]
-      this.data = data.filter(item => item.key !== key)
+      axios.delete(`tempat/${key}`).then(result => {
+         this.$store.dispatch('tempat/tempatfetch').then( ({ data }) => {
+            this.data = data.values
+            this.$store.commit('tempat/set', data.values)
+      })  
+      }).catch(error => {
+            this.loading = false
+            if (error.response && error.response.data) {
+              this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+            }
+          })
+    }
     },
-  }
+  
 };
 </script>

@@ -6,29 +6,29 @@ import axios from "axios";
 
 export const state = () => ({
     list: [],
-    bkd: {},
+    kegiatan: {},
 })
 
 export const mutations = {
-    set(state, bkds) {
-        state.list = bkds
+    set(state, events) {
+        state.list = events
     },
     add(state, value) {
         merge(state.list, value)
     },
-    remove(state, {bkd}) {
-        state.list.splice(state.list.indexOf(bkd), 1)
+    remove(state, {kegiatan}) {
+        state.list.splice(state.list.indexOf(kegiatan), 1)
     },
-    setBkd(state, bkd) { state.bkd = bkd },
+    setKegiatan(state, kegiatan) { state.kegiatan = kegiatan },
 
-    removeBkd(state, bkd) { 
-        state.list.splice(state.list.indexOf(bkd), 1)
+    removeKegiatan(state, kegiatan) { 
+        state.list.splice(state.list.indexOf(kegiatan), 1)
      }
 }
 
 export const actions = {
     async get({commit}) {
-        await api.getBkd()
+        await api.kegiatan.getKegiatan()
             .then((res) => {
                 if (res.status === 200) {
                     commit('set', res.values)
@@ -36,17 +36,17 @@ export const actions = {
             })
     },
     async show({commit}, params) {
-        await api.findBkd(params.bkd_id)
+        await api.kegiatan.findKegiatan(params.idKegiatan)
             .then((res) => {
                 if (res.status === 200) {
-                    commit('setBkd', res.values)
+                    commit('setKegiatan', res.values)
                 }
             })
     },
 
 
     async nuxtServerInit ({commit}) {
-        let {data} = await api.bkd.getBkd().then(response => {data})
+        let {data} = await api.kegiatan.getKegiatan().then(response => {data})
         commit('set', values(data))
     },
 
@@ -55,42 +55,42 @@ export const actions = {
         commit('SET_BKD', data)
     },*/
 
-    bkdfetch ({commit}) {
-        return api.bkd.getBkd()
+    kegiatanfetch ({commit}) {
+        return api.kegiatan.getKegiatan()
             .then(response => {
                 commit('set', response.values)
                 return response
             })
             .catch(error => {
-                commit('reset_bkd')
+                commit('remove_kegiatan')
                 return error
             })
     },
-    bkdfind ({commit}, params) {
-        return axios.get('bkd/')
+    kegiatanfind ({commit}, params) {
+        return axios.get('kegiatan/')
             .then(response => {
-                commit('setBkd', response.values)
+                commit('setKegiatan', response.values)
                 return response
             })
     },
-    bkdadd ({commit}, data) {
-        return api.bkd.addBkd(data)
+    kegiatanadd ({commit}, data) {
+        return api.kegiatan.addKegiatan(data)
             .then(response => {
-                commit('setBkd', response.data)
+                commit('setKegiatan', response.data)
                 return response
             })
     },
-    bkdedit ({commit}, data) {
-        return api.bkd.editBkd(data)
+    kegiatanedit ({commit}, data) {
+        return api.kegiatan.editKegiatan(data)
             .then(response => {
-                commit('setBkd', response.data)
+                commit('setKegiatan', response.data)
                 console.log(response)
                 return response
             })
     },
-    bkddelete ({commit}, data) {
+    kegiatandelete ({commit}, data) {
         console.log(data)
-        return api.bkd.deleteBkd(data)
+        return api.kegiatan.deleteKegiatan(data)
             .then(response => {
                 //commit('removeBkd', response.data)
                 return response

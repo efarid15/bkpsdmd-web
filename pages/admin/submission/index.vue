@@ -2,7 +2,7 @@
   <div class="container">
     <div class="title">Daftar Pengajuan</div>
 
-    <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }">
+    <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
       <span slot="action" slot-scope="text, record">
         <a @click="showApprove" class="color-blue">Approve</a>
         <a-divider type="vertical" />
@@ -18,14 +18,24 @@
       @ok="handleApprove"
     >
       <a-form layout="vertical" :form="form" @submit="handleSubmitApprove" hideRequiredMark>
+        <a-form-item label="Tanggal Kegiatan" has-feedback>
+          <a-range-picker
+            style="width: 100%"
+            :placeholder="['Tanggal Mulai', 'Tanggal Berakhir']"
+            :disabledDate="disabledDate"
+            v-decorator="['tglkeg', config]"
+          />
+        </a-form-item>
+
         <a-form-item label="Tempat Kegiatan">
           <a-select
             v-decorator="['tempat',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
             placeholder="Pilih Tempat Kegiatan"
             showSearch
           >
-            <a-select-option :value="1">Campus I</a-select-option>
-            <a-select-option :value="2">Campus II</a-select-option>
+            <a-select-option v-for="(item) in venue" :value="item.id" v-bind:key="item.id">{{ item.namatempat }}{{ item.ruangan }}</a-select-option>
+            <!-- <a-select-option :value="1">Campus I</a-select-option>
+            <a-select-option :value="2">Campus II</a-select-option> -->
           </a-select>
         </a-form-item>
 
@@ -94,15 +104,17 @@
   </div>
 </template>
 <script>
+import moment from "moment"
+moment.locale("id");
 const columns = [
   {
     title: "Nama Kegiatan",
-    dataIndex: "name",
-    key: "name"
+    dataIndex: "jenisdiklat",
+    key: "jenisdiklat"
   },
-  { title: "BKD", dataIndex: "bkd", key: "bkd" },
-  { title: "Peserta", dataIndex: "jumlah", key: "jumlah" },
-  { title: "Tanggal Kegiatan", dataIndex: "createdAt", key: "createdAt" },
+  { title: "BKD", dataIndex: "namabkd", key: "namabkd" },
+  { title: "Peserta", dataIndex: "jmlpeserta", key: "jmlpeserta" },
+  { title: "Tanggal Kegiatan", dataIndex: "tglkegiatan", key: "tglkegiatan" },
   {
     title: "Action",
     key: "operation",
@@ -131,7 +143,7 @@ const data = [
 
 export default {
   fetch ({store, redirect}) {
-    if (!store.state.auth.user) {
+    if (!store.state.auth.authUser) {
       redirect('/')
     }
   },
@@ -148,13 +160,45 @@ export default {
     return {
       visibleReject: false,
       visibleApprove: false,
-      data,
+      venue: {},
+      mentor: {},
+      data: [],
       columns
     };
   },
+
+ mounted () {
+    this.$store.dispatch('pengajuan/pengajuanfetch').then( ({ data }) => {
+      this.data = data.values
+      for (let index = 0; index < this.data.length; index++) {
+
+        const tglevent = moment(this.data[index]['tglkegiatan']).format('dddd, D MMMM YYYY')
+        const tglsubmit = moment(this.data[index]['tglpengajuan']).format('dddd, D MMMM YYYY')
+        this.$set(this.data[index], 'tglkegiatan', tglevent)
+        this.$set(this.data[index], 'tglpengajuan', tglsubmit)
+        const statpengajuan = this.data[index]['status']
+        if(statpengajuan === 'R'){ 
+          this.$set(this.data[index], 'status', 'Menunggu Verifikasi')
+          }
+
+      }
+      this.$store.commit('pengajuan/set', data.values)
+      
+    })
+
+  },
+
   methods: {
     showApprove() {
+      
+      this.$store.dispatch('tempat/tempatfetch').then( ({ data }) => {
+      this.venue = data.values
+      this.$store.commit('tempat/set', data.values)
+
       this.visibleApprove = true;
+      console.log(this.events)
+    })
+
     },
     handleApprove() {
       this.visibleApprove = false;

@@ -6,29 +6,29 @@ import axios from "axios";
 
 export const state = () => ({
     list: [],
-    bkd: {},
+    pengajuan: {},
 })
 
 export const mutations = {
-    set(state, bkds) {
-        state.list = bkds
+    set(state, events) {
+        state.list = events
     },
     add(state, value) {
         merge(state.list, value)
     },
-    remove(state, {bkd}) {
-        state.list.splice(state.list.indexOf(bkd), 1)
+    remove(state, {pengajuan}) {
+        state.list.splice(state.list.indexOf(pengajuan), 1)
     },
-    setBkd(state, bkd) { state.bkd = bkd },
+    setPengajuan(state, pengajuan) { state.pengajuan = pengajuan },
 
-    removeBkd(state, bkd) { 
-        state.list.splice(state.list.indexOf(bkd), 1)
+    removePengajuan(state, pengajuan) { 
+        state.list.splice(state.list.indexOf(pengajuan), 1)
      }
 }
 
 export const actions = {
     async get({commit}) {
-        await api.getBkd()
+        await api.pengajuan.getPengajuan()
             .then((res) => {
                 if (res.status === 200) {
                     commit('set', res.values)
@@ -36,17 +36,17 @@ export const actions = {
             })
     },
     async show({commit}, params) {
-        await api.findBkd(params.bkd_id)
+        await api.pengajuan.findPengajuan(params.idPengajuan)
             .then((res) => {
                 if (res.status === 200) {
-                    commit('setBkd', res.values)
+                    commit('setPengajuan', res.values)
                 }
             })
     },
 
 
     async nuxtServerInit ({commit}) {
-        let {data} = await api.bkd.getBkd().then(response => {data})
+        let {data} = await api.pengajuan.getPengajuan().then(response => {data})
         commit('set', values(data))
     },
 
@@ -54,43 +54,55 @@ export const actions = {
         const { data } = await api.bkd.getBkd().then(response => {})
         commit('SET_BKD', data)
     },*/
-
-    bkdfetch ({commit}) {
-        return api.bkd.getBkd()
+    
+    approvefetch ({commit}) {
+        return api.pengajuan.getApprove()
             .then(response => {
                 commit('set', response.values)
                 return response
             })
             .catch(error => {
-                commit('reset_bkd')
+                commit('remove_pengajuan')
                 return error
             })
     },
-    bkdfind ({commit}, params) {
-        return axios.get('bkd/')
+
+    pengajuanfetch ({commit}) {
+        return api.pengajuan.getPengajuan()
             .then(response => {
-                commit('setBkd', response.values)
+                commit('set', response.values)
+                return response
+            })
+            .catch(error => {
+                commit('remove_pengajuan')
+                return error
+            })
+    },
+    pengajuanfind ({commit}, params) {
+        return axios.get('pengajuan/')
+            .then(response => {
+                commit('setPengajuan', response.values)
                 return response
             })
     },
-    bkdadd ({commit}, data) {
-        return api.bkd.addBkd(data)
+    pengajuanadd ({commit}, data) {
+        return api.pengajuan.addPengajuan(data)
             .then(response => {
-                commit('setBkd', response.data)
+                commit('setPengajuan', response.data)
                 return response
             })
     },
-    bkdedit ({commit}, data) {
-        return api.bkd.editBkd(data)
+    pengajuanedit ({commit}, data) {
+        return api.pengajuan.editPengajuan(data)
             .then(response => {
-                commit('setBkd', response.data)
+                commit('setPengajuan', response.data)
                 console.log(response)
                 return response
             })
     },
-    bkddelete ({commit}, data) {
+    pengajuandelete ({commit}, data) {
         console.log(data)
-        return api.bkd.deleteBkd(data)
+        return api.pengajuan.deletePengajuan(data)
             .then(response => {
                 //commit('removeBkd', response.data)
                 return response

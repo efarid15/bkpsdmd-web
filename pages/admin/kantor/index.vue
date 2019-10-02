@@ -19,8 +19,8 @@
         <a-divider type="vertical"></a-divider>
         <a-popconfirm
           v-if="data.length"
-          title="Sure to delete?"
-          @confirm="() => onDelete(record.key)">
+          title="Anda ingin menghapus data ini?"
+          @confirm="() => onDelete(record.id)">
           <a-button size="small" type="link" class="color-red">Hapus</a-button>
         </a-popconfirm>
       </span>
@@ -145,6 +145,12 @@ const columns = [
 
 export default {
 
+  fetch ({store, redirect}) {
+    if (!store.state.auth.authLogin) {
+      redirect('/')
+    }
+  },
+
   name: "skpd",
   beforeCreate() {
     this.form = this.$form.createForm(this);
@@ -178,7 +184,7 @@ export default {
   mounted () {
     this.$store.dispatch('bkd/bkdfetch').then( ({ data }) => {
       this.data = data.values
-      this.$store.commit('bkd/set', data)
+      this.$store.commit('bkd/set', data.values)
       console.log(data)
     })
 
@@ -206,17 +212,26 @@ export default {
           if (!err) {
             //this.alert = null
             this.$store.dispatch('bkd/bkdadd', {
-              bkdnama: values.name,
-              bkdalamat: values.address,
-              bkdkabupaten: 'makassar',
-              bkdnotelp: values.telp,
+              namaBkd: values.name,
+              alamatBkd: values.address,
+              kabupatenBkd: 'makassar',
+              notelpBkd: values.telp,
 
             }).then(result => {
               this.alert = {type: 'success', message: result.data.message}
-              this.$store.commit('bkd/set', message)
-              this.loading = true
-              this.visibleAdd = false
-              location.reload()
+            
+              this.$store.dispatch('bkd/bkdfetch').then( ({ data }) => {
+                this.data = data.values
+                this.$store.commit('bkd/set', data.values)
+                this.visibleAdd = false
+            
+               }).catch(error => {
+                this.loading = false
+                if (error.response && error.response.data) {
+              //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+                 }
+              })
+              
 
 
             }).catch(error => {
@@ -226,20 +241,24 @@ export default {
               }
             })
 
+            
+        
+
         }
       });
     },
 
     showEdit(key) {
-
-      axios.get(`bkd/${key}`).then(result => {
-        this.$store.commit('bkd/setBkd', result.data)
-        let res = this.$store.state.bkd.bkd.values[0]
-
+        axios.get(`bkd/${key}`).then(result => {
+        
+        let res = result.data.values[0]
+        this.$store.commit('bkd/setBkd', result.data.values[0])
+        
+        
         let namaBkd = res['namabkd']
         let alamatBkd = res['alamat']
         let notelpBkd = res['notelp']
-
+        
         this.form.setFieldsValue({
           nameEdit: namaBkd,
           telpEdit: notelpBkd,
@@ -247,13 +266,14 @@ export default {
 
         });
 
-        console.log(res)
+        
       })
 
       this.visibleEdit = true;
     },
     handleEdit() {
       this.visibleEdit = false;
+      
     },
     handleSubmitEdit(e) {
       e.preventDefault();
@@ -261,23 +281,24 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           //console.log(key)
-          let resid = this.$store.state.bkd.bkd.values[0]['id']
-
+          const resid = this.$store.state.bkd.bkd['id']
+          console.log(resid)
           this.$store.dispatch('bkd/bkdedit', {
-            bkdnama: values.nameEdit,
-            bkdalamat: values.addressEdit,
-            bkdkabupaten: 'makassar',
-            bkdnotelp: values.telpEdit,
-            bkdid: resid,
+            namaBkd: values.nameEdit,
+            alamatBkd: values.addressEdit,
+            kabupatenBkd: 'makassar',
+            notelpBkd: values.telpEdit,
+            bkdId: resid,
 
           }).then(result => {
             this.alert = {type: 'success', message: result.data.message}
-            this.$store.commit('bkd/setBkd', result.data.message)
-            //this.loading = true
+            
+            this.$store.dispatch('bkd/bkdfetch').then( ({ data }) => {
+            this.data = data.values
+            this.$store.commit('bkd/set', data.values)
+            console.log(data)
             this.visibleEdit = false
-           // console.log(result.config.data)
-            location.reload()
-
+              })
 
           }).catch(error => {
             this.loading = false
@@ -291,8 +312,20 @@ export default {
     },
 
     onDelete (key) {
-      const data = [...this.data]
-      this.data = data.filter(item => item.key !== key)
+      
+      axios.delete(`bkd/${key}`).then(result => {
+         this.$store.dispatch('bkd/bkdfetch').then( ({ data }) => {
+            this.data = data.values
+            this.$store.commit('bkd/set', data.values)
+      })  
+      }).catch(error => {
+            this.loading = false
+            if (error.response && error.response.data) {
+              this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+            }
+          })
+
+      //this.$store.commit('bkd/setBkd', result.data.message)
     },
   }
 };
