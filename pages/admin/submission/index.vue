@@ -18,15 +18,6 @@
       @ok="handleApprove"
     >
       <a-form layout="vertical" :form="form" @submit="handleSubmitApprove" hideRequiredMark>
-        <a-form-item label="Tanggal Kegiatan" has-feedback>
-          <a-range-picker
-            style="width: 100%"
-            :placeholder="['Tanggal Mulai', 'Tanggal Berakhir']"
-            :disabledDate="disabledDate"
-            v-decorator="['tglkeg', config]"
-          />
-        </a-form-item>
-
         <a-form-item label="Tempat Kegiatan">
           <a-select
             v-decorator="['tempat',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
@@ -48,6 +39,15 @@
             <!-- <a-select-option :value="1">IB Lantai 2</a-select-option>
             <a-select-option :value="2">3A Lantai 1</a-select-option>-->
           </a-select>
+        </a-form-item>
+        
+        <a-form-item label="Tanggal Kegiatan" has-feedback>
+          <a-range-picker
+            style="width: 100%"
+            :placeholder="['Tanggal Mulai', 'Tanggal Berakhir']"
+            :disabledDate="disabledDate"
+            v-decorator="['tglkeg', config]"
+          />
         </a-form-item>
 
         <a-form-item label="Widiasuara/Pengajar">
