@@ -6,29 +6,29 @@ import axios from "axios";
 
 export const state = () => ({
     list: [],
-    pengajuan: {},
+    kampus: {},
 })
 
 export const mutations = {
-    set(state, events) {
-        state.list = events
+    set(state, kampuss) {
+        state.list = kampuss
     },
     add(state, value) {
         merge(state.list, value)
     },
-    remove(state, {pengajuan}) {
-        state.list.splice(state.list.indexOf(pengajuan), 1)
+    remove(state, {kampus}) {
+        state.list.splice(state.list.indexOf(kampus), 1)
     },
-    setPengajuan(state, pengajuan) { state.pengajuan = pengajuan },
+    setKampus(state, kampus) { state.kampus = kampus },
 
-    removePengajuan(state, pengajuan) { 
-        state.list.splice(state.list.indexOf(pengajuan), 1)
+    removeKampus(state, kampus) { 
+        state.list.splice(state.list.indexOf(kampus), 1)
      }
 }
 
 export const actions = {
     async get({commit}) {
-        await api.pengajuan.getPengajuan()
+        await api.kampus.getKampus()
             .then((res) => {
                 if (res.status === 200) {
                     commit('set', res.values)
@@ -36,17 +36,17 @@ export const actions = {
             })
     },
     async show({commit}, params) {
-        await api.pengajuan.findPengajuan(params.idPengajuan)
+        await api.kampus.findTempat(params.jenisId)
             .then((res) => {
                 if (res.status === 200) {
-                    commit('setPengajuan', res.values)
+                    commit('setKampus', res.values)
                 }
             })
     },
 
 
     async nuxtServerInit ({commit}) {
-        let {data} = await api.pengajuan.getPengajuan().then(response => {data})
+        let {data} = await api.kampus.getKampus().then(response => {data})
         commit('set', values(data))
     },
 
@@ -54,64 +54,61 @@ export const actions = {
         const { data } = await api.bkd.getBkd().then(response => {})
         commit('SET_BKD', data)
     },*/
-    
-    approvefetch ({commit}) {
-        return api.pengajuan.getApprove()
+
+    kampusfetch ({commit}) {
+        return api.kampus.getKampus()
             .then(response => {
                 commit('set', response.values)
                 return response
             })
             .catch(error => {
-                commit('remove_pengajuan')
+                commit('remove')
                 return error
             })
     },
-
-    pengajuanfetch ({commit}) {
-        return api.pengajuan.getPengajuan()
+    vkampusfetch ({commit}) {
+        return api.kampus.getVKampus()
             .then(response => {
                 commit('set', response.values)
                 return response
             })
             .catch(error => {
-                commit('remove_pengajuan')
+                commit('remove')
                 return error
             })
     },
-    pengajuanfind ({commit}, params) {
-        return axios.get('pengajuan/')
+    kampusfind ({commit}, params) {
+        return axios.get('kampus/')
             .then(response => {
-                commit('setPengajuan', response.values)
+                commit('setKampus', response.values)
                 return response
             })
     },
-    pengajuanadd ({commit}, data) {
-        return api.pengajuan.addPengajuan(data)
+    kampusfindruangan ({commit}, params) {
+        return axios.get('kampus/ruangan/')
             .then(response => {
-                commit('setPengajuan', response.data)
+                commit('setKampus', response.values)
                 return response
             })
     },
-    pengajuanedit ({commit}, data) {
-        return api.pengajuan.editPengajuan(data)
+    kampusadd ({commit}, data) {
+        return api.kampus.addKampus(data)
             .then(response => {
-                commit('setPengajuan', response.data)
-                console.log(response)
+                commit('setKampus', response.data)
                 return response
             })
     },
-    pengajuandelete ({commit}, data) {
+    kampusedit ({commit}, data) {
+        return api.kampus.editKampus(data)
+            .then(response => {
+                commit('setKampus', response.data)
+                console.log(response.data)
+                return response
+            })
+    },
+    kampusdelete ({commit}, data) {
         console.log(data)
-        return api.pengajuan.deletePengajuan(data)
-            .then(response => {
-                //commit('removeBkd', response.data)
-                return response
-            })
-    },
-
-    setapprove ({commit}, data) {
-        console.log(data)
-        return api.pengajuan.setApprove(data)
+        return api.kampus.deleteKampus(data)
             .then(response => {
                 //commit('removeBkd', response.data)
                 return response

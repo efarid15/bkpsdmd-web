@@ -66,6 +66,15 @@ export const actions = {
                 return error
             })
     },
+    kabupatenfetch ({commit}) {
+        return api.kabupaten.getKabupaten()
+            .then(response => {
+                return response
+            })
+            .catch(error => {
+                return error
+            })
+    },
     bkdfind ({commit}, params) {
         return axios.get('bkd/')
             .then(response => {
