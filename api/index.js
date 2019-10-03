@@ -6,6 +6,12 @@ export default {
         me: () => axios.get('me'),
         login: (data) => axios.post('login', data)
     },
+    users: {
+        findUser: (params) => axios.get('users/', params),
+        getBkduser: () => axios.get('bkduser'),
+        addBkduser: (data) => axios.post('bkduser', data), 
+        
+    },
     bkd: {
         findBkd: (params) => axios.get('bkd/', params),
         getBkd: () => axios.get('bkd'),

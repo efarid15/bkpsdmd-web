@@ -154,6 +154,7 @@ export default {
     handleAdd() {
       this.visibleAdd = false;
     },
+    
     handleSubmitAdd(e) {
       e.preventDefault();
       this.form.validateFields((err, values) => {
