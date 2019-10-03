@@ -51,6 +51,7 @@ export default {
     return {
       email: "",
       password: "",
+      user: {},
       alert: null,
       loading: null
     };
@@ -78,9 +79,26 @@ export default {
             .then(result => {
               this.alert = { type: "success", message: result.data.message };
               this.loading = false;
-              this.$router.push("/dashboard");
-              this.$store.commit("auth/set_user", data);
-              console.log(data);
+              this.user = result.data.user
+
+              switch(this.user['roleuser']){
+                 case 'admin':
+                   this.$router.push("/dashboard")
+                   break;
+                 case 'bkd':
+                   this.$router.push("/bkd/dashboard")
+                   break;
+                 case 'pengajar':
+                   this.$router.push("/pengajar/dashboard")
+                   break;
+                 case 'user':
+                   this.$router.push("/member/dashboard")
+                   break;
+                 default:
+                   this.$router.push("/login")
+              }
+              this.$store.commit("auth/set_user", result.data.user);
+              
             })
             .catch(error => {
               this.loading = false;

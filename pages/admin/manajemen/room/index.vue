@@ -77,13 +77,13 @@ const columns = [
   },
   {
     title: "Tempat Kegiatan",
-    dataIndex: "namatempat",
-    key: "namatempat"
+    dataIndex: "namakampus",
+    key: "namakampus"
   },
   {
     title: "Ruangan",
-    dataIndex: "ruangan",
-    key: "ruangan"
+    dataIndex: "namaruangan",
+    key: "namaruangan"
   },
   {
     title: "Alamat",
@@ -140,9 +140,9 @@ export default {
   },
 
   mounted () {
-    this.$store.dispatch('tempat/tempatfetch').then( ({ data }) => {
+    this.$store.dispatch('kampus/vkampusfetch').then( ({ data }) => {
       this.data = data.values
-      this.$store.commit('tempat/set', data.values)
+      this.$store.commit('kampus/set', data.values)
     })
 
   },

@@ -4,7 +4,7 @@
 
     <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
       <span slot="action" slot-scope="text, record">
-        <a @click="showApprove" class="color-blue">Approve</a>
+        <a @click="showApprove(record.id)" class="color-blue">Approve</a>
         <a-divider type="vertical" />
         <a @click="showReject" class="color-red">Tolak</a>
       </span>
@@ -30,10 +30,9 @@
         <a-form-item label="Tempat Kegiatan">
           <a-select
             v-decorator="['tempat',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
-            placeholder="Pilih Tempat Kegiatan"
-            showSearch
+            placeholder="Pilih Tempat Kegiatan" setFieldsValue="selectKampus" @change="handleChangeKampus"
           >
-            <a-select-option v-for="(item) in venue" :value="item.id" v-bind:key="item.id">{{ item.namatempat }}{{ item.ruangan }}</a-select-option>
+            <a-select-option v-for="(item) in venue" :value="item.id" v-bind:key="item.id">{{ item.namakampus }}</a-select-option>
             <!-- <a-select-option :value="1">Campus I</a-select-option>
             <a-select-option :value="2">Campus II</a-select-option> -->
           </a-select>
@@ -45,8 +44,9 @@
             placeholder="Pilih Ruangan Kegiatan"
             showSearch
           >
-            <a-select-option :value="1">IB Lantai 2</a-select-option>
-            <a-select-option :value="2">3A Lantai 1</a-select-option>
+          <a-select-option  v-for="(ruang) in room" :value="ruang.id" v-bind:key="ruang.id+10">{{ ruang.namaruangan }}</a-select-option>
+            <!-- <a-select-option :value="1">IB Lantai 2</a-select-option>
+            <a-select-option :value="2">3A Lantai 1</a-select-option>-->
           </a-select>
         </a-form-item>
 
@@ -56,8 +56,9 @@
             placeholder="Pilih Widiasuara/Pengajar"
             showSearch
           >
-            <a-select-option :value="1">Widya Pitaloka</a-select-option>
-            <a-select-option :value="2">Nur Elsa</a-select-option>
+          <a-select-option  v-for="(item) in mentor" :value="item.id" v-bind:key="item.id+5">{{ item.nama }}</a-select-option>
+            <!-- <a-select-option :value="1">Widya Pitaloka</a-select-option>
+            <a-select-option :value="2">Nur Elsa</a-select-option> -->
           </a-select>
         </a-form-item>
 
@@ -105,7 +106,9 @@
 </template>
 <script>
 import moment from "moment"
+import axios from "axios"
 moment.locale("id");
+
 const columns = [
   {
     title: "Nama Kegiatan",
@@ -160,10 +163,15 @@ export default {
     return {
       visibleReject: false,
       visibleApprove: false,
+      selectKampus: '',
       venue: {},
+      room: {},
       mentor: {},
       data: [],
-      columns
+      columns,
+      config: {
+        rules: [{ type: "array", required: true, message: "Harus di isi!" }]
+      }
     };
   },
 
@@ -189,15 +197,38 @@ export default {
   },
 
   methods: {
-    showApprove() {
-      
-      this.$store.dispatch('tempat/tempatfetch').then( ({ data }) => {
-      this.venue = data.values
-      this.$store.commit('tempat/set', data.values)
+    handleChangeKampus(value) {
+      axios.get(`kampus/ruangan/${value}`).then(result => {
+        
+        this.room = result.data.values
+        
+      })
+      // console.log(idkampus)
+    },
 
-      this.visibleApprove = true;
-      console.log(this.events)
+    disabledDate(current) {
+      return current && current < moment().endOf("day");
+    },
+
+    showApprove(key) {
+
+      axios.get(`pengajuan/${key}`).then(result => {
+        console.log(result.data.values)
+        this.$store.commit('pengajuan/setPengajuan', result.data.values)
+      })
+      
+      this.$store.dispatch('kampus/kampusfetch').then( ({ data }) => {
+      this.venue = data.values
+      this.$store.commit('kampus/set', data.values)
+      console.log(this.venue)
     })
+
+    this.$store.dispatch('widyaiswara/widyaiswarafetch').then( ({ data }) => {
+      this.mentor = data.values
+      this.$store.commit('widyaiswara/set', data.values)
+    })
+
+    this.visibleApprove = true;
 
     },
     handleApprove() {
@@ -218,7 +249,42 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          this.visibleApprove = false;
+          let idPengajuan = this.$store.state.pengajuan.pengajuan[0]['id']
+          
+          this.$store.dispatch('pengajuan/setapprove', {
+            statusPengajuan: 'A',
+            pengajuanId: idPengajuan,
+
+          }).then(result => {
+            this.alert = {type: 'success', message: result.data.message}
+            
+            this.$store.dispatch('pengajuan/pengajuanfetch').then( ({ data }) => {
+            this.data = data.values
+            for (let index = 0; index < this.data.length; index++) {
+
+              const tglevent = moment(this.data[index]['tglkegiatan']).format('dddd, D MMMM YYYY')
+              const tglsubmit = moment(this.data[index]['tglpengajuan']).format('dddd, D MMMM YYYY')
+              this.$set(this.data[index], 'tglkegiatan', tglevent)
+              this.$set(this.data[index], 'tglpengajuan', tglsubmit)
+              const statpengajuan = this.data[index]['status']
+              if(statpengajuan === 'R'){ 
+                this.$set(this.data[index], 'status', 'Menunggu Verifikasi')
+               }
+
+      }
+      this.$store.commit('pengajuan/set', data.values)
+      
+    })
+            this.visibleApprove = false
+
+          }).catch(error => {
+            this.loading = false
+            if (error.response && error.response.data) {
+              //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+            }
+          })
+
+          
         }
       });
     },

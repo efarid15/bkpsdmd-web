@@ -42,6 +42,15 @@ export default {
         editTempat: (data) => axios.put('tempat', data),
         deleteTempat: (data) => axios.delete('tempat', data),
     },
+    kampus: {
+        findKampus: (params) => axios.get('kampus/', params),
+        findRuangan: (params) => axios.get('kampus/ruangan/', params),
+        getKampus: () => axios.get('kampus'),
+        getVKampus: () => axios.get('vkampus'),
+        addKampus: (data) => axios.post('kampus', data),
+        editKampus: (data) => axios.put('kampus', data),
+        deleteKampus: (data) => axios.delete('kampus', data),
+    },
     widyaiswara: {
         findWidyaiswara: (params) => axios.get('widyaiswara/', params),
         getWidyaiswara: () => axios.get('widyaiswara'),
@@ -54,9 +63,15 @@ export default {
         findPengajuan: (params) => axios.get('pengajuan/', params),
         getPengajuan: () => axios.get('pengajuan'),
         getApprove: () => axios.get('pengajuan/approve'),
+        setApprove: (data) => axios.put('pengajuan', data),
         addPengajuan: (data) => axios.post('pengajuan', data),
         editPengajuan: (data) => axios.put('pengajuan', data),
     },
+   
+    kabupaten: {
+        getKabupaten: () => axios.get('kabupaten'),
+    },
+
 
    
 }

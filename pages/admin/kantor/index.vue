@@ -40,6 +40,19 @@
           />
         </a-form-item>
 
+        <a-form-item label="Kabupaten / Kota">
+          <a-select
+            v-decorator="['kabupatenAdd', {rules: [{ required: true, message: 'Harus di isi!' }]}]"
+            placeholder="Pilih Kabupaten/Kota"
+            showSearch
+          >
+          <a-select-option  v-for="(item) in region" :value="item.id" v-bind:key="item.id+3">{{ item.kabupaten_kota }}</a-select-option>
+            <!-- <a-select-option :value="1">Widya Pitaloka</a-select-option>
+            <a-select-option :value="2">Nur Elsa</a-select-option> -->
+          </a-select>
+        </a-form-item>
+
+
         <a-form-item label="No. Telepon" has-feedback>
           <a-input
             v-decorator="[
@@ -73,9 +86,22 @@
         <a-form-item label="Nama / Kantor" has-feedback>
 
           <a-input
-            v-decorator="['nameEdit',{initialValue: 'Dinas Pelayanan Kota Makassar', rules: [{ required: true, message: 'Harus di isi!' }]}]"
+            v-decorator="['nameEdit',{initialValue: 'BKD Kota Makassar', rules: [{ required: true, message: 'Harus di isi!' }]}]"
           />
         </a-form-item>
+
+        <a-form-item label="Kabupaten / Kota">
+          <a-select
+            v-decorator="['kabupatenEdit',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
+            placeholder="Pilih Kabupaten/Kota"
+            showSearch
+          >
+          <a-select-option  v-for="(item) in region" :value="item.id" v-bind:key="item.id+10">{{ item.kabupaten_kota }}</a-select-option>
+            <!-- <a-select-option :value="1">Widya Pitaloka</a-select-option>
+            <a-select-option :value="2">Nur Elsa</a-select-option> -->
+          </a-select>
+        </a-form-item>
+
 
         <a-form-item label="No. Telepon" has-feedback>
           <a-input
@@ -101,11 +127,6 @@
   import {mapMutations} from "vuex";
 
 const columns = [
-  {
-    title: "No",
-    dataIndex: "id",
-    key: "id"
-  },
   {
     title: "Nama BKD",
     dataIndex: "namabkd",
@@ -164,6 +185,7 @@ export default {
     return {
       visibleAdd: false,
       visibleEdit: false,
+      region: {},
       data: [],
       columns,
     };
@@ -200,6 +222,10 @@ export default {
     }),
 
     showAdd() {
+      this.$store.dispatch('bkd/kabupatenfetch').then( ({ data }) => {
+      this.region = data.values
+      console.log(this.region)
+    })
       this.visibleAdd = true;
     },
     handleAdd() {
@@ -214,7 +240,7 @@ export default {
             this.$store.dispatch('bkd/bkdadd', {
               namaBkd: values.name,
               alamatBkd: values.address,
-              kabupatenBkd: 'makassar',
+              kabupatenBkd: values.kabupatenAdd,
               notelpBkd: values.telp,
 
             }).then(result => {
@@ -266,6 +292,11 @@ export default {
 
         });
 
+        this.$store.dispatch('bkd/kabupatenfetch').then( ({ data }) => {
+        this.region = data.values
+        console.log(this.region)
+    })
+
         
       })
 
@@ -286,7 +317,7 @@ export default {
           this.$store.dispatch('bkd/bkdedit', {
             namaBkd: values.nameEdit,
             alamatBkd: values.addressEdit,
-            kabupatenBkd: 'makassar',
+            kabupatenBkd: values.kabupatenEdit,
             notelpBkd: values.telpEdit,
             bkdId: resid,
 
