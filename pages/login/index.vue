@@ -15,6 +15,7 @@
           { rules: [{required: true, message: 'Harus di isi!' }] }
         ]"
             placeholder="Username"
+            size="large"
           >
             <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)" />
           </a-input>
@@ -27,6 +28,7 @@
         ]"
             type="password"
             placeholder="Password"
+            size="large"
           >
             <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)" />
           </a-input>
@@ -35,6 +37,7 @@
         <a-button
           type="primary"
           html-type="submit"
+          size="large"
           block
           :loading="loading"
           :disable="loading"
