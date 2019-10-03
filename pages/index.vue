@@ -16,11 +16,155 @@
           <div class="title">SIPP BPSM</div>
           <div class="subtitle">Badan Kepegawaian Dan Sumber Daya Manusia Kota Makassar</div>
           <a-button size="large">
-            <nuxt-link to="/login">Masuk ke Dashboard <a-icon type="right" /></nuxt-link>
+            <nuxt-link to="/login">
+              Masuk ke Dashboard
+              <a-icon type="right" />
+            </nuxt-link>
           </a-button>
         </div>
       </div>
+
+      <div class="ant-items--body">
+        <a-row type="flex" justify="space-around" align="middle">
+          <a-col :xs="24" :sm="24" :md="20" :lg="20">
+            <div class="heading">
+              <div class="divider"></div>
+              <h2>
+                Tempat Kegiatan
+                <strong>Campus I</strong>
+              </h2>
+            </div>
+
+            <div class="items-images">
+              <a-row :gutter="8">
+                <a-col :xs="24" :sm="24" :md="8">
+                  <a-row>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/8.jpeg')"></div>
+                      </div>
+                    </a-col>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/9.jpeg')"></div>
+                      </div>
+                    </a-col>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/10.jpeg')"></div>
+                      </div>
+                    </a-col>
+                  </a-row>
+                </a-col>
+                <a-col :xs="24" :sm="24" :md="8">
+                  <div class="items-images-large">
+                    <div class="items-cover" style="backgroundImage: url('/campus/1.jpeg')"></div>
+                  </div>
+                </a-col>
+                <a-col :xs="24" :sm="24" :md="8">
+                  <a-row>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/12.jpeg')"></div>
+                      </div>
+                    </a-col>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/13.jpeg')"></div>
+                      </div>
+                    </a-col>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/11.jpeg')"></div>
+                      </div>
+                    </a-col>
+                  </a-row>
+                </a-col>
+              </a-row>
+            </div>
+          </a-col>
+        </a-row>
+      </div>
+
+      <div class="banners">
+        <a-row type="flex" justify="space-around" align="middle">
+          <a-col :xs="24" :sm="24" :md="20" :lg="20">
+            <h2>Sukseskan Kegiatan Mu Dengan Fasilitas dan Pelayanan Terbaik</h2>
+            <a-button size="large">
+              <nuxt-link to="/login">
+                Buat Pengajuan Sekarang
+                <a-icon type="right" />
+              </nuxt-link>
+            </a-button>
+          </a-col>
+        </a-row>
+      </div>
+
+      <div class="ant-items--body">
+        <a-row type="flex" justify="space-around" align="middle">
+          <a-col :xs="24" :sm="24" :md="20" :lg="20">
+            <div class="heading">
+              <div class="divider"></div>
+              <h2>
+                Tempat Kegiatan
+                <strong>Campus II</strong>
+              </h2>
+            </div>
+
+            <div class="items-images">
+              <a-row :gutter="8">
+                <a-col :xs="24" :sm="24" :md="8">
+                  <a-row>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/1.jpeg')"></div>
+                      </div>
+                    </a-col>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/2.jpeg')"></div>
+                      </div>
+                    </a-col>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/3.jpeg')"></div>
+                      </div>
+                    </a-col>
+                  </a-row>
+                </a-col>
+                <a-col :xs="24" :sm="24" :md="8">
+                  <div class="items-images-large">
+                    <div class="items-cover" style="backgroundImage: url('/campus/4.jpeg')"></div>
+                  </div>
+                </a-col>
+                <a-col :xs="24" :sm="24" :md="8">
+                  <a-row>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/5.jpeg')"></div>
+                      </div>
+                    </a-col>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/6.jpeg')"></div>
+                      </div>
+                    </a-col>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/7.jpeg')"></div>
+                      </div>
+                    </a-col>
+                  </a-row>
+                </a-col>
+              </a-row>
+            </div>
+          </a-col>
+        </a-row>
+      </div>
     </a-layout-content>
+    <a-layout-footer>
+      <span>&copy; 2019 SIPP BPSM</span>
+    </a-layout-footer>
   </a-layout>
 </template>
 <script>
