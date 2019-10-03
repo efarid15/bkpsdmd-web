@@ -1,0 +1,76 @@
+.ant-layout--onepages {
+    & .ant-carousel--slide {
+        position: relative;
+        overflow: hidden;
+        height: 100vh;
+        & .ant-carousel {
+            & .slick-slide {
+                border: none;
+                & .ant-carousel--slide-images {
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    height: 100vh;
+                }
+            }
+        }
+        & .ant-carousel--slide-caption {
+            position: absolute;
+            color: #ffffff;
+            max-width: 560px;
+            padding: 24px;
+            z-index: 10;
+            left: 20%;
+            top: 25%;
+            & .title {
+                line-height: normal;
+                margin-bottom: 8px;
+                font-size: 20px;
+                opacity: .85;
+            }
+            & .subtitle {
+                font-size: 40px;
+                line-height: normal;
+                margin-bottom: 24px;
+            }
+            & .ant-btn {
+                background-image: linear-gradient(-225deg, #3D4E81 0%, #5753C9 48%, #6E7FF3 100%);
+                border-radius: 20px;
+                padding: 0 40px;
+                border: none;
+                color: #ffffff;
+                & a {
+                    & i {
+                        margin-left: 4px;
+                        font-size: 12px;
+                        opacity: .8;
+                    }
+                }
+            }
+        }
+    }
+    & .ant-items--body {
+        background: #ffffff;
+        padding: 60px 24px;
+        & .heading {
+            text-align: center;
+            & .divider {
+                background-color: #c8c8c8;
+                height: 1px;
+                width: 100px;
+                display: block;
+                margin: 0 auto;
+            }
+            & h2 {
+                padding: 16px;
+                margin: 0;
+            }
+        }
+    }
+    & .ant-layout-footer {
+        background: #ffffff;
+        text-align: center;
+        font-size: 14px;
+        color: #606060;
+    }
+}
