@@ -50,4 +50,20 @@
         color: #ffffff;
         border: none;
     }
+    & .back-action {
+        text-align: center;
+        margin: 24px 0;
+        & a {
+            color: rgba($color: #000000, $alpha: .35);
+            transition: all .5s ease-in-out;
+            font-size: 14px;
+            & i {
+                font-size: 12px;
+                margin-right: 4px;
+            }
+            &:hover {
+                color: rgba($color: #000000, $alpha: .65);
+            }
+        }
+    }
 }
