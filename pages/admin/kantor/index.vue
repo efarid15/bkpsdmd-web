@@ -29,7 +29,7 @@
     <!-- if add bkd show modal -->
     <a-modal title="Tambah" :footer="false" v-model="visibleAdd" @ok="handleAdd" centered>
       <a-form layout="vertical" :form="form" @submit="handleSubmitAdd" hideRequiredMark>
-        <a-form-item label="Nama / Kantor" has-feedback>
+        <a-form-item label="Nama BKD" has-feedback>
           <a-input
             v-decorator="[
           'name',
@@ -83,7 +83,7 @@
     <a-modal title="Edit" :footer="false" v-model="visibleEdit" @ok="handleEdit"  centered>
       <a-form layout="vertical" :form="form" @submit="handleSubmitEdit" hideRequiredMark>
 
-        <a-form-item label="Nama / Kantor" has-feedback>
+        <a-form-item label="Nama BKD" has-feedback>
 
           <a-input
             v-decorator="['nameEdit',{initialValue: 'BKD Kota Makassar', rules: [{ required: true, message: 'Harus di isi!' }]}]"

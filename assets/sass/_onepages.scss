@@ -1,0 +1,139 @@
+.ant-layout--onepages {
+    & .ant-carousel--slide {
+        position: relative;
+        overflow: hidden;
+        height: 100vh;
+        & .ant-carousel {
+            & .slick-slide {
+                border: none;
+                & .ant-carousel--slide-images {
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    height: 100vh;
+                }
+            }
+        }
+        & .ant-carousel--slide-caption {
+            position: absolute;
+            color: #ffffff;
+            max-width: 560px;
+            padding: 24px;
+            z-index: 10;
+            left: 20%;
+            top: 25%;
+            & .title {
+                line-height: normal;
+                margin-bottom: 8px;
+                font-size: 20px;
+                opacity: .85;
+            }
+            & .subtitle {
+                font-size: 40px;
+                line-height: normal;
+                margin-bottom: 24px;
+            }
+            & .ant-btn {
+                background-image: linear-gradient(to right, #ff758c 0%, #ff7eb3 100%);
+                border-radius: 20px;
+                padding: 0 40px;
+                border: none;
+                color: #ffffff;
+                & a {
+                    & i {
+                        margin-left: 4px;
+                        font-size: 12px;
+                        opacity: .8;
+                    }
+                }
+            }
+        }
+    }
+    & .ant-items--body {
+        background: #ffffff;
+        padding: 60px 24px;
+        & .heading {
+            text-align: center;
+            margin: 16px 0;
+            & .divider {
+                background-color: #c8c8c8;
+                height: 1px;
+                width: 100px;
+                display: block;
+                margin: 0 auto;
+            }
+            & h2 {
+                font-weight: normal;
+                padding: 16px;
+                font-size: 26px;
+                margin: 0;
+            }
+        }
+        & .items-images {
+            & .items-images-small {
+                padding: 4px 0;
+                height: 160px;
+                & .items-cover {
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    height: 100%;
+                    width: 100%;
+                }
+            }
+            & .items-images-large {
+                padding: 4px 0;
+                height: 480px;
+                & .items-cover {
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    height: 100%;
+                    width: 100%;
+                }
+            }
+        }
+    }
+    & .banners {
+        background-image: linear-gradient(to right, #ff758c 0%, #ff7eb3 100%);
+        text-align: center;
+        padding: 80px 0;
+        & h2 {
+            font-weight: normal;
+            font-size: 28px;
+            color: #ffffff;
+            margin-bottom: 24px;
+        }
+        & .ant-btn {
+            background: transparent;
+            border-radius: 20px;
+            padding: 0 40px;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            & a {
+                & i {
+                    margin-left: 4px;
+                    font-size: 12px;
+                    opacity: .8;
+                }
+            }
+        }
+    }
+    & .ant-layout-footer {
+        background: #ffffff;
+        text-align: center;
+        font-size: 14px;
+        color: #606060;
+    }
+}
+
+@media (max-width: 768px) {
+    .ant-layout--onepages {
+        & .ant-carousel--slide {
+            & .ant-carousel--slide-caption {
+                top: 10% !important;
+                left: 0 !important;
+            }
+        }
+    }
+}
