@@ -173,7 +173,7 @@ export default {
       this.data = data.values;
       for (let index = 0; index < this.data.length; index++) {
         const tglevent = moment(this.data[index]["tglkegiatan"]).format(
-          "dddd, D MMMM YYYY"
+          "MMMM YYYY"
         );
         const tglsubmit = moment(this.data[index]["tglpengajuan"]).format(
           "dddd, D MMMM YYYY"
