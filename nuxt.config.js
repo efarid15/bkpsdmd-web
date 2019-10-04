@@ -7,7 +7,7 @@ module.exports = {
      ** Headers of the page
      */
     head: {
-        title: 'Badan Kepegawaian Dan Sumber Daya Manusia Daerah Kota Makassar - BKPSDMD',
+        title: 'SIPP BPSDM - Badan Pengembangan Sumber Daya Manusia Provinsi Sulawesi Selatan',
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },

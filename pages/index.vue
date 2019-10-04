@@ -14,7 +14,7 @@
         </a-carousel>
         <div class="ant-carousel--slide-caption">
           <div class="title">SIPP BPSDM</div>
-          <div class="subtitle">BPSDM Provinsi Sulawesi Selatan</div>
+          <div class="subtitle">Badan Pengembangan Sumber Daya Manusia Provinsi Sulawesi Selatan</div>
           <a-button size="large">
             <nuxt-link to="/login">
               Masuk ke Dashboard
@@ -41,44 +41,51 @@
                   <a-row>
                     <a-col :span="24">
                       <div class="items-images-small">
-                        <div class="items-cover" style="backgroundImage: url('/campus/8.jpeg')"></div>
+                        <div class="items-cover" style="backgroundImage: url('/campus/1/1.JPG')"></div>
                       </div>
                     </a-col>
                     <a-col :span="24">
                       <div class="items-images-small">
-                        <div class="items-cover" style="backgroundImage: url('/campus/9.jpeg')"></div>
-                      </div>
-                    </a-col>
-                    <a-col :span="24">
-                      <div class="items-images-small">
-                        <div class="items-cover" style="backgroundImage: url('/campus/10.jpeg')"></div>
+                        <div class="items-cover" style="backgroundImage: url('/campus/1/2.JPG')"></div>
                       </div>
                     </a-col>
                   </a-row>
                 </a-col>
                 <a-col :xs="24" :sm="24" :md="8">
                   <div class="items-images-large">
-                    <div class="items-cover" style="backgroundImage: url('/campus/1.jpeg')"></div>
+                    <div class="items-cover" style="backgroundImage: url('/campus/1/C1.JPG')"></div>
                   </div>
                 </a-col>
                 <a-col :xs="24" :sm="24" :md="8">
                   <a-row>
                     <a-col :span="24">
                       <div class="items-images-small">
-                        <div class="items-cover" style="backgroundImage: url('/campus/12.jpeg')"></div>
+                        <div class="items-cover" style="backgroundImage: url('/campus/1/3.JPG')"></div>
                       </div>
                     </a-col>
                     <a-col :span="24">
                       <div class="items-images-small">
-                        <div class="items-cover" style="backgroundImage: url('/campus/13.jpeg')"></div>
-                      </div>
-                    </a-col>
-                    <a-col :span="24">
-                      <div class="items-images-small">
-                        <div class="items-cover" style="backgroundImage: url('/campus/11.jpeg')"></div>
+                        <div class="items-cover" style="backgroundImage: url('/campus/1/4.JPG')"></div>
                       </div>
                     </a-col>
                   </a-row>
+                </a-col>
+              </a-row>
+              <a-row :gutter="8">
+                <a-col :xs="24" :sm="24" :md="8">
+                  <div class="items-images-small">
+                    <div class="items-cover" style="backgroundImage: url('/campus/1/5.JPG')"></div>
+                  </div>
+                </a-col>
+                <a-col :xs="24" :sm="24" :md="8">
+                  <div class="items-images-small">
+                    <div class="items-cover" style="backgroundImage: url('/campus/1/C2.JPG')"></div>
+                  </div>
+                </a-col>
+                <a-col :xs="24" :sm="24" :md="8">
+                  <div class="items-images-small">
+                    <div class="items-cover" style="backgroundImage: url('/campus/1/6.JPG')"></div>
+                  </div>
                 </a-col>
               </a-row>
             </div>
@@ -113,48 +120,71 @@
 
             <div class="items-images">
               <a-row :gutter="8">
-                <a-col :xs="24" :sm="24" :md="8">
-                  <a-row>
-                    <a-col :span="24">
-                      <div class="items-images-small">
-                        <div class="items-cover" style="backgroundImage: url('/campus/1.jpeg')"></div>
-                      </div>
-                    </a-col>
-                    <a-col :span="24">
-                      <div class="items-images-small">
-                        <div class="items-cover" style="backgroundImage: url('/campus/2.jpeg')"></div>
-                      </div>
-                    </a-col>
-                    <a-col :span="24">
-                      <div class="items-images-small">
-                        <div class="items-cover" style="backgroundImage: url('/campus/3.jpeg')"></div>
-                      </div>
-                    </a-col>
-                  </a-row>
-                </a-col>
-                <a-col :xs="24" :sm="24" :md="8">
+                <a-col :xs="24" :sm="24" :md="16">
                   <div class="items-images-large">
-                    <div class="items-cover" style="backgroundImage: url('/campus/4.jpeg')"></div>
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/C1.JPG')"></div>
                   </div>
                 </a-col>
                 <a-col :xs="24" :sm="24" :md="8">
-                  <a-row>
-                    <a-col :span="24">
-                      <div class="items-images-small">
-                        <div class="items-cover" style="backgroundImage: url('/campus/5.jpeg')"></div>
-                      </div>
-                    </a-col>
-                    <a-col :span="24">
-                      <div class="items-images-small">
-                        <div class="items-cover" style="backgroundImage: url('/campus/6.jpeg')"></div>
-                      </div>
-                    </a-col>
-                    <a-col :span="24">
-                      <div class="items-images-small">
-                        <div class="items-cover" style="backgroundImage: url('/campus/7.jpeg')"></div>
-                      </div>
-                    </a-col>
-                  </a-row>
+                  <div class="items-images-small">
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/1.JPG')"></div>
+                  </div>
+
+                  <div class="items-images-small">
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/2.JPG')"></div>
+                  </div>
+                </a-col>
+              </a-row>
+
+              <a-row :gutter="8">
+                <a-col :xs="24" :sm="24" :md="8">
+                  <div class="items-images-small">
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/3.JPG')"></div>
+                  </div>
+                </a-col>
+                <a-col :xs="24" :sm="24" :md="8">
+                  <div class="items-images-small">
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/4.JPG')"></div>
+                  </div>
+                </a-col>
+                <a-col :xs="24" :sm="24" :md="8">
+                  <div class="items-images-small">
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/5.JPG')"></div>
+                  </div>
+                </a-col>
+              </a-row>
+
+              <a-row :gutter="8">
+                <a-col :xs="24" :sm="24" :md="8">
+                  <div class="items-images-small">
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/C2.JPG')"></div>
+                  </div>
+
+                  <div class="items-images-small">
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/6.JPG')"></div>
+                  </div>
+                </a-col>
+                <a-col :xs="24" :sm="24" :md="16">
+                  <div class="items-images-large">
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/7.JPG')"></div>
+                  </div>
+                </a-col>
+              </a-row>
+
+              <a-row :gutter="8">
+                <a-col :xs="24" :sm="24" :md="16">
+                  <div class="items-images-large">
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/8.JPG')"></div>
+                  </div>
+                </a-col>
+                <a-col :xs="24" :sm="24" :md="8">
+                  <div class="items-images-small">
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/9.JPG')"></div>
+                  </div>
+
+                  <div class="items-images-small">
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/10.JPG')"></div>
+                  </div>
                 </a-col>
               </a-row>
             </div>
@@ -163,7 +193,7 @@
       </div>
     </a-layout-content>
     <a-layout-footer>
-      <span>&copy; 2019 SIPP BPSM</span>
+      <span>&copy; 2019 SIPP BPSDM</span>
     </a-layout-footer>
   </a-layout>
 </template>
