@@ -87,22 +87,19 @@
 </template>
 <script>
 export default {
-<<<<<<< HEAD
    computed: {
      nama() {
        return this.$store.state.auth.authUser.nama
      }
-   }
-}
-</script>>
-=======
-  methods: {
+   },
+   methods: {
     logOut() {
       this.$store.dispatch("auth/reset").then(() => {
         this.$router.push("/");
       });
     }
   }
+
 };
-</script>
->>>>>>> d718e0c1e2df201659b91744ab6ba7fdabf80f3d
+</script>>
+  
