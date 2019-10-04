@@ -17,7 +17,13 @@
           <span v-if="record.progress === 'Progress'">
             <nuxt-link to="/bkd/activities/rundown">Rundown</nuxt-link>
             <a-divider type="vertical"></a-divider>
-            <nuxt-link to="/bkd/activities/formulir">Formulir</nuxt-link>
+            <nuxt-link :to="`/bkd/activities/formulir/${record.id}`">Formulir</nuxt-link>
+            
+            <!--<router-link :to="`/category/edit/${category.id}`" class="dropdown-item">Home</router-link>-->
+           
+
+            
+
           </span>
           <span v-if="record.progress === 'Finish'">
             <nuxt-link to="/bkd/activities/rundown">Rundown</nuxt-link>
@@ -84,6 +90,7 @@ export default {
   },
   data() {
     return {
+      idpengajuan: {},
       data: [],
       columns
     };
@@ -92,6 +99,7 @@ export default {
   mounted () {
     this.$store.dispatch('pengajuan/approvefetch').then( ({ data }) => {
       this.data = data.values
+      
       for (let index = 0; index < this.data.length; index++) {
 
         let tglevent = moment(this.data[index]['tglkegiatan']).format('dddd, D MMMM YYYY')
