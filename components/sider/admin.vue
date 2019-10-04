@@ -7,7 +7,8 @@
     <div class="avatar d-flex align-items-center">
       <div class="avatar-item">
         <a-avatar :size="64"><div class="brand" style="backgroundImage: url('/logo-sulsel.png')"></div></a-avatar>
-        <div class="name-user">Gustang</div>
+        <div class="name-user" v-if="!this.$store.state.auth.authUser">Pengguna</div>
+        <div class="name-user" v-else>{{ nama }}</div>
       </div>
     </div>
     <a-menu :defaultSelectedKeys="['1']" mode="inline">
@@ -69,3 +70,12 @@
     </a-menu>
   </div>
 </template>
+<script>
+export default {
+   computed: {
+     nama() {
+       return this.$store.state.auth.authUser.nama
+     }
+   }
+}
+</script>>
