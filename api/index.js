@@ -70,6 +70,7 @@ export default {
         getPengajuan: () => axios.get('pengajuan'),
         getApprove: () => axios.get('pengajuan/approve'),
         setApprove: (data) => axios.put('pengajuan', data),
+        setReject: (data) => axios.put('pengajuan/reject', data),
         addPengajuan: (data) => axios.post('pengajuan', data),
         editPengajuan: (data) => axios.put('pengajuan', data),
     },

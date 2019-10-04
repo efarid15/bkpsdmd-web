@@ -54,7 +54,7 @@ export default {
 
   name: "dashboard",
   computed: {
-    user () { return this.$store.state.auth ? this.$store.state.auth.user : null }
+    //user () { return this.$store.state.auth ? this.$store.state.auth.user : null }
   },
   
   fetch ({store, redirect}) {
