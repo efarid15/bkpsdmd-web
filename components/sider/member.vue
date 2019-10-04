@@ -7,7 +7,7 @@
     <div class="avatar d-flex align-items-center">
       <div class="avatar-item">
         <a-avatar :size="64"><div class="brand" style="backgroundImage: url('/logo-sulsel.png')"></div></a-avatar>
-        <div class="name-user">Admin Member</div>
+        <div class="name-user">{{ nama }}</div>
       </div>
     </div>
     <a-menu :defaultSelectedKeys="['1']" mode="inline">
@@ -32,3 +32,21 @@
     </a-menu>
   </div>
 </template>
+
+<script>
+export default {
+   computed: {
+     nama() {
+       return this.$store.state.auth.authUser.nama
+     }
+   },
+   methods: {
+    logOut() {
+      this.$store.dispatch("auth/reset").then(() => {
+        this.$router.push("/");
+      });
+    }
+  }
+
+};
+</script>>

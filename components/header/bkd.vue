@@ -90,7 +90,11 @@ export default {
     };
   },
   methods: {
-    logOut() {},
+    logOut() {
+      this.$store.dispatch("auth/reset").then(() => {
+        this.$router.push("/");
+      });
+    },
     showDrawer() {
       this.visible = true;
     },
