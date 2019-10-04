@@ -117,7 +117,7 @@ const columns = [
   },
   { title: "BKD", dataIndex: "namabkd", key: "namabkd" },
   { title: "Peserta", dataIndex: "jmlpeserta", key: "jmlpeserta" },
-  { title: "Tanggal Kegiatan", dataIndex: "tglkegiatan", key: "tglkegiatan" },
+  { title: "Bulan Kegiatan", dataIndex: "tglkegiatan", key: "tglkegiatan" },
   {
     title: "Action",
     key: "operation",
@@ -180,7 +180,7 @@ export default {
       this.data = data.values
       for (let index = 0; index < this.data.length; index++) {
 
-        const tglevent = moment(this.data[index]['tglkegiatan']).format('dddd, D MMMM YYYY')
+        const tglevent = moment(this.data[index]['tglkegiatan']).format('MMMM YYYY')
         const tglsubmit = moment(this.data[index]['tglpengajuan']).format('dddd, D MMMM YYYY')
         this.$set(this.data[index], 'tglkegiatan', tglevent)
         this.$set(this.data[index], 'tglpengajuan', tglsubmit)
