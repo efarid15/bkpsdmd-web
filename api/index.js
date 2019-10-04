@@ -9,7 +9,8 @@ export default {
     users: {
         findUser: (params) => axios.get('users/', params),
         getBkduser: () => axios.get('bkduser'),
-        addBkduser: (data) => axios.post('bkduser', data), 
+        addBkduser: (data) => axios.post('bkduser', data),
+        addMemberuser: (data) => axios.post('memberuser', data), 
         
     },
     bkd: {
