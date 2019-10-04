@@ -234,10 +234,9 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          const tglku = moment(values.tgladd[0].format("YYYY-MM-DD"));
+          const tglku = moment(values.tgladd.format("YYYY-MM-DD"));
           this.$store
             .dispatch("pengajuan/pengajuanadd", {
-              idSkpd: 4,
               idBkd: 1,
               namaKegiatan: values.kegiatan,
               jmlPeserta: values.jumlahpeserta,
