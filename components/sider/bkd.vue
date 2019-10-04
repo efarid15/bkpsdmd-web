@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="brand-sider d-flex align-items-center">
-      <!-- <div class="logo" :style="{ backgroundImage: 'url(/logo.png)' }" /> -->
       <div class="logo-text">SIPP BPSDM</div>
     </div>
     <div class="avatar d-flex align-items-center">
