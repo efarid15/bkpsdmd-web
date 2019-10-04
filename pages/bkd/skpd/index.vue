@@ -107,7 +107,7 @@ const columns = [
     key: "namaskpd"
   },
   { title: "Alamat", dataIndex: "alamat", key: "alamat" },
-  { title: "Kab/Kota", dataIndex: "kabupaten", key: "kabupaten" },
+  // { title: "Kab/Kota", dataIndex: "kabupaten", key: "kabupaten" },
   { title: "Telepon", dataIndex: "notelp", key: "notelp" },
   {
     title: "Action",

@@ -12,6 +12,14 @@
       <div style="padding: 24px">
         <div class="fs-16 cr-black" style="margin-bottom: 8px">Informasi Kegiatan</div>
         <a-row :gutter="16">
+          <a-col :xs="24" :sm="24" style="margin-bottom: 16px">
+            <div class="fs-12 cr-gray text-uppercase" style="margin-bottom: 8px">Instansi/BKD</div>
+            <div>
+              <a-avatar icon="user" style="margin-right: 8px" /> BKD Kabupaten Gowa
+            </div>
+          </a-col>
+        </a-row>
+        <a-row :gutter="16">
           <a-col :xs="24" :sm="12" :md="10" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Jenis Kegiatan</div>
             <div
@@ -59,7 +67,7 @@ const columns = [
     key: "name"
   },
   {
-    title: "Instansi",
+    title: "Instansi / BKD",
     dataIndex: "instansi",
     key: "instansi"
   }
