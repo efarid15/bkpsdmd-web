@@ -7,7 +7,7 @@
       :style="{ height: '100vh',padding: '24px' }"
     >
       <a-col :xs="24" :sm="12" :md="12" :lg="6">
-        <img class="myBrand" src="/SIPP.jpeg" />
+        <nuxt-link to="/"><img class="myBrand" src="/SIPP.jpeg" /></nuxt-link>
         <a-form :form="form" class="login-form" @submit="handleSubmit">
           <a-form-item>
             <a-alert style="margin-bottom: 16px;" v-if="alert" :type="alert.type" :message="alert.message" />
@@ -44,6 +44,10 @@
             :loading="loading"
             :disable="loading"
           >Masuk</a-button>
+
+          <div class="back-action">
+            <nuxt-link to="/"><a-icon type="left" /> Kembali ke Halaman Awal</nuxt-link>
+          </div>
         </a-form>
       </a-col>
     </a-row>
