@@ -78,6 +78,13 @@ export const actions = {
                 return error
             })
     },
+    approvefind ({commit}, params) {
+        return axios.get('pengajuan/approve')
+            .then(response => {
+                commit('setPengajuan', response.values)
+                return response
+            })
+    },
     pengajuanfind ({commit}, params) {
         return axios.get('pengajuan/')
             .then(response => {
