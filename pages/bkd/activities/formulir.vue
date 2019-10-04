@@ -58,16 +58,17 @@
             <a-row :gutter="16" type="flex" justify="space-around" align="middle">
               <a-col :xs="24" :sm="6" :md="6">
                 <a-form-item :label="index === 0 ? '' : ''" :required="false">
-                  <a-select style="width: 100%" showSearch placeholder="Pilih SKPD">
-                    <a-select-option value="skpd 1">SKPD 1</a-select-option>
-                    <a-select-option value="skpd 2">SKPD 2</a-select-option>
+                  <a-select style="width: 100%" v-decorator="[`skpd[${index}]`,{rules: [{ required: true, message: 'Harus di pilih!' }]}]" showSearch placeholder="Pilih SKPD">
+                    <a-select-option v-for="(item) in skpd" :value="item.id" v-bind:key="item.id+13">{{ item.namaskpd }}</a-select-option>
+                    <!--<a-select-option value="skpd 1">SKPD 1</a-select-option>
+                    <a-select-option value="skpd 2">SKPD 2</a-select-option>-->
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :xs="24" :sm="8" :md="8">
+              <a-col :xs="14" :sm="6" :md="6">
                 <a-form-item :label="index === 0 ? '' : ''" :required="false">
                   <a-input
-                    v-decorator="[`name[${member}]`,
+                    v-decorator="[`nama[${index}]`,
                     {
                         validateTrigger: ['change', 'blur'],
                         rules: [{
@@ -81,10 +82,10 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :xs="24" :sm="8" :md="8">
+              <a-col :xs="16" :sm="4" :md="4">
                 <a-form-item :label="index === 0 ? '' : ''" :required="false">
                   <a-input
-                    v-decorator="[`nip[${member}]`,
+                    v-decorator="[`nip[${index}]`,
                     {
                         validateTrigger: ['change', 'blur'],
                         rules: [{
@@ -95,6 +96,23 @@
                     }
                     ]"
                     placeholder="NIP Peserta"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :xs="24" :sm="4" :md="4">
+                <a-form-item :label="index === 0 ? '' : ''" :required="false">
+                  <a-input
+                    v-decorator="[`email[${index}]`,
+                    {
+                        validateTrigger: ['change', 'blur'],
+                        rules: [{
+                        required: true,
+                        whitespace: true,
+                        message: 'Harus di isi!',
+                        }],
+                    }
+                    ]"
+                    placeholder="Email Peserta"
                   />
                 </a-form-item>
               </a-col>
@@ -150,6 +168,13 @@ export default {
       title: "Formulir Peserta Kegiatan - BKD"
     };
   },
+  data(){
+    return {
+      skpd: {},
+      member:[],
+      data: [],
+    }
+  },
   methods: {
     remove(member) {
       const { form } = this;
@@ -167,6 +192,12 @@ export default {
     },
 
     add() {
+
+      this.$store.dispatch("skpd/skpdfetch").then(({ data }) => {
+        this.skpd = data.values;
+        console.log(this.skpd);
+      });
+
       const { form } = this;
       // can use data-binding to get
       const keys = form.getFieldValue("keys");
@@ -174,14 +205,65 @@ export default {
       // can use data-binding to set
       // important! notify form to detect changes
       form.setFieldsValue({
-        keys: nextKeys
+        keys: nextKeys,
+        
       });
+
+      
     },
 
     handleSubmit(e) {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
+
+          this.data = values
+          //console.log(this.data.nama.length)
+          
+          for(let index=0; index < this.data.keys.length; index++ ){
+            this.$store.dispatch('users/memberuseradd', {
+            nip: this.data.nip[index],
+            idbkd: 1,
+            idskpd: this.data.skpd[index],
+            idkegiatan: 1,
+            nama: this.data.nama[index],
+            roleid: 3,
+            email: this.data.email[index],
+            password: this.data.nip[index],
+
+          }).then(result => {
+            this.alert = {type: 'success', message: result.data.message}
+            
+          }).catch(error => {
+            this.loading = false
+            if (error.response && error.response.data) {
+              //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+            }
+          })
+          //console.log(this.data.email[index])
+          }
+
+          /*this.$store.dispatch('users/memberuseradd', {
+            nip: values.nip,
+            idbkd: 1,
+            idskpd: values.skpd,
+            idkegiatan: 1,
+            nama: values.nama,
+            roleid: 3,
+            email: values.email,
+            password: values.nip,
+
+          }).then(result => {
+            this.alert = {type: 'success', message: result.data.message}
+            
+          }).catch(error => {
+            this.loading = false
+            if (error.response && error.response.data) {
+              //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+            }
+          })*/
+
+
         }
       });
     }
