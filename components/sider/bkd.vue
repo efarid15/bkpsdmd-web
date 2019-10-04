@@ -37,7 +37,7 @@
       </a-menu-item>
       <a-menu-item key="5">
         <nuxt-link to="/bkd/report">
-          <a-icon type="printer" />Î
+          <a-icon type="printer" />
           <span>Laporan</span>
         </nuxt-link>
       </a-menu-item>
