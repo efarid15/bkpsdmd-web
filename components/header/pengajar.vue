@@ -75,7 +75,11 @@ export default {
     showDrawer() {
       this.visible = true;
     },
-    logOut() {},
+    logOut() {
+      this.$store.dispatch("auth/reset").then(() => {
+        this.$router.push("/");
+      });
+    },
     onClose() {
       this.visible = false;
     },

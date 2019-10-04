@@ -9,7 +9,8 @@
         <a-avatar :size="64">
           <div class="brand" style="backgroundImage: url('/logo-sulsel.png')"></div>
         </a-avatar>
-        <div class="name-user">Gustang</div>
+        <div class="name-user" v-if="nama">{{ nama }}</div>
+        <div class="name-user" v-else>Pengguna</div>
       </div>
     </div>
     <a-menu :defaultSelectedKeys="['1']" mode="inline">
