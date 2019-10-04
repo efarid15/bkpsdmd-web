@@ -13,8 +13,8 @@
           ></div>
         </a-carousel>
         <div class="ant-carousel--slide-caption">
-          <div class="title">SIPP BPSM</div>
-          <div class="subtitle">Badan Kepegawaian Dan Sumber Daya Manusia Kota Makassar</div>
+          <div class="title">SIPP BPSDM</div>
+          <div class="subtitle">BPSDM Provinsi Sulawesi Selatan</div>
           <a-button size="large">
             <nuxt-link to="/login">
               Masuk ke Dashboard

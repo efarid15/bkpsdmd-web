@@ -80,6 +80,12 @@ export default {
         getKabupaten: () => axios.get('kabupaten'),
     },
 
+    detailpengajuan: {
+        findDetailpengajuan: (params) => axios.get('detailpengajuan/', params),
+        getDetailpengajuan: () => axios.get('detailpengajuan'),
+        addDetailpengajuan: (data) => axios.post('detailpengajuan', data),
+    },
+
 
    
 }

@@ -170,11 +170,13 @@ export default {
   },
   data(){
     return {
+      events:{},
       skpd: {},
       member:[],
       data: [],
     }
   },
+  
   methods: {
     remove(member) {
       const { form } = this;

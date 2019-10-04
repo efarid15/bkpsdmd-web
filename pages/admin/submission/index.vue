@@ -212,9 +212,12 @@ export default {
 
     showApprove(key) {
 
+      
+
       axios.get(`pengajuan/${key}`).then(result => {
-        console.log(result.data.values)
+        
         this.$store.commit('pengajuan/setPengajuan', result.data.values)
+        console.log(this.$store.state.pengajuan.pengajuan[0]["namakegiatan"])
       })
       
       this.$store.dispatch('kampus/kampusfetch').then( ({ data }) => {
@@ -249,7 +252,27 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          let idPengajuan = this.$store.state.pengajuan.pengajuan[0]['id']
+
+          
+
+         // simpan detail pengajuan
+
+         this.$store.dispatch('detailpengajuan/detailpengajuanadd', {
+              idJenisdiklat: this.$store.state.pengajuan.pengajuan[0]["namakegiatan"],
+              tglMulai: values.tglkeg[0],
+              tglAkhir: values.tglkeg[1],
+              idKampus: values.tempat,
+              idRuangan: values.room,
+              idPengajuan: this.$store.state.pengajuan.pengajuan[0]["id"],
+              idMentor: values.pengajar,
+
+            }).then(result => {
+              this.alert = {type: 'success', message: result.data.message}
+
+
+              //end berhasil simpan data
+
+              let idPengajuan = this.$store.state.pengajuan.pengajuan[0]['id']
           
           this.$store.dispatch('pengajuan/setapprove', {
             statusPengajuan: 'A',
@@ -271,10 +294,10 @@ export default {
                 this.$set(this.data[index], 'status', 'Menunggu Verifikasi')
                }
 
-      }
-      this.$store.commit('pengajuan/set', data.values)
+               }
+            this.$store.commit('pengajuan/set', data.values)
       
-    })
+          })
             this.visibleApprove = false
 
           }).catch(error => {
@@ -282,8 +305,23 @@ export default {
             if (error.response && error.response.data) {
               //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
             }
-          })
+        })
 
+
+            }).catch(error => {
+              this.loading = false
+              if (error.response && error.response.data) {
+                //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+              }
+            })
+
+
+
+         //End Detail
+
+
+          
+         // end approve
           
         }
       });
