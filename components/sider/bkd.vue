@@ -37,7 +37,7 @@
       </a-menu-item>
       <a-menu-item key="5">
         <nuxt-link to="/bkd/report">
-          <a-icon type="printer" />
+          <a-icon type="printer" />Î
           <span>Laporan</span>
         </nuxt-link>
       </a-menu-item>
@@ -46,6 +46,12 @@
           <a-icon type="user" />
           <span>Pengaturan Akun</span>
         </nuxt-link>
+      </a-menu-item>
+      <a-menu-item key="7">
+        <a @click="logOut">
+          <a-icon type="poweroff" />
+          <span>Keluar</span>
+        </a>
       </a-menu-item>
     </a-menu>
   </div>
