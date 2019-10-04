@@ -1,118 +1,175 @@
 <template>
-  <a-row
-    type="flex"
-    justify="space-around"
-    align="middle"
-    :style="{ height: '100vh',padding: '24px' }"
-  >
-    <a-col :xs="24" :sm="12" :md="12" :lg="6">
-      <a-form :form="form" class="login-form" @submit="handleSubmit">
-        <a-form-item>
-          <a-alert v-if="alert" :type="alert.type" :message="alert.message" />
-          <a-input
-            v-decorator="[
-          'email',
-          { rules: [{required: true, message: 'Harus di isi!' }] }
-        ]"
-            placeholder="Username"
-          >
-            <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)" />
-          </a-input>
-        </a-form-item>
-        <a-form-item>
-          <a-input
-            v-decorator="[
-          'password',
-          { rules: [{required: true, message: 'Harus di isi!' }] }
-        ]"
-            type="password"
-            placeholder="Password"
-          >
-            <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)" />
-          </a-input>
-        </a-form-item>
+  <a-layout class="ant-layout--onepages">
+    <a-layout-content>
+      <div class="ant-carousel--slide">
+        <a-carousel vertical autoplay effect="fade">
+          <div
+            class="ant-carousel--slide-images"
+            style="backgroundImage: url('https://images.unsplash.com/photo-1568284440614-7155befdc39d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2855&q=80')"
+          ></div>
+          <div
+            class="ant-carousel--slide-images"
+            style="backgroundImage: url('https://images.unsplash.com/photo-1497091071254-cc9b2ba7c48a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2853&q=80')"
+          ></div>
+        </a-carousel>
+        <div class="ant-carousel--slide-caption">
+          <div class="title">SIPP BPSM</div>
+          <div class="subtitle">Badan Kepegawaian Dan Sumber Daya Manusia Kota Makassar</div>
+          <a-button size="large">
+            <nuxt-link to="/login">
+              Masuk ke Dashboard
+              <a-icon type="right" />
+            </nuxt-link>
+          </a-button>
+        </div>
+      </div>
 
-        <a-button
-          type="primary"
-          html-type="submit"
-          block
-          :loading="loading"
-          :disable="loading"
-        >Log in</a-button>
-      </a-form>
-    </a-col>
-  </a-row>
+      <div class="ant-items--body">
+        <a-row type="flex" justify="space-around" align="middle">
+          <a-col :xs="24" :sm="24" :md="20" :lg="20">
+            <div class="heading">
+              <div class="divider"></div>
+              <h2>
+                Tempat Kegiatan
+                <strong>Campus I</strong>
+              </h2>
+            </div>
+
+            <div class="items-images">
+              <a-row :gutter="8">
+                <a-col :xs="24" :sm="24" :md="8">
+                  <a-row>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/8.jpeg')"></div>
+                      </div>
+                    </a-col>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/9.jpeg')"></div>
+                      </div>
+                    </a-col>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/10.jpeg')"></div>
+                      </div>
+                    </a-col>
+                  </a-row>
+                </a-col>
+                <a-col :xs="24" :sm="24" :md="8">
+                  <div class="items-images-large">
+                    <div class="items-cover" style="backgroundImage: url('/campus/1.jpeg')"></div>
+                  </div>
+                </a-col>
+                <a-col :xs="24" :sm="24" :md="8">
+                  <a-row>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/12.jpeg')"></div>
+                      </div>
+                    </a-col>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/13.jpeg')"></div>
+                      </div>
+                    </a-col>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/11.jpeg')"></div>
+                      </div>
+                    </a-col>
+                  </a-row>
+                </a-col>
+              </a-row>
+            </div>
+          </a-col>
+        </a-row>
+      </div>
+
+      <div class="banners">
+        <a-row type="flex" justify="space-around" align="middle">
+          <a-col :xs="24" :sm="24" :md="20" :lg="20">
+            <h2>Sukseskan Kegiatan Mu Dengan Fasilitas dan Pelayanan Terbaik</h2>
+            <a-button size="large">
+              <nuxt-link to="/login">
+                Buat Pengajuan Sekarang
+                <a-icon type="right" />
+              </nuxt-link>
+            </a-button>
+          </a-col>
+        </a-row>
+      </div>
+
+      <div class="ant-items--body">
+        <a-row type="flex" justify="space-around" align="middle">
+          <a-col :xs="24" :sm="24" :md="20" :lg="20">
+            <div class="heading">
+              <div class="divider"></div>
+              <h2>
+                Tempat Kegiatan
+                <strong>Campus II</strong>
+              </h2>
+            </div>
+
+            <div class="items-images">
+              <a-row :gutter="8">
+                <a-col :xs="24" :sm="24" :md="8">
+                  <a-row>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/1.jpeg')"></div>
+                      </div>
+                    </a-col>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/2.jpeg')"></div>
+                      </div>
+                    </a-col>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/3.jpeg')"></div>
+                      </div>
+                    </a-col>
+                  </a-row>
+                </a-col>
+                <a-col :xs="24" :sm="24" :md="8">
+                  <div class="items-images-large">
+                    <div class="items-cover" style="backgroundImage: url('/campus/4.jpeg')"></div>
+                  </div>
+                </a-col>
+                <a-col :xs="24" :sm="24" :md="8">
+                  <a-row>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/5.jpeg')"></div>
+                      </div>
+                    </a-col>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/6.jpeg')"></div>
+                      </div>
+                    </a-col>
+                    <a-col :span="24">
+                      <div class="items-images-small">
+                        <div class="items-cover" style="backgroundImage: url('/campus/7.jpeg')"></div>
+                      </div>
+                    </a-col>
+                  </a-row>
+                </a-col>
+              </a-row>
+            </div>
+          </a-col>
+        </a-row>
+      </div>
+    </a-layout-content>
+    <a-layout-footer>
+      <span>&copy; 2019 SIPP BPSM</span>
+    </a-layout-footer>
+  </a-layout>
 </template>
 <script>
 export default {
-  layout: "login",
-  name: "login",
-  data() {
-    return {
-      email: "",
-      password: "",
-      user: {},
-      alert: null,
-      loading: null
-    };
-  },
-  head() {
-    return {
-      title:
-        "Masuk ke Dashboard Badan Kepegawaian Dan Sumber Daya Manusia Daerah Kota Makassar - BKPSDMD"
-    };
-  },
-  beforeCreate() {
-    this.form = this.$form.createForm(this);
-  },
-  methods: {
-    handleSubmit(e) {
-      e.preventDefault();
-      this.form.validateFields((err, values) => {
-        if (!err) {
-          this.alert = null;
-          this.$store
-            .dispatch("auth/login", {
-              email: values.email,
-              password: values.password
-            })
-            .then(result => {
-              this.alert = { type: "success", message: result.data.message };
-              this.loading = false;
-              this.user = result.data.user
-
-              switch(this.user['roleuser']){
-                 case 'admin':
-                   this.$router.push("/dashboard")
-                   break;
-                 case 'bkd':
-                   this.$router.push("/bkd/dashboard")
-                   break;
-                 case 'pengajar':
-                   this.$router.push("/pengajar/dashboard")
-                   break;
-                 case 'user':
-                   this.$router.push("/member/dashboard")
-                   break;
-                 default:
-                   this.$router.push("/login")
-              }
-              this.$store.commit("auth/set_user", result.data.user);
-              
-            })
-            .catch(error => {
-              this.loading = false;
-              if (error.response && error.response.data) {
-                this.alert = {
-                  type: "error",
-                  message: error.response.data.message || error.reponse.status
-                };
-              }
-            });
-          // return this.$router.push("/dashboard");
-        }
-      });
-    }
-  }
+  name: "onepages",
+  layout: "login"
 };
 </script>

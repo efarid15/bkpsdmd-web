@@ -1,35 +1,41 @@
 <template>
   <div>
-    <a-button @click="$router.go(-1)" type="link" class="cr-gray" icon="arrow-left" style="margin-bottom: 8px">Kembali</a-button>
+    <a-button
+      @click="$router.go(-1)"
+      type="link"
+      class="cr-gray"
+      icon="arrow-left"
+      style="margin-bottom: 8px"
+    >Kembali</a-button>
 
     <div class="container" style="margin-bottom: 16px">
       <div style="padding: 24px">
-          <div class="fs-16 cr-black" style="margin-bottom: 8px">Informasi Kegiatan</div>
-          <a-row :gutter="16">
-            <a-col :xs="24" :sm="12" :md="10" style="margin-bottom: 16px">
-                <div class="fs-12 cr-gray text-uppercase">Jenis Kegiatan</div>
-                <div class="fs-14 cr-black text-capitalize">Diklat Prajabatan Golongan I Angkatan X dan XI Tahun 2019</div>
-            </a-col>
-            <a-col :xs="24" :sm="12" :md="4" style="margin-bottom: 16px">
-                <div class="fs-12 cr-gray text-uppercase">Jumlah Peserta</div>
-                <div class="fs-14 cr-black text-capitalize">40 Orang</div>
-            </a-col>
-            <a-col :xs="24" :sm="12" :md="5" style="margin-bottom: 16px">
-                <div class="fs-12 cr-gray text-uppercase">Tanggal Mulai</div>
-                <div class="fs-14 cr-black text-capitalize">Senin, 20 Oktober 2019</div>
-            </a-col>
-            <a-col :xs="24" :sm="12" :md="5" style="margin-bottom: 16px">
-                <div class="fs-12 cr-gray text-uppercase">Tanggal Berakhir</div>
-                <div class="fs-14 cr-black text-capitalize">Senin, 20 Desember 2019</div>
-            </a-col>
-          </a-row>
+        <div class="fs-16 cr-black" style="margin-bottom: 8px">Informasi Kegiatan</div>
+        <a-row :gutter="16">
+          <a-col :xs="24" :sm="12" :md="10" style="margin-bottom: 16px">
+            <div class="fs-12 cr-gray text-uppercase">Jenis Kegiatan</div>
+            <div
+              class="fs-14 cr-black text-capitalize"
+            >Diklat Prajabatan Golongan I Angkatan X dan XI Tahun 2019</div>
+          </a-col>
+          <a-col :xs="24" :sm="12" :md="4" style="margin-bottom: 16px">
+            <div class="fs-12 cr-gray text-uppercase">Jumlah Peserta</div>
+            <div class="fs-14 cr-black text-capitalize">40 Orang</div>
+          </a-col>
+          <a-col :xs="24" :sm="12" :md="5" style="margin-bottom: 16px">
+            <div class="fs-12 cr-gray text-uppercase">Tanggal Mulai</div>
+            <div class="fs-14 cr-black text-capitalize">Senin, 20 Oktober 2019</div>
+          </a-col>
+          <a-col :xs="24" :sm="12" :md="5" style="margin-bottom: 16px">
+            <div class="fs-12 cr-gray text-uppercase">Tanggal Berakhir</div>
+            <div class="fs-14 cr-black text-capitalize">Senin, 20 Desember 2019</div>
+          </a-col>
+        </a-row>
 
         <a-row :gutter="16">
           <a-col :xs="24" :sm="12" :md="10" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Tempat Kegiatan</div>
-            <div
-              class="fs-14 cr-black text-capitalize"
-            >Campus I</div>
+            <div class="fs-14 cr-black text-capitalize">Campus I</div>
           </a-col>
           <a-col :xs="24" :sm="12" :md="4" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Ruangan</div>
@@ -50,7 +56,15 @@
         <a-form layout="vertical" :form="form" @submit="handleSubmit" hideRequiredMark>
           <div v-for="(member, index) in form.getFieldValue('keys')" :key="member">
             <a-row :gutter="16" type="flex" justify="space-around" align="middle">
-              <a-col :xs="24" :sm="11" :md="11">
+              <a-col :xs="24" :sm="6" :md="6">
+                <a-form-item :label="index === 0 ? '' : ''" :required="false">
+                  <a-select style="width: 100%" showSearch placeholder="Pilih SKPD">
+                    <a-select-option value="skpd 1">SKPD 1</a-select-option>
+                    <a-select-option value="skpd 2">SKPD 2</a-select-option>
+                  </a-select>
+                </a-form-item>
+              </a-col>
+              <a-col :xs="24" :sm="8" :md="8">
                 <a-form-item :label="index === 0 ? '' : ''" :required="false">
                   <a-input
                     v-decorator="[`name[${member}]`,
@@ -67,7 +81,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :xs="24" :sm="11" :md="11">
+              <a-col :xs="24" :sm="8" :md="8">
                 <a-form-item :label="index === 0 ? '' : ''" :required="false">
                   <a-input
                     v-decorator="[`nip[${member}]`,
@@ -108,7 +122,13 @@
               </a-button>
             </a-col>
             <a-col :xs="24" :sm="6" :md="4">
-              <a-button v-if="form.getFieldValue('keys').length > 0" type="primary" html-type="submit" block style="margin-bottom: 8px">Simpan</a-button>
+              <a-button
+                v-if="form.getFieldValue('keys').length > 0"
+                type="primary"
+                html-type="submit"
+                block
+                style="margin-bottom: 8px"
+              >Simpan</a-button>
             </a-col>
           </a-row>
         </a-form>
