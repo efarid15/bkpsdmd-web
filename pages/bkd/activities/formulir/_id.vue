@@ -16,34 +16,34 @@
             <div class="fs-12 cr-gray text-uppercase">Jenis Kegiatan</div>
             <div
               class="fs-14 cr-black text-capitalize"
-            >Diklat Prajabatan Golongan I Angkatan X dan XI Tahun 2019</div>
+            >{{ this.detail.jenisdiklat }}</div>
           </a-col>
           <a-col :xs="24" :sm="12" :md="4" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Jumlah Peserta</div>
-            <div class="fs-14 cr-black text-capitalize">40 Orang</div>
+            <div class="fs-14 cr-black text-capitalize">{{ this.detail.jmlpeserta }}</div>
           </a-col>
           <a-col :xs="24" :sm="12" :md="5" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Tanggal Mulai</div>
-            <div class="fs-14 cr-black text-capitalize">Senin, 20 Oktober 2019</div>
+            <div class="fs-14 cr-black text-capitalize">{{ this.detail.tglmulai }}</div>
           </a-col>
           <a-col :xs="24" :sm="12" :md="5" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Tanggal Berakhir</div>
-            <div class="fs-14 cr-black text-capitalize">Senin, 20 Desember 2019</div>
+            <div class="fs-14 cr-black text-capitalize">{{ this.detail.tglberakhir }}</div>
           </a-col>
         </a-row>
 
         <a-row :gutter="16">
           <a-col :xs="24" :sm="12" :md="10" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Tempat Kegiatan</div>
-            <div class="fs-14 cr-black text-capitalize">Campus I</div>
+            <div class="fs-14 cr-black text-capitalize">{{ this.detail.namakampus }}</div>
           </a-col>
           <a-col :xs="24" :sm="12" :md="4" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Ruangan</div>
-            <div class="fs-14 cr-black text-capitalize">1B Lantai 1</div>
+            <div class="fs-14 cr-black text-capitalize">{{ this.detail.namaruangan }}</div>
           </a-col>
           <a-col :xs="24" :sm="24" :md="10" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Alamat</div>
-            <div class="fs-14 cr-black text-capitalize">Jl. BTP Blok A No 537</div>
+            <div class="fs-14 cr-black text-capitalize">{{ this.detail.alamat }}</div>
           </a-col>
         </a-row>
       </div>
@@ -155,6 +155,11 @@
   </div>
 </template>
 <script>
+import axios from "axios"
+import moment from "moment"
+
+moment.locale("id");
+
 let id = 0;
 export default {
   name: "formulir",
@@ -172,9 +177,28 @@ export default {
     return {
       events:{},
       skpd: {},
+      detail: {},
       member:[],
       data: [],
     }
+  },
+
+  created() {
+     let idpengajuan = this.$route.params.id 
+     axios.get(`pengajuan/approve/${idpengajuan}`).then(result => {
+        
+        this.detail = result.data.values[0]
+        
+        let tglstart = moment(this.detail.tglmulai).format('dddd, D MMMM YYYY')
+        this.$set(this.detail, 'tglmulai', tglstart)
+        let tglend = moment(this.detail.tglberakhir).format('dddd, D MMMM YYYY')
+        this.$set(this.detail, 'tglberakhir', tglend)
+
+        
+
+        });
+      
+    //this.baseaccount = this.$route.params.baseaccount;
   },
   
   methods: {
