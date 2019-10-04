@@ -45,8 +45,8 @@
           </a-select>
         </a-form-item>
 
-        <a-form-item label="Tanggal Kegiatan" has-feedback>
-          <a-month-picker style="width: 100%" :disabledDate="disabledDate" placeholder="Pilih tanggal" v-decorator="['tgladd', config]" />
+        <a-form-item label="Bulan Kegiatan" has-feedback>
+          <a-month-picker style="width: 100%" :disabledDate="disabledDate" placeholder="Pilih Bulan" v-decorator="['tgladd', config]" />
         </a-form-item>
 
         <!-- <a-form-item label="Tanggal Kegiatan" has-feedback>
