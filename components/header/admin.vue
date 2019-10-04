@@ -13,8 +13,7 @@
 
       <div class="ml-auto">
         <a @click="logOut" class="hidden-mobile d-flex align-items-center" style="font-size: 14px;color: #676767">
-          <a-icon type="poweroff" style="margin-right: 4px" /> Log Out
-          <!-- <a-avatar class="hidden-mobile" icon="poweroff" style="margin-right: 8px;background-color: #f5f5f5" /> -->
+          <a-icon type="poweroff" style="margin-right: 4px" /> Keluar
         </a>
 
         <a-avatar class="hidden-dekstop" size="large">

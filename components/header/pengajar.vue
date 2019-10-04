@@ -12,8 +12,12 @@
       </div>
 
       <div class="ml-auto">
-        <a @click="logOut">
-          <a-avatar class="hidden-mobile" icon="poweroff" style="margin-right: 8px" />
+        <a
+          @click="logOut"
+          class="hidden-mobile d-flex align-items-center"
+          style="font-size: 14px;color: #676767"
+        >
+          <a-icon type="poweroff" style="margin-right: 4px" />Keluar
         </a>
 
         <a-avatar class="hidden-dekstop" size="large">
@@ -59,6 +63,12 @@
             <a-icon type="user" />
             <span>Pengaturan Akun</span>
           </nuxt-link>
+        </a-menu-item>
+        <a-menu-item key="4">
+          <a @click="logOut">
+            <a-icon type="poweroff" />
+            <span>Keluar</span>
+          </a>
         </a-menu-item>
       </a-menu>
     </a-drawer>

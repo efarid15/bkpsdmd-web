@@ -3,6 +3,9 @@
     <div class="title">Daftar Pengajuan</div>
 
     <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
+      <span slot="tempat" slot-scope="text, record" :key="record">
+        -
+      </span>
       <span slot="action" slot-scope="text, record">
         <a @click="showApprove(record.id)" class="color-blue">Approve</a>
         <a-divider type="vertical" />
@@ -21,11 +24,17 @@
         <a-form-item label="Tempat Kegiatan">
           <a-select
             v-decorator="['tempat',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
-            placeholder="Pilih Tempat Kegiatan" setFieldsValue="selectKampus" @change="handleChangeKampus"
+            placeholder="Pilih Tempat Kegiatan"
+            setFieldsValue="selectKampus"
+            @change="handleChangeKampus"
           >
-            <a-select-option v-for="(item) in venue" :value="item.id" v-bind:key="item.id">{{ item.namakampus }}</a-select-option>
+            <a-select-option
+              v-for="(item) in venue"
+              :value="item.id"
+              v-bind:key="item.id"
+            >{{ item.namakampus }}</a-select-option>
             <!-- <a-select-option :value="1">Campus I</a-select-option>
-            <a-select-option :value="2">Campus II</a-select-option> -->
+            <a-select-option :value="2">Campus II</a-select-option>-->
           </a-select>
         </a-form-item>
 
@@ -35,12 +44,16 @@
             placeholder="Pilih Ruangan Kegiatan"
             showSearch
           >
-          <a-select-option  v-for="(ruang) in room" :value="ruang.id" v-bind:key="ruang.id+10">{{ ruang.namaruangan }}</a-select-option>
+            <a-select-option
+              v-for="(ruang) in room"
+              :value="ruang.id"
+              v-bind:key="ruang.id+10"
+            >{{ ruang.namaruangan }}</a-select-option>
             <!-- <a-select-option :value="1">IB Lantai 2</a-select-option>
             <a-select-option :value="2">3A Lantai 1</a-select-option>-->
           </a-select>
         </a-form-item>
-        
+
         <a-form-item label="Tanggal Kegiatan" has-feedback>
           <a-range-picker
             style="width: 100%"
@@ -56,14 +69,24 @@
             placeholder="Pilih Widiasuara/Pengajar"
             showSearch
           >
-          <a-select-option  v-for="(item) in mentor" :value="item.id" v-bind:key="item.id+5">{{ item.nama }}</a-select-option>
+            <a-select-option
+              v-for="(item) in mentor"
+              :value="item.id"
+              v-bind:key="item.id+5"
+            >{{ item.nama }}</a-select-option>
             <!-- <a-select-option :value="1">Widya Pitaloka</a-select-option>
-            <a-select-option :value="2">Nur Elsa</a-select-option> -->
+            <a-select-option :value="2">Nur Elsa</a-select-option>-->
           </a-select>
         </a-form-item>
 
         <a-form-item label="Dokumen Persetujuan">
-          <a-upload-dragger name="file" :multiple="true" action="#" @change="handleChange" v-decorator="['file',{rules: [{ required: true, message: 'Harus di isi!' }]}]">
+          <a-upload-dragger
+            name="file"
+            :multiple="true"
+            action="#"
+            @change="handleChange"
+            v-decorator="['file',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
+          >
             <p class="ant-upload-drag-icon">
               <a-icon type="inbox" />
             </p>
@@ -84,7 +107,13 @@
     >
       <a-form layout="vertical" :form="form" @submit="handleSubmitReject" hideRequiredMark>
         <a-form-item label="Dokumen Penolakan">
-          <a-upload-dragger name="file" :multiple="true" action="#" @change="handleChange" v-decorator="['fileReject',{rules: [{ required: true, message: 'Harus di isi!' }]}]">
+          <a-upload-dragger
+            name="file"
+            :multiple="true"
+            action="#"
+            @change="handleChange"
+            v-decorator="['fileReject',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
+          >
             <p class="ant-upload-drag-icon">
               <a-icon type="inbox" />
             </p>
@@ -105,8 +134,8 @@
   </div>
 </template>
 <script>
-import moment from "moment"
-import axios from "axios"
+import moment from "moment";
+import axios from "axios";
 moment.locale("id");
 
 const columns = [
@@ -117,6 +146,7 @@ const columns = [
   },
   { title: "BKD", dataIndex: "namabkd", key: "namabkd" },
   { title: "Peserta", dataIndex: "jmlpeserta", key: "jmlpeserta" },
+  { title: "Tempat Kegiatan", dataIndex: "tempat", key: "tempat", scopedSlots: { customRender: "tempat" } },
   { title: "Bulan Kegiatan", dataIndex: "tglkegiatan", key: "tglkegiatan" },
   {
     title: "Action",
@@ -134,20 +164,13 @@ const data = [
     bkd: "Dinas Perhubungan",
     createdAt: "Senin, 10 November 2019",
     jumlah: "40"
-  },
-  {
-    key: "2",
-    name: "Diklat Prajabatan Golongan II Angkatan X dan XI Tahun 2019",
-    bkd: "Dinas Pengelolaan Kebersihan",
-    createdAt: "Minggu, 17 November 2019",
-    jumlah: "45"
   }
 ];
 
 export default {
-  fetch ({store, redirect}) {
+  fetch({ store, redirect }) {
     if (!store.state.auth.authUser) {
-      redirect('/')
+      redirect("/");
     }
   },
   name: "submission",
@@ -163,7 +186,7 @@ export default {
     return {
       visibleReject: false,
       visibleApprove: false,
-      selectKampus: '',
+      selectKampus: "",
       venue: {},
       room: {},
       mentor: {},
@@ -175,34 +198,32 @@ export default {
     };
   },
 
- mounted () {
-    this.$store.dispatch('pengajuan/pengajuanfetch').then( ({ data }) => {
-      this.data = data.values
+  mounted() {
+    this.$store.dispatch("pengajuan/pengajuanfetch").then(({ data }) => {
+      this.data = data.values;
       for (let index = 0; index < this.data.length; index++) {
-
-        const tglevent = moment(this.data[index]['tglkegiatan']).format('MMMM YYYY')
-        const tglsubmit = moment(this.data[index]['tglpengajuan']).format('dddd, D MMMM YYYY')
-        this.$set(this.data[index], 'tglkegiatan', tglevent)
-        this.$set(this.data[index], 'tglpengajuan', tglsubmit)
-        const statpengajuan = this.data[index]['status']
-        if(statpengajuan === 'R'){ 
-          this.$set(this.data[index], 'status', 'Menunggu Verifikasi')
-          }
-
+        const tglevent = moment(this.data[index]["tglkegiatan"]).format(
+          "MMMM YYYY"
+        );
+        const tglsubmit = moment(this.data[index]["tglpengajuan"]).format(
+          "dddd, D MMMM YYYY"
+        );
+        this.$set(this.data[index], "tglkegiatan", tglevent);
+        this.$set(this.data[index], "tglpengajuan", tglsubmit);
+        const statpengajuan = this.data[index]["status"];
+        if (statpengajuan === "R") {
+          this.$set(this.data[index], "status", "Menunggu Verifikasi");
+        }
       }
-      this.$store.commit('pengajuan/set', data.values)
-      
-    })
-
+      this.$store.commit("pengajuan/set", data.values);
+    });
   },
 
   methods: {
     handleChangeKampus(value) {
       axios.get(`kampus/ruangan/${value}`).then(result => {
-        
-        this.room = result.data.values
-        
-      })
+        this.room = result.data.values;
+      });
       // console.log(idkampus)
     },
 
@@ -211,28 +232,23 @@ export default {
     },
 
     showApprove(key) {
-
-      
-
       axios.get(`pengajuan/${key}`).then(result => {
-        
-        this.$store.commit('pengajuan/setPengajuan', result.data.values)
-        console.log(this.$store.state.pengajuan.pengajuan[0]["namakegiatan"])
-      })
-      
-      this.$store.dispatch('kampus/kampusfetch').then( ({ data }) => {
-      this.venue = data.values
-      this.$store.commit('kampus/set', data.values)
-      console.log(this.venue)
-    })
+        this.$store.commit("pengajuan/setPengajuan", result.data.values);
+        console.log(this.$store.state.pengajuan.pengajuan[0]["namakegiatan"]);
+      });
 
-    this.$store.dispatch('widyaiswara/widyaiswarafetch').then( ({ data }) => {
-      this.mentor = data.values
-      this.$store.commit('widyaiswara/set', data.values)
-    })
+      this.$store.dispatch("kampus/kampusfetch").then(({ data }) => {
+        this.venue = data.values;
+        this.$store.commit("kampus/set", data.values);
+        console.log(this.venue);
+      });
 
-    this.visibleApprove = true;
+      this.$store.dispatch("widyaiswara/widyaiswarafetch").then(({ data }) => {
+        this.mentor = data.values;
+        this.$store.commit("widyaiswara/set", data.values);
+      });
 
+      this.visibleApprove = true;
     },
     handleApprove() {
       this.visibleApprove = false;
@@ -252,77 +268,81 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
+          // simpan detail pengajuan
 
-          
-
-         // simpan detail pengajuan
-
-         this.$store.dispatch('detailpengajuan/detailpengajuanadd', {
-              idJenisdiklat: this.$store.state.pengajuan.pengajuan[0]["namakegiatan"],
+          this.$store
+            .dispatch("detailpengajuan/detailpengajuanadd", {
+              idJenisdiklat: this.$store.state.pengajuan.pengajuan[0][
+                "namakegiatan"
+              ],
               tglMulai: values.tglkeg[0],
               tglAkhir: values.tglkeg[1],
               idKampus: values.tempat,
               idRuangan: values.room,
               idPengajuan: this.$store.state.pengajuan.pengajuan[0]["id"],
-              idMentor: values.pengajar,
-
-            }).then(result => {
-              this.alert = {type: 'success', message: result.data.message}
-
+              idMentor: values.pengajar
+            })
+            .then(result => {
+              this.alert = { type: "success", message: result.data.message };
 
               //end berhasil simpan data
 
-              let idPengajuan = this.$store.state.pengajuan.pengajuan[0]['id']
-          
-          this.$store.dispatch('pengajuan/setapprove', {
-            statusPengajuan: 'A',
-            pengajuanId: idPengajuan,
+              let idPengajuan = this.$store.state.pengajuan.pengajuan[0]["id"];
 
-          }).then(result => {
-            this.alert = {type: 'success', message: result.data.message}
-            
-            this.$store.dispatch('pengajuan/pengajuanfetch').then( ({ data }) => {
-            this.data = data.values
-            for (let index = 0; index < this.data.length; index++) {
+              this.$store
+                .dispatch("pengajuan/setapprove", {
+                  statusPengajuan: "A",
+                  pengajuanId: idPengajuan
+                })
+                .then(result => {
+                  this.alert = {
+                    type: "success",
+                    message: result.data.message
+                  };
 
-              const tglevent = moment(this.data[index]['tglkegiatan']).format('dddd, D MMMM YYYY')
-              const tglsubmit = moment(this.data[index]['tglpengajuan']).format('dddd, D MMMM YYYY')
-              this.$set(this.data[index], 'tglkegiatan', tglevent)
-              this.$set(this.data[index], 'tglpengajuan', tglsubmit)
-              const statpengajuan = this.data[index]['status']
-              if(statpengajuan === 'R'){ 
-                this.$set(this.data[index], 'status', 'Menunggu Verifikasi')
-               }
-
-               }
-            this.$store.commit('pengajuan/set', data.values)
-      
-          })
-            this.visibleApprove = false
-
-          }).catch(error => {
-            this.loading = false
-            if (error.response && error.response.data) {
-              //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
-            }
-        })
-
-
-            }).catch(error => {
-              this.loading = false
+                  this.$store
+                    .dispatch("pengajuan/pengajuanfetch")
+                    .then(({ data }) => {
+                      this.data = data.values;
+                      for (let index = 0; index < this.data.length; index++) {
+                        const tglevent = moment(
+                          this.data[index]["tglkegiatan"]
+                        ).format("dddd, D MMMM YYYY");
+                        const tglsubmit = moment(
+                          this.data[index]["tglpengajuan"]
+                        ).format("dddd, D MMMM YYYY");
+                        this.$set(this.data[index], "tglkegiatan", tglevent);
+                        this.$set(this.data[index], "tglpengajuan", tglsubmit);
+                        const statpengajuan = this.data[index]["status"];
+                        if (statpengajuan === "R") {
+                          this.$set(
+                            this.data[index],
+                            "status",
+                            "Menunggu Verifikasi"
+                          );
+                        }
+                      }
+                      this.$store.commit("pengajuan/set", data.values);
+                    });
+                  this.visibleApprove = false;
+                })
+                .catch(error => {
+                  this.loading = false;
+                  if (error.response && error.response.data) {
+                    //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+                  }
+                });
+            })
+            .catch(error => {
+              this.loading = false;
               if (error.response && error.response.data) {
                 //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
               }
-            })
+            });
 
+          //End Detail
 
-
-         //End Detail
-
-
-          
-         // end approve
-          
+          // end approve
         }
       });
     },

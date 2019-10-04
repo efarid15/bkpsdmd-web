@@ -3,10 +3,11 @@
     <div class="title">Semua Kegiatan</div>
 
     <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
-      <span slot="action" slot-scope="text">
+      <span slot="action" slot-scope="text, record">
         <nuxt-link to="/admin/activities/rundown">Rundown</nuxt-link>
         <a-divider type="vertical"></a-divider>
-        <nuxt-link to="/admin/activities/detail">Detail</nuxt-link>
+        <!-- <nuxt-link to="/admin/activities/detail">Detail</nuxt-link>-->
+        <nuxt-link :to="`/admin/activities/detail/${record.id}`">Detail</nuxt-link>
       </span>
     </a-table>
   </div>
@@ -27,7 +28,7 @@ const columns = [
   },
   { title: "BKD", dataIndex: "namabkd", key: "namabkd" },
   { title: "Peserta", dataIndex: "jmlpeserta", key: "jmlpeserta" },
-  { title: "Tanggal Kegiatan", dataIndex: "tglkegiatan", key: "tgl" },
+  { title: "Tanggal Kegiatan", dataIndex: "tglmulai", key: "tgl" },
   {
     title: "Action",
     key: "operation",
@@ -72,8 +73,8 @@ export default {
     this.$store.dispatch('pengajuan/approvefetch').then( ({ data }) => {
       this.data = data.values
       for (let index = 0; index < this.data.length; index++) {
-        const tglevent = moment(this.data[index]['tglkegiatan']).format('dddd, D MMMM YYYY')
-        this.$set(this.data[index], 'tglkegiatan', tglevent)
+        const tglevent = moment(this.data[index]['tglmulai']).format('dddd, D MMMM YYYY')
+        this.$set(this.data[index], 'tglmulai', tglevent)
 
       }
       this.$store.commit('pengajuan/set', data.values)

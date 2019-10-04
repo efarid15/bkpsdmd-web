@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="brand-sider d-flex align-items-center">
-      <!-- <div class="logo" :style="{ backgroundImage: 'url(/logo.png)' }" /> -->
       <div class="logo-text">SIPP BPSDM</div>
     </div>
     <div class="avatar d-flex align-items-center">
@@ -46,6 +45,12 @@
           <a-icon type="user" />
           <span>Pengaturan Akun</span>
         </nuxt-link>
+      </a-menu-item>
+      <a-menu-item key="7">
+        <a @click="logOut">
+          <a-icon type="poweroff" />
+          <span>Keluar</span>
+        </a>
       </a-menu-item>
     </a-menu>
   </div>

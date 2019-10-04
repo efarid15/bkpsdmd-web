@@ -15,7 +15,7 @@
           <a-col :xs="24" :sm="24" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase" style="margin-bottom: 8px">Instansi/BKD</div>
             <div>
-              <a-avatar icon="user" style="margin-right: 8px" /> BKD Kabupaten Gowa
+              <a-avatar icon="user" style="margin-right: 8px" /> {{ this.detail.namabkd }}
             </div>
           </a-col>
         </a-row>
@@ -24,19 +24,19 @@
             <div class="fs-12 cr-gray text-uppercase">Jenis Kegiatan</div>
             <div
               class="fs-14 cr-black text-capitalize"
-            >Diklat Prajabatan Golongan I Angkatan X dan XI Tahun 2019</div>
+            >{{ this.detail.jenisdiklat }}</div>
           </a-col>
           <a-col :xs="24" :sm="12" :md="4" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Jumlah Peserta</div>
-            <div class="fs-14 cr-black text-capitalize">40 Orang</div>
+            <div class="fs-14 cr-black text-capitalize">{{ this.detail.jmlpeserta }}</div>
           </a-col>
           <a-col :xs="24" :sm="12" :md="5" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Tanggal Mulai</div>
-            <div class="fs-14 cr-black text-capitalize">Senin, 20 Oktober 2019</div>
+            <div class="fs-14 cr-black text-capitalize">{{ this.detail.tglmulai }}</div>
           </a-col>
           <a-col :xs="24" :sm="12" :md="5" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Tanggal Berakhir</div>
-            <div class="fs-14 cr-black text-capitalize">Senin, 20 Desember 2019</div>
+            <div class="fs-14 cr-black text-capitalize">{{ this.detail.tglberakhir }}</div>
           </a-col>
         </a-row>
       </div>
@@ -50,6 +50,11 @@
   </div>
 </template>
 <script>
+import axios from "axios"
+import moment from "moment"
+
+moment.locale("id");
+
 const columns = [
   {
     title: "No",
@@ -94,7 +99,7 @@ const data = [
   }
 ];
 export default {
-  name: "details",
+  name: "detailspengajuan",
   head() {
     return {
       title: "Detail Kegiatan - BKPSDMD"
@@ -102,9 +107,28 @@ export default {
   },
   data() {
     return {
+      detail: {},
       columns,
       data
     };
-  }
+  },
+
+  created() {
+     let idpengajuan = this.$route.params.id 
+     axios.get(`pengajuan/approve/${idpengajuan}`).then(result => {
+        
+        this.detail = result.data.values[0]
+        
+        let tglstart = moment(this.detail.tglmulai).format('dddd, D MMMM YYYY')
+        this.$set(this.detail, 'tglmulai', tglstart)
+        let tglend = moment(this.detail.tglberakhir).format('dddd, D MMMM YYYY')
+        this.$set(this.detail, 'tglberakhir', tglend)
+
+        
+
+        });
+      
+    //this.baseaccount = this.$route.params.baseaccount;
+  },
 };
 </script>
