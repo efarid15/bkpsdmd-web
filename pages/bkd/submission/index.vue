@@ -234,10 +234,11 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
+          let bkdid = this.$store.state.auth.authLogin["bkdid"]
           const tglku = moment(values.tgladd.format("YYYY-MM-DD"));
           this.$store
             .dispatch("pengajuan/pengajuanadd", {
-              idBkd: 1,
+              idBkd: bkdid,
               namaKegiatan: values.kegiatan,
               jmlPeserta: values.jumlahpeserta,
               tglKegiatan: tglku

@@ -152,6 +152,13 @@
         </a-form>
       </div>
     </div>
+    
+    <div class="container">
+      <div class="title fs-18">Informasi Peserta Kegiatan</div>
+
+      <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id" />
+    </div>
+
   </div>
 </template>
 <script>
@@ -161,6 +168,29 @@ import moment from "moment"
 moment.locale("id");
 
 let id = 0;
+const columns = [
+  {
+    title: "NIP",
+    dataIndex: "nip",
+    key: "nip"
+  },
+  {
+    title: "Nama Peserta",
+    dataIndex: "nama",
+    key: "nama"
+  },
+  {
+    title: "Email",
+    dataIndex: "email",
+    key: "email"
+  },
+  {
+    title: "Instansi SKPD",
+    dataIndex: "namaskpd",
+    key: "namaskpd"
+  }
+];
+
 export default {
   name: "formulir",
   layout: "bkd",
@@ -179,7 +209,9 @@ export default {
       skpd: {},
       detail: {},
       member:[],
+      peserta: [],
       data: [],
+      columns
     }
   },
 
@@ -200,6 +232,15 @@ export default {
       
     //this.baseaccount = this.$route.params.baseaccount;
   },
+
+  mounted () {
+    let idpengajuan = this.$route.params.id 
+    axios.get(`peserta/${idpengajuan}`).then(result => {
+        this.data = result.data.values;
+      });
+
+  },
+
   
   methods: {
     remove(member) {
@@ -218,10 +259,11 @@ export default {
     },
 
     add() {
-
+      
       this.$store.dispatch("skpd/skpdfetch").then(({ data }) => {
         this.skpd = data.values;
         console.log(this.skpd);
+        
       });
 
       const { form } = this;
@@ -242,53 +284,51 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-
-          this.data = values
-          //console.log(this.data.nama.length)
+          this.peserta = []
+          this.peserta = values
+          //console.log(this.peserta)
           
-          for(let index=0; index < this.data.keys.length; index++ ){
-            this.$store.dispatch('users/memberuseradd', {
-            nip: this.data.nip[index],
-            idbkd: 1,
-            idskpd: this.data.skpd[index],
-            idkegiatan: 1,
-            nama: this.data.nama[index],
-            roleid: 3,
-            email: this.data.email[index],
-            password: this.data.nip[index],
+          //let pengajuanID = this.$route.params.id
+          //let bkdID = this.$store.state.auth.authLogin["bkdid"]
 
+          for(let index=0; index < this.peserta.keys.length; index++ ){
+            /*this.$store.dispatch('users/memberuseradd', {
+            nip: this.peserta.nip[index],
+            idbkd: bkdID,
+            idskpd: this.peserta.skpd[index],
+            idkegiatan: pengajuanID,
+            nama: this.peserta.nama[index],
+            roleid: 3, // roleid perserta
+            email: this.peserta.email[index],
+            password: this.peserta.nip[index],
+
+            
           }).then(result => {
             this.alert = {type: 'success', message: result.data.message}
+            let idpengajuan = this.$route.params.id 
+             axios.get(`peserta/${idpengajuan}`).then(result => {
+            this.data = result.data.values;
+            this.remove(index)
+
+            
+          });
+
             
           }).catch(error => {
             this.loading = false
             if (error.response && error.response.data) {
-              //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
-            }
-          })
-          //console.log(this.data.email[index])
-          }
-
-          /*this.$store.dispatch('users/memberuseradd', {
-            nip: values.nip,
-            idbkd: 1,
-            idskpd: values.skpd,
-            idkegiatan: 1,
-            nama: values.nama,
-            roleid: 3,
-            email: values.email,
-            password: values.nip,
-
-          }).then(result => {
-            this.alert = {type: 'success', message: result.data.message}
-            
-          }).catch(error => {
-            this.loading = false
-            if (error.response && error.response.data) {
-              //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+              
             }
           })*/
+          console.log(this.peserta)
+          this.remove(`${keys}`)
+          console.log(index)
+          
 
+          
+          }
+
+          
 
         }
       });

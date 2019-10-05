@@ -45,7 +45,7 @@
     <div class="container">
       <div class="title fs-18">Informasi Peserta Kegiatan</div>
 
-      <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" />
+      <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id" />
     </div>
   </div>
 </template>
