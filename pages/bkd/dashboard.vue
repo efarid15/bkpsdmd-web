@@ -52,6 +52,7 @@
 <script>
 export default {
   name: "dashboard",
+  middleware: 'auth',
   layout: "bkd",
   head() {
     return {

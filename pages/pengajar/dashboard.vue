@@ -53,6 +53,7 @@
 export default {
   name: "dashboard",
   layout: "pengajar",
+  middleware: 'auth',
   head() {
     return {
       title: "Dashboard Badan Kepegawaian Dan Sumber Daya Manusia Daerah Kota Makassar - BKPSDMD"

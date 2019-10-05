@@ -51,17 +51,8 @@
 </template>
 <script>
 export default {
-
   name: "dashboard",
-  computed: {
-    //user () { return this.$store.state.auth ? this.$store.state.auth.user : null }
-  },
-  
-  fetch ({store, redirect}) {
-    if (!store.state.auth.authLogin) {
-      redirect('/')
-    }
-  },
+  middleware: 'auth',
   head() {
     return {
       title:

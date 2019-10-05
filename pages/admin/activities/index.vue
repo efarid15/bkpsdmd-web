@@ -57,6 +57,7 @@ const data = [
 
 export default {
   name: "activities",
+  middleware: 'auth',
   head() {
     return {
       title: "Semua Kegiatan - BKPSDMD"
