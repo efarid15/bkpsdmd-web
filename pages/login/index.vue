@@ -7,10 +7,17 @@
       :style="{ height: '100vh',padding: '24px' }"
     >
       <a-col :xs="24" :sm="12" :md="12" :lg="6">
-        <nuxt-link to="/"><img class="myBrand" src="/SIPP.jpeg" /></nuxt-link>
+        <nuxt-link to="/">
+          <img class="myBrand" src="/SIPP.jpeg" />
+        </nuxt-link>
         <a-form :form="form" class="login-form" @submit="handleSubmit">
           <a-form-item>
-            <a-alert style="margin-bottom: 16px;" v-if="alert" :type="alert.type" :message="alert.message" />
+            <a-alert
+              style="margin-bottom: 16px;"
+              v-if="alert"
+              :type="alert.type"
+              :message="alert.message"
+            />
             <a-input
               v-decorator="[
           'email',
@@ -46,7 +53,9 @@
           >Masuk</a-button>
 
           <div class="back-action">
-            <nuxt-link to="/"><a-icon type="left" /> Kembali ke Halaman Awal</nuxt-link>
+            <nuxt-link to="/">
+              <a-icon type="left" />Kembali ke Halaman Awal
+            </nuxt-link>
           </div>
         </a-form>
       </a-col>
@@ -76,7 +85,7 @@ export default {
     this.form = this.$form.createForm(this);
   },
   methods: {
-    handleSubmit(e) {
+    async handleSubmit(e) {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
@@ -107,6 +116,7 @@ export default {
                 default:
                   this.$router.push("/login");
               }
+              
               this.$store.commit("auth/set_user", result.data.user);
             })
             .catch(error => {

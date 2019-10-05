@@ -100,6 +100,7 @@ const data = [
 ];
 export default {
   name: "detailspengajuan",
+  middleware: 'auth',
   head() {
     return {
       title: "Detail Kegiatan - BKPSDMD"
