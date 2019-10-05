@@ -60,7 +60,11 @@
 export default {
    computed: {
      nama() {
-       return this.$store.state.auth.authUser.nama
+       if(this.$store.state.auth.authUser){
+         return this.$store.state.auth.authUser.nama
+       }
+       return 'BKD'
+       
      }
    },
    methods: {
