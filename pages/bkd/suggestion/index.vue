@@ -57,6 +57,8 @@
 <script>
 import moment from "moment";
 import axios from "axios";
+moment.locale("id");
+
 export default {
   name: "suggestion",
   layout: "bkd",
