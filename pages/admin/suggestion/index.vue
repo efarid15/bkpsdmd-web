@@ -5,17 +5,16 @@
     <a-list
       class="comment-list"
       itemLayout="horizontal"
-      :dataSource="data"
+      :dataSource="kritik"
        style="padding: 0 24px"
     >
       <a-list-item slot="renderItem" slot-scope="item, index" :key="index">
-        <a-comment :author="item.author" :avatar="item.avatar">
+        <a-comment :author="item.nama" :avatar="item.avatar">
           <div slot="content">
-            <h4>Titel Saran</h4>
-            <div>{{item.content}}</div>
+            <div>{{item.kritiksaran}}</div>
             <div style="color:#9e9e9e;font-size:12px;margin-top:8px;">
-              <a-tooltip :title="item.datetime.format('YYYY-MM-DD HH:mm:ss')">
-                <span>{{item.datetime.fromNow()}}</span>
+              <a-tooltip :title="item.tglposting">
+                <span>{{  moment(item.tglposting, "YYYYMMDD").fromNow() }}</span>
               </a-tooltip>
             </div>
           </div>
@@ -27,6 +26,7 @@
 <script>
 import moment from "moment";
 import axios from "axios";
+moment.locale("id");
 export default {
   name: "suggestion",
   head() {
@@ -37,6 +37,7 @@ export default {
   
   data() {
     return {
+      kritik: [],
       data: [
         {
           author: "Admin BKPSDM Gowa",
@@ -54,6 +55,20 @@ export default {
         }
       ]
     };
+  },
+
+  mounted () {
+
+    axios.get('kritik').then(result => {
+           this.kritik = result.data.values;
+           for (let index = 0; index < this.kritik.length; index++) {
+
+             let tglevent = moment(this.kritik[index]['tglposting']).format('YYYYMMDD')
+             this.$set(this.kritik[index], 'tglposting', tglevent)
+
+           }
+
+        });
   },
 
   methods: {
