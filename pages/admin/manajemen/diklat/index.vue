@@ -1,18 +1,18 @@
 <template>
   <div class="container">
-    <a-row :gutter="16" type="flex" justify="space-around" align="middle">
-      <a-col :xs="24" :sm="12" :md="12">
+    <a-row :gutter="16" type="flex" justify="space-around" align="middle" class="p24">
+      <a-col :xs="12" :sm="12" :md="12">
         <div class="title">Diklat / Kegiatan</div>
       </a-col>
-      <a-col :xs="24" :sm="12" :md="12" class="text-right">
+      <a-col :xs="12" :sm="12" :md="12" class="text-right">
         <a-button
           @click="showAdd"
           type="primary"
           icon="plus"
-          :style="{ marginRight: '16px' }"
         >Tambah</a-button>
       </a-col>
     </a-row>
+
     <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
       <span slot="action" slot-scope="text, record">
         <a-button size="small" type="link" class="color-blue" @click="showEdit(record.id)">Edit</a-button>
