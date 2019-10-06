@@ -43,7 +43,11 @@ module.exports = {
     /*
      ** Nuxt.js modules
      */
-    modules: [],
+    modules: [
+        ['nuxt-vuex-localstorage', {
+            mode: 'debug'
+          }]
+    ],
     /*
      ** Build configuration
      */

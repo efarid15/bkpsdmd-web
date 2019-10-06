@@ -60,8 +60,8 @@
 export default {
    computed: {
      nama() {
-       if(this.$store.state.auth.authUser){
-         return this.$store.state.auth.authUser.nama
+       if(this.$store.state.localStorage.authUser){
+         return this.$store.state.localStorage.authUser.nama
        }
        return 'BKD'
        
@@ -70,6 +70,7 @@ export default {
    methods: {
     logOut() {
       this.$store.dispatch("auth/reset").then(() => {
+        this.$store.dispatch("localStorage/reset")
         this.$router.push("/");
       });
     }
