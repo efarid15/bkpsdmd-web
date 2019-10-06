@@ -118,6 +118,7 @@ export default {
               }
               
               this.$store.commit("auth/set_user", result.data.user);
+              this.$store.commit("localStorage/set_user", result.data.user);
             })
             .catch(error => {
               this.loading = false;

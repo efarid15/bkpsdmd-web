@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <div class="title">Daftar Kegiatan</div>
+      <div class="title p24">Daftar Kegiatan</div>
 
       <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
         <span slot="progress" slot-scope="text, record">

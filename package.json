@@ -25,10 +25,10 @@
         "moment": "^2.24.0",
         "nodemon": "^1.19.2",
         "nuxt": "^2.9.2",
+        "nuxt-vuex-localstorage": "^1.2.6",
         "querystring": "^0.2.0",
         "sass": "^1.22.12",
         "vue-fullcalendar": "^1.0.9",
-        "vuex-persistedstate": "^2.5.4",
         "whatwg-fetch": "^3.0.0"
     },
     "devDependencies": {

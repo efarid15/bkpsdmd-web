@@ -15,16 +15,15 @@
           <a-col :xs="24" :sm="24" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase" style="margin-bottom: 8px">Instansi/BKD</div>
             <div>
-              <a-avatar icon="user" style="margin-right: 8px" /> {{ this.detail.namabkd }}
+              <a-avatar icon="user" style="margin-right: 8px" />
+              {{ this.detail.namabkd }}
             </div>
           </a-col>
         </a-row>
         <a-row :gutter="16">
           <a-col :xs="24" :sm="12" :md="10" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Jenis Kegiatan</div>
-            <div
-              class="fs-14 cr-black text-capitalize"
-            >{{ this.detail.jenisdiklat }}</div>
+            <div class="fs-14 cr-black text-capitalize">{{ this.detail.jenisdiklat }}</div>
           </a-col>
           <a-col :xs="24" :sm="12" :md="4" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Jumlah Peserta</div>
@@ -43,15 +42,15 @@
     </div>
 
     <div class="container">
-      <div class="title fs-18">Informasi Peserta Kegiatan</div>
+      <div class="title p24">Informasi Peserta Kegiatan</div>
 
       <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id" />
     </div>
   </div>
 </template>
 <script>
-import axios from "axios"
-import moment from "moment"
+import axios from "axios";
+import moment from "moment";
 
 moment.locale("id");
 
@@ -100,7 +99,7 @@ const data = [
 ];
 export default {
   name: "detailspengajuan",
-  middleware: 'auth',
+  middleware: "auth",
   head() {
     return {
       title: "Detail Kegiatan - BKPSDMD"
@@ -115,21 +114,17 @@ export default {
   },
 
   created() {
-     let idpengajuan = this.$route.params.id 
-     axios.get(`pengajuan/approve/${idpengajuan}`).then(result => {
-        
-        this.detail = result.data.values[0]
-        
-        let tglstart = moment(this.detail.tglmulai).format('dddd, D MMMM YYYY')
-        this.$set(this.detail, 'tglmulai', tglstart)
-        let tglend = moment(this.detail.tglberakhir).format('dddd, D MMMM YYYY')
-        this.$set(this.detail, 'tglberakhir', tglend)
+    let idpengajuan = this.$route.params.id;
+    axios.get(`pengajuan/approve/${idpengajuan}`).then(result => {
+      this.detail = result.data.values[0];
 
-        
+      let tglstart = moment(this.detail.tglmulai).format("dddd, D MMMM YYYY");
+      this.$set(this.detail, "tglmulai", tglstart);
+      let tglend = moment(this.detail.tglberakhir).format("dddd, D MMMM YYYY");
+      this.$set(this.detail, "tglberakhir", tglend);
+    });
 
-        });
-      
     //this.baseaccount = this.$route.params.baseaccount;
-  },
+  }
 };
 </script>

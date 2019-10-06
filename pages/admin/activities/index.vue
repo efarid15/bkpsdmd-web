@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="title">Semua Kegiatan</div>
+    <div class="title p24">Semua Kegiatan</div>
 
     <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
       <span slot="action" slot-scope="text, record">
@@ -13,12 +13,9 @@
   </div>
 </template>
 <script>
+import moment from "moment";
 
-import moment from 'moment'
-
-moment.locale("id"); 
-
-
+moment.locale("id");
 
 const columns = [
   {
@@ -57,7 +54,7 @@ const data = [
 
 export default {
   name: "activities",
-  middleware: 'auth',
+  middleware: "auth",
   head() {
     return {
       title: "Semua Kegiatan - BKPSDMD"
@@ -69,19 +66,18 @@ export default {
       columns
     };
   },
-  
-  mounted () {
-    this.$store.dispatch('pengajuan/approvefetch').then( ({ data }) => {
-      this.data = data.values
+
+  mounted() {
+    this.$store.dispatch("pengajuan/approvefetch").then(({ data }) => {
+      this.data = data.values;
       for (let index = 0; index < this.data.length; index++) {
-        const tglevent = moment(this.data[index]['tglmulai']).format('dddd, D MMMM YYYY')
-        this.$set(this.data[index], 'tglmulai', tglevent)
-
+        const tglevent = moment(this.data[index]["tglmulai"]).format(
+          "dddd, D MMMM YYYY"
+        );
+        this.$set(this.data[index], "tglmulai", tglevent);
       }
-      this.$store.commit('pengajuan/set', data.values)
-      
-    })
-
+      this.$store.commit("pengajuan/set", data.values);
+    });
   },
 
   methods: {}

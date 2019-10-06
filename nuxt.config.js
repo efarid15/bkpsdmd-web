@@ -33,7 +33,6 @@ module.exports = {
      */
     plugins: [
         { src: '@/plugins/antd-ui' },
-        { src: '@/plugins/fullcalendar', mode: 'client' },
         '~/api/init.js'
     ],
     /*
@@ -43,7 +42,11 @@ module.exports = {
     /*
      ** Nuxt.js modules
      */
-    modules: [],
+    modules: [
+        ['nuxt-vuex-localstorage', {
+            mode: 'debug'
+          }]
+    ],
     /*
      ** Build configuration
      */

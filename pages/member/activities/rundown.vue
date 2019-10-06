@@ -35,9 +35,7 @@
         <a-row :gutter="16">
           <a-col :xs="24" :sm="12" :md="10" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Tempat Kegiatan</div>
-            <div
-              class="fs-14 cr-black text-capitalize"
-            >Campus I</div>
+            <div class="fs-14 cr-black text-capitalize">Campus I</div>
           </a-col>
           <a-col :xs="24" :sm="12" :md="4" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Ruangan</div>
@@ -51,14 +49,15 @@
 
         <div>
           <nuxt-link to="/member/activities/detail" class="color-blue">
-            Lihat Informasi Peserta <a-icon style="margin-left: 8px" type="right" />
+            Lihat Informasi Peserta
+            <a-icon style="margin-left: 8px" type="right" />
           </nuxt-link>
         </div>
       </div>
     </div>
 
     <div class="container">
-      <div class="title fs-18">Rundown Kegiatan</div>
+      <div class="title p24">Rundown Kegiatan</div>
 
       <div style="padding: 0 24px 24px 24px">
         <a-timeline>
@@ -68,9 +67,9 @@
               <a-divider type="vertical"></a-divider>
               <span class="fs-14">Senin, 12 Januari 2020</span>
             </div>
-            <div class="fs-14 fw-400 cr-black">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem pariatur explicabo ullam hic recusandae vel? Ab officia dolorem odio aperiam! Similique totam eos reprehenderit ipsa iure odio corporis molestiae illum!
-            </div>
+            <div
+              class="fs-14 fw-400 cr-black"
+            >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem pariatur explicabo ullam hic recusandae vel? Ab officia dolorem odio aperiam! Similique totam eos reprehenderit ipsa iure odio corporis molestiae illum!</div>
           </a-timeline-item>
           <a-timeline-item>
             <div class="fw-500 cr-black">
@@ -78,9 +77,9 @@
               <a-divider type="vertical"></a-divider>
               <span class="fs-14">Selasa, 13 Januari 2020</span>
             </div>
-            <div class="fs-14 fw-400 cr-black">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem pariatur explicabo ullam hic recusandae vel? Ab officia dolorem odio aperiam! Similique totam eos reprehenderit ipsa iure odio corporis molestiae illum!
-            </div>
+            <div
+              class="fs-14 fw-400 cr-black"
+            >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem pariatur explicabo ullam hic recusandae vel? Ab officia dolorem odio aperiam! Similique totam eos reprehenderit ipsa iure odio corporis molestiae illum!</div>
           </a-timeline-item>
           <a-timeline-item>
             <div class="fw-500 cr-black">
@@ -88,9 +87,9 @@
               <a-divider type="vertical"></a-divider>
               <span class="fs-14">Rabu, 14 Januari 2020</span>
             </div>
-            <div class="fs-14 fw-400 cr-black">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem pariatur explicabo ullam hic recusandae vel? Ab officia dolorem odio aperiam! Similique totam eos reprehenderit ipsa iure odio corporis molestiae illum!
-            </div>
+            <div
+              class="fs-14 fw-400 cr-black"
+            >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem pariatur explicabo ullam hic recusandae vel? Ab officia dolorem odio aperiam! Similique totam eos reprehenderit ipsa iure odio corporis molestiae illum!</div>
           </a-timeline-item>
           <a-timeline-item>
             <div class="fw-500 cr-black">
@@ -98,9 +97,9 @@
               <a-divider type="vertical"></a-divider>
               <span class="fs-14">Kamis, 15 Januari 2020</span>
             </div>
-            <div class="fs-14 fw-400 cr-black">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem pariatur explicabo ullam hic recusandae vel? Ab officia dolorem odio aperiam! Similique totam eos reprehenderit ipsa iure odio corporis molestiae illum!
-            </div>
+            <div
+              class="fs-14 fw-400 cr-black"
+            >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem pariatur explicabo ullam hic recusandae vel? Ab officia dolorem odio aperiam! Similique totam eos reprehenderit ipsa iure odio corporis molestiae illum!</div>
           </a-timeline-item>
           <a-timeline-item>
             <div class="fw-500 cr-black">
@@ -108,9 +107,9 @@
               <a-divider type="vertical"></a-divider>
               <span class="fs-14">Jumat, 16 Januari 2020</span>
             </div>
-            <div class="fs-14 fw-400 cr-black">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem pariatur explicabo ullam hic recusandae vel? Ab officia dolorem odio aperiam! Similique totam eos reprehenderit ipsa iure odio corporis molestiae illum!
-            </div>
+            <div
+              class="fs-14 fw-400 cr-black"
+            >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem pariatur explicabo ullam hic recusandae vel? Ab officia dolorem odio aperiam! Similique totam eos reprehenderit ipsa iure odio corporis molestiae illum!</div>
           </a-timeline-item>
           <a-timeline-item>
             <div class="fw-500 cr-black">
@@ -118,9 +117,9 @@
               <a-divider type="vertical"></a-divider>
               <span class="fs-14">Sabtu, 17 Januari 2020</span>
             </div>
-            <div class="fs-14 fw-400 cr-black">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem pariatur explicabo ullam hic recusandae vel? Ab officia dolorem odio aperiam! Similique totam eos reprehenderit ipsa iure odio corporis molestiae illum!
-            </div>
+            <div
+              class="fs-14 fw-400 cr-black"
+            >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem pariatur explicabo ullam hic recusandae vel? Ab officia dolorem odio aperiam! Similique totam eos reprehenderit ipsa iure odio corporis molestiae illum!</div>
           </a-timeline-item>
         </a-timeline>
       </div>
