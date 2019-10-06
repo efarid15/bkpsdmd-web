@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <div class="title">Daftar Kegiatan Saya</div>
+      <div class="title p24">Daftar kegiatan saya</div>
 
       <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }">
         <span slot="progress" slot-scope="text, record">
@@ -23,7 +23,7 @@
   </div>
 </template>
 <script>
-import moment from "moment"
+import moment from "moment";
 moment.locale("id");
 
 const columns = [
@@ -84,31 +84,28 @@ export default {
     };
   },
 
-  mounted () {
-    this.$store.dispatch('pengajuan/approvefetch').then( ({ data }) => {
-      this.data = data.values
+  mounted() {
+    this.$store.dispatch("pengajuan/approvefetch").then(({ data }) => {
+      this.data = data.values;
       for (let index = 0; index < this.data.length; index++) {
+        let tglevent = moment(this.data[index]["tglkegiatan"]).format(
+          "dddd, D MMMM YYYY"
+        );
+        let eventstatus = this.data[index]["progress"];
 
-        let tglevent = moment(this.data[index]['tglkegiatan']).format('dddd, D MMMM YYYY')
-        let eventstatus = this.data[index]['progress']
-
-        switch(eventstatus){
-            case 'P':
-            this.$set(this.data[index], 'progress', 'Progress')
+        switch (eventstatus) {
+          case "P":
+            this.$set(this.data[index], "progress", "Progress");
             break;
-            case 'F':
-            this.$set(this.data[index], 'progress', 'Finish')
+          case "F":
+            this.$set(this.data[index], "progress", "Finish");
             break;
-            
         }
 
-        this.$set(this.data[index], 'tglkegiatan', tglevent)
-
+        this.$set(this.data[index], "tglkegiatan", tglevent);
       }
-      this.$store.commit('pengajuan/set', data.values)
-      
-    })
-
-  },
+      this.$store.commit("pengajuan/set", data.values);
+    });
+  }
 };
 </script>

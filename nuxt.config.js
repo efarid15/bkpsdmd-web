@@ -33,7 +33,6 @@ module.exports = {
      */
     plugins: [
         { src: '@/plugins/antd-ui' },
-        { src: '@/plugins/fullcalendar', mode: 'client' },
         '~/api/init.js'
     ],
     /*

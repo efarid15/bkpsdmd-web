@@ -1,15 +1,14 @@
 <template>
   <div class="container">
-    <a-row :gutter="16" type="flex" justify="space-around" align="middle">
-      <a-col :xs="24" :sm="12" :md="12">
+    <a-row :gutter="16" type="flex" justify="space-around" align="middle" class="p24">
+      <a-col :xs="12" :sm="12" :md="12">
         <div class="title">Daftar Satuan Kerja Perangkat Daerah</div>
       </a-col>
-      <a-col :xs="24" :sm="12" :md="12" class="text-right">
+      <a-col :xs="12" :sm="12" :md="12" class="text-right">
         <a-button
           @click="showAdd"
           type="primary"
           icon="plus"
-          :style="{ marginRight: '16px' }"
         >Tambah</a-button>
       </a-col>
     </a-row>
@@ -20,7 +19,8 @@
         <a-popconfirm
           v-if="data.length"
           title="Sure to delete?"
-          @confirm="() => onDelete(record.id)">
+          @confirm="() => onDelete(record.id)"
+        >
           <a-button size="small" type="link" class="color-red">Hapus</a-button>
         </a-popconfirm>
       </span>
@@ -93,8 +93,7 @@
   </div>
 </template>
 <script>
-
-import axios from 'axios'
+import axios from "axios";
 const columns = [
   {
     title: "No",
@@ -156,16 +155,15 @@ export default {
       columns
     };
   },
-  
-  mounted () {
-    let idbkd = this.$store.state.auth.authLogin['bkdid']
-    
-    axios.get(`skpd/bkd/${idbkd}`).then(result => {
-        this.data = result.data.values;
-        //console.log(this.data)
-        this.$store.commit('skpd/set', result.data.values)
-      });
 
+  mounted() {
+    let idbkd = this.$store.state.auth.authLogin["bkdid"];
+
+    axios.get(`skpd/bkd/${idbkd}`).then(result => {
+      this.data = result.data.values;
+      //console.log(this.data)
+      this.$store.commit("skpd/set", result.data.values);
+    });
   },
 
   methods: {
@@ -179,67 +177,59 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          let idbkd = this.$store.state.auth.authLogin['bkdid']
-          this.$store.dispatch('skpd/skpdadd', {
+          let idbkd = this.$store.state.auth.authLogin["bkdid"];
+          this.$store
+            .dispatch("skpd/skpdadd", {
               namaSkpd: values.name,
               alamatSkpd: values.address,
-              kabupatenSkpd: 'makassar',
+              kabupatenSkpd: "makassar",
               notelpSkpd: values.telp,
-              bkdid: idbkd,
+              bkdid: idbkd
+            })
+            .then(result => {
+              this.alert = { type: "success", message: result.data.message };
 
-            }).then(result => {
-              this.alert = {type: 'success', message: result.data.message}
-            
-              this.$store.dispatch('skpd/skpdfetch').then( ({ data }) => {
-                this.data = data.values
-                this.$store.commit('skpd/set', data.values)
-                this.visibleAdd = false
-            
-               }).catch(error => {
-                this.loading = false
-                if (error.response && error.response.data) {
-              //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
-                 }
-              })
-              
-
-
-            }).catch(error => {
-              this.loading = false
+              this.$store
+                .dispatch("skpd/skpdfetch")
+                .then(({ data }) => {
+                  this.data = data.values;
+                  this.$store.commit("skpd/set", data.values);
+                  this.visibleAdd = false;
+                })
+                .catch(error => {
+                  this.loading = false;
+                  if (error.response && error.response.data) {
+                    //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+                  }
+                });
+            })
+            .catch(error => {
+              this.loading = false;
               if (error.response && error.response.data) {
                 //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
               }
-            })
-
-          
+            });
         }
       });
     },
 
     showEdit(key) {
+      axios.get(`skpd/${key}`).then(result => {
+        let res = result.data.values[0];
+        this.$store.commit("skpd/setSkpd", result.data.values[0]);
 
-       axios.get(`skpd/${key}`).then(result => {
-        
-        let res = result.data.values[0]
-        this.$store.commit('skpd/setSkpd', result.data.values[0])
-        
-        
-        let namaSkpd = res['namaskpd']
-        let alamatSkpd = res['alamat']
-        let notelpSkpd = res['notelp']
-        
+        let namaSkpd = res["namaskpd"];
+        let alamatSkpd = res["alamat"];
+        let notelpSkpd = res["notelp"];
+
         this.form.setFieldsValue({
           nameEdit: namaSkpd,
           telpEdit: notelpSkpd,
-          addressEdit: alamatSkpd,
-
+          addressEdit: alamatSkpd
         });
-
-        
-      })
+      });
 
       this.visibleEdit = true;
-     
     },
     handleEdit() {
       this.visibleEdit = false;
@@ -248,50 +238,55 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          const resid = this.$store.state.skpd.skpd['id']
-          console.log(resid)
-          this.$store.dispatch('skpd/skpdedit', {
-            namaSkpd: values.nameEdit,
-            alamatSkpd: values.addressEdit,
-            kabupatenSkpd: 'makassar',
-            notelpSkpd: values.telpEdit,
-            skpdId: resid,
+          const resid = this.$store.state.skpd.skpd["id"];
+          console.log(resid);
+          this.$store
+            .dispatch("skpd/skpdedit", {
+              namaSkpd: values.nameEdit,
+              alamatSkpd: values.addressEdit,
+              kabupatenSkpd: "makassar",
+              notelpSkpd: values.telpEdit,
+              skpdId: resid
+            })
+            .then(result => {
+              this.alert = { type: "success", message: result.data.message };
 
-          }).then(result => {
-            this.alert = {type: 'success', message: result.data.message}
-            
-            this.$store.dispatch('skpd/skpdfetch').then( ({ data }) => {
-            this.data = data.values
-            this.$store.commit('skpd/set', data.values)
-            console.log(data)
-            this.visibleEdit = false
-              })
-
-          }).catch(error => {
-            this.loading = false
-            if (error.response && error.response.data) {
-              //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
-            }
-          })
-
-          
+              this.$store.dispatch("skpd/skpdfetch").then(({ data }) => {
+                this.data = data.values;
+                this.$store.commit("skpd/set", data.values);
+                console.log(data);
+                this.visibleEdit = false;
+              });
+            })
+            .catch(error => {
+              this.loading = false;
+              if (error.response && error.response.data) {
+                //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+              }
+            });
         }
       });
     },
 
-    onDelete (key) {
-      axios.delete(`skpd/${key}`).then(result => {
-         this.$store.dispatch('skpd/skpdfetch').then( ({ data }) => {
-            this.data = data.values
-            this.$store.commit('skpd/set', data.values)
-      })  
-      }).catch(error => {
-            this.loading = false
-            if (error.response && error.response.data) {
-              this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
-            }
-          })
-    },
+    onDelete(key) {
+      axios
+        .delete(`skpd/${key}`)
+        .then(result => {
+          this.$store.dispatch("skpd/skpdfetch").then(({ data }) => {
+            this.data = data.values;
+            this.$store.commit("skpd/set", data.values);
+          });
+        })
+        .catch(error => {
+          this.loading = false;
+          if (error.response && error.response.data) {
+            this.alert = {
+              type: "error",
+              message: error.response.data.message || error.reponse.status
+            };
+          }
+        });
+    }
   }
 };
 </script>

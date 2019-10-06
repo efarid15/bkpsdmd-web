@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="title">Laporan Kegiatan</div>
+    <div class="title p24">Laporan kegiatan</div>
     <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }">
       <span slot="status" slot-scope="text, record">
         <span class="color-green">Terlaksana</span>

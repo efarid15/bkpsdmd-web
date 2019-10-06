@@ -58,7 +58,7 @@
     </div>
 
     <div class="container">
-      <div class="title fs-18">Rundown Kegiatan</div>
+      <div class="title p24">Rundown kegiatan</div>
 
       <div style="padding: 0 24px 24px 24px">
         <a-timeline>

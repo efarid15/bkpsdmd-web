@@ -50,12 +50,28 @@
                 &::after {
                     display: none;
                 }
+                & .mh-svg-icon {
+                    margin-bottom: -6px;
+                    margin-right: 8px;
+                    position: relative;
+                    & g [fill] {
+                        fill: rgba($color: #000, $alpha: .25);
+                    }
+                }
             }
             & .ant-menu-submenu {
                 & .ant-menu-sub {
                     & .ant-menu-item {
                         & i {
                             font-size: 10px;
+                        }
+                        & .mh-svg-icon {
+                            margin-bottom: -6px;
+                            margin-right: 8px;
+                            position: relative;
+                            & g [fill] {
+                                fill: rgba($color: #000, $alpha: .25);
+                            }
                         }
                     }
                 }
