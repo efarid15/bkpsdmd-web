@@ -36,7 +36,7 @@
   </div>
 </template>
 <script>
-
+import axios from "axios"
 import moment from "moment"
 moment.locale("id");
 
@@ -97,10 +97,12 @@ export default {
   },
 
   mounted () {
-    this.$store.dispatch('pengajuan/approvefetch').then( ({ data }) => {
-      this.data = data.values
-      
-      for (let index = 0; index < this.data.length; index++) {
+    let idbkd = this.$store.state.localStorage.authUser['bkdid']
+    
+    axios.get(`pengajuan/approve/bkd/${idbkd}`).then(result => {
+        this.data = result.data.values;
+        
+        for (let index = 0; index < this.data.length; index++) {
 
         let tglevent = moment(this.data[index]['tglkegiatan']).format('dddd, D MMMM YYYY')
         let eventstatus = this.data[index]['progress']
@@ -115,20 +117,13 @@ export default {
             
         }
 
-        /*if(eventstatus === 'A'){
-          this.$set(this.data[index], 'status', 'Progress')  
-        }
-        else if(eventstatus === 'F'){
-          this.$set(this.data[index], 'status', 'Finish')
-        }*/
-
         this.$set(this.data[index], 'tglkegiatan', tglevent)
 
       }
       this.$store.commit('pengajuan/set', data.values)
-      
-    })
 
+        
+      });
   },
 
 };
