@@ -58,7 +58,7 @@
     </div>
 
     <div class="container">
-      <div class="title fs-18">Informasi Peserta Kegiatan</div>
+      <div class="title p24">Informasi peserta kegiatan</div>
 
       <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" />
     </div>
