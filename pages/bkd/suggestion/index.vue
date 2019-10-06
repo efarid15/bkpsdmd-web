@@ -18,16 +18,16 @@
     <a-list
       class="comment-list"
       itemLayout="horizontal"
-      :dataSource="data"
+      :dataSource="kritik"
        style="padding: 0 24px"
     >
       <a-list-item slot="renderItem" slot-scope="item, index" :key="index">
-        <a-comment :author="item.author" :avatar="item.avatar">
+        <a-comment :author="item.nama" :avatar="item.avatar">
           <div slot="content">
-            {{item.content}}
+            {{item.kritiksaran}}
             <div style="color:#9e9e9e;font-size:12px;margin-top:8px;">
-              <a-tooltip :title="item.datetime.format('YYYY-MM-DD HH:mm:ss')">
-                <span>{{item.datetime.fromNow()}}</span>
+              <a-tooltip :title="item.tglposting">
+                <span>{{  moment(item.tglposting, "YYYYMMDD").fromNow() }}</span>
               </a-tooltip>
             </div>
           </div>
@@ -36,16 +36,13 @@
     </a-list>
 
     <!-- show send suggestion -->
-    <a-modal title="Kirimkan Saran Anda!" :visible="visibleSuggestion" @ok="handleOk">
+    <a-modal title="Kirimkan Saran Anda!" v-model="visibleSuggestion" @ok="handleOk">
       <a-form layout="vertical" :form="form" hideRequiredMark>
-        <a-form-item label="Judul Saran" has-feedback>
-          <a-input v-decorator="['title',{rules: [{ required: true, message: 'Harus di isi!' }]}]" />
-        </a-form-item>
 
-        <a-form-item label="Keterangan">
+        <a-form-item label="Kritik / Saran">
           <a-textarea
-            :rows="4"
-            v-decorator="['desc',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
+            :rows="6"
+            v-decorator="['kritik',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
           />
         </a-form-item>
       </a-form>
@@ -72,6 +69,9 @@ export default {
     return {
       visibleSuggestion: false,
       confirmLoading: false,
+      kritik: [
+        {tglposting: moment().subtract(2, "days")}
+      ],
       data: [
         {
           author: "Admin BKPSDM Gowa",
@@ -95,6 +95,21 @@ export default {
     this.form = this.$form.createForm(this);
   },
 
+  mounted () {
+
+    let bkdid = this.$store.state.localStorage.authUser['bkdid']
+     axios.get(`kritik/bkd/${bkdid}`).then(result => {
+           this.kritik = result.data.values;
+           for (let index = 0; index < this.kritik.length; index++) {
+
+             let tglevent = moment(this.kritik[index]['tglposting']).format('YYYYMMDD')
+             this.$set(this.kritik[index], 'tglposting', tglevent)
+
+           }
+
+        });
+  },
+
   methods: {
     moment,
     showSuggestion() {
@@ -104,11 +119,42 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          this.confirmLoading = true;
-          setTimeout(() => {
-            this.visibleSuggestion = false;
-            this.confirmLoading = false;
-          }, 2000);
+
+           let idbkd = this.$store.state.localStorage.authUser['bkdid']
+           let username = this.$store.state.localStorage.authUser['id']
+
+                axios.post('kritik', {
+                    idBkd: idbkd,
+                    user: username,
+                    kritiksaran: values.kritik,
+                    avatar: "/logo-sulsel.png"
+
+                })
+                .then(result => {
+                    
+                    let bkdid = this.$store.state.localStorage.authUser['bkdid']
+
+                    axios.get(`kritik/bkd/${bkdid}`).then(result => {
+                    this.kritik = result.data.values;
+                    for (let index = 0; index < this.kritik.length; index++) {
+
+                      let tglevent = moment(this.kritik[index]['tglposting']).format('YYYYMMDD')
+                      this.$set(this.kritik[index], 'tglposting', tglevent)
+
+                    }
+                    this.visibleSuggestion = false;
+                    console.log(result)
+                    
+                    
+                  });
+
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+           
+
+          
         }
       });
     },
