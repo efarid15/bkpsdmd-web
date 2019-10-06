@@ -15,7 +15,7 @@
           <a-col :xs="24" :sm="24" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase" style="margin-bottom: 8px">Instansi/BKD</div>
             <div>
-              <a-avatar icon="user" style="margin-right: 8px" /> BKD Kabupaten Gowa
+              <a-avatar icon="user" style="margin-right: 8px" />BKD Kabupaten Gowa
             </div>
           </a-col>
         </a-row>
@@ -43,7 +43,7 @@
     </div>
 
     <div class="container" style="margin-bottom: 16px">
-      <div class="title fs-18">Rundown Kegiatan</div>
+      <div class="title p24">Rundown Kegiatan</div>
 
       <div style="padding: 0 24px 24px 24px;">
         <a-timeline>
@@ -211,7 +211,7 @@ import moment from "moment";
 let id = 0;
 export default {
   name: "rundown",
-  middleware: 'auth',
+  middleware: "auth",
   beforeCreate() {
     this.form = this.$form.createForm(this);
     this.form.getFieldDecorator("keys", { initialValue: [], preserve: true });
@@ -225,9 +225,7 @@ export default {
     return {
       visible: false,
       config: {
-        rules: [
-          { type: "object", required: true, message: "Harus di isi!" }
-        ]
+        rules: [{ type: "object", required: true, message: "Harus di isi!" }]
       }
     };
   },

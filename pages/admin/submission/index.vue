@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="title">Daftar Pengajuan</div>
+    <div class="title p24">Daftar pengajuan</div>
 
     <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
       <span slot="tempat" slot-scope="text, record" :key="record">
