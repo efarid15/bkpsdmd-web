@@ -1,18 +1,18 @@
 <template>
   <div class="container">
-    <a-row :gutter="16" type="flex" justify="space-around" align="middle">
-      <a-col :xs="24" :sm="12" :md="12">
-        <div class="title">Daftar Pengajuan</div>
+    <a-row :gutter="16" type="flex" justify="space-around" align="middle" class="p24">
+      <a-col :xs="12" :sm="12" :md="12">
+        <div class="title">Daftar pengajuan</div>
       </a-col>
-      <a-col :xs="24" :sm="12" :md="12" class="text-right">
+      <a-col :xs="12" :sm="12" :md="12" class="text-right">
         <a-button
           @click="showSubmission"
           type="primary"
           icon="plus"
-          :style="{ marginRight: '16px' }"
         >Buat Pengajuan</a-button>
       </a-col>
     </a-row>
+
     <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
       <span slot="status" slot-scope="text, record">
         <span class="color-red">{{record.status}}</span>

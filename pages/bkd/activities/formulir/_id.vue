@@ -50,7 +50,7 @@
     </div>
 
     <div class="container">
-      <div class="title fs-18">Formulir Peserta Kegiatan</div>
+      <div class="title p24">Formulir peserta kegiatan</div>
 
       <div style="padding: 0 24px 24px 24px">
         <a-form layout="vertical" :form="form"  @submit="handleSubmit" hideRequiredMark>
@@ -154,7 +154,7 @@
     </div>
     
     <div class="container">
-      <div class="title fs-18">Informasi Peserta Kegiatan</div>
+      <div class="title p24">Informasi peserta kegiatan</div>
 
       <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id" />
     </div>
