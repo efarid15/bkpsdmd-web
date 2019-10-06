@@ -1,16 +1,15 @@
 <template>
   <div>
     <div class="container" style="margin-bottom: 16px">
-      <a-row :gutter="16" type="flex" justify="space-around" align="middle">
-        <a-col :xs="24" :sm="12" :md="12">
+      <a-row :gutter="16" type="flex" justify="space-around" align="middle" class="p24">
+        <a-col :xs="12" :sm="12" :md="12">
           <div class="title fs-18">Profil Kantor</div>
         </a-col>
-        <a-col :xs="24" :sm="12" :md="12" class="text-right">
+        <a-col :xs="12" :sm="12" :md="12" class="text-right">
           <a-button
             @click="showEdit"
             type="danger"
             icon="edit"
-            :style="{ marginRight: '16px' }"
           >Edit</a-button>
         </a-col>
       </a-row>
@@ -108,16 +107,15 @@
 
     <!-- password -->
     <div class="container" style="margin-bottom: 16px">
-      <a-row :gutter="16" type="flex" justify="space-around" align="middle">
-        <a-col :xs="24" :sm="12" :md="12">
+      <a-row :gutter="16" type="flex" justify="space-around" align="middle" class="p24">
+        <a-col :xs="12" :sm="12" :md="12">
           <div class="title fs-18">Password</div>
         </a-col>
-        <a-col :xs="24" :sm="12" :md="12" class="text-right">
+        <a-col :xs="12" :sm="12" :md="12" class="text-right">
           <a-button
             @click="showEditPassword"
             type="danger"
             icon="edit"
-            :style="{ marginRight: '16px' }"
           >Edit</a-button>
         </a-col>
       </a-row>
