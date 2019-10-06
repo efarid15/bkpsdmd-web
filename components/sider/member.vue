@@ -42,7 +42,7 @@
 export default {
    computed: {
      nama() {
-       return this.$store.state.auth.authUser.nama
+       return this.$store.state.localStorage.authUser.nama
      }
    },
    methods: {

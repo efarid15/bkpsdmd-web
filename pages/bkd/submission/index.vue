@@ -169,9 +169,11 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch("pengajuan/pengajuanfetch").then(({ data }) => {
-      this.data = data.values;
-      for (let index = 0; index < this.data.length; index++) {
+    let idbkd = this.$store.state.localStorage.authLogin['bkdid']
+    
+    axios.get(`pengajuan/bkd/${idbkd}`).then(result => {
+        this.data = result.data.values;
+        for (let index = 0; index < this.data.length; index++) {
         const tglevent = moment(this.data[index]["tglkegiatan"]).format(
           "MMMM YYYY"
         );
@@ -185,8 +187,9 @@ export default {
           this.$set(this.data[index], "status", "Menunggu Verifikasi");
         }
       }
-      this.$store.commit("pengajuan/set", data.values);
-    });
+        //console.log(this.data)
+        this.$store.commit("pengajuan/set", data.values);
+      });
   },
 
   methods: {
@@ -234,7 +237,7 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          let bkdid = this.$store.state.auth.authLogin["bkdid"]
+          let bkdid = this.$store.state.localStorage.authUser["bkdid"]
           const tglku = moment(values.tgladd.format("YYYY-MM-DD"));
           this.$store
             .dispatch("pengajuan/pengajuanadd", {
@@ -245,13 +248,10 @@ export default {
             })
             .then(result => {
               this.alert = { type: "success", message: result.data.message };
-
-              this.$store
-                .dispatch("pengajuan/pengajuanfetch")
-                .then(({ data }) => {
-                  this.data = data.values;
-
-                  for (let index = 0; index < this.data.length; index++) {
+              
+              axios.get(`skpd/bkd/${bkdid}`).then(result => {
+              this.data = result.data.values;
+              for (let index = 0; index < this.data.length; index++) {
                     const tglevent = moment(
                       this.data[index]["tglkegiatan"]
                     ).format("dddd, D MMMM YYYY");
@@ -269,16 +269,12 @@ export default {
                       );
                     }
                   }
-
-                  this.$store.commit("pengajuan/set", data.values);
+              
+               this.$store.commit("pengajuan/set", data.values);
                   this.visibleAdd = false;
-                })
-                .catch(error => {
-                  this.loading = false;
-                  if (error.response && error.response.data) {
-                    //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
-                  }
-                });
+             });
+
+
             })
             .catch(error => {
               this.loading = false;
