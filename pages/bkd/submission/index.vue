@@ -46,7 +46,7 @@
         </a-form-item>
 
         <a-form-item label="Bulan Kegiatan" has-feedback>
-          <a-month-picker style="width: 100%" :disabledDate="disabledDate" placeholder="Pilih Bulan" v-decorator="['tgladd', config]" />
+          <a-month-picker style="width: 100%" placeholder="Pilih Bulan" v-decorator="['tgladd', config]" />
         </a-form-item>
 
         <!-- <a-form-item label="Tanggal Kegiatan" has-feedback>
@@ -219,9 +219,9 @@ export default {
     handleSubmission() {
       this.visibleSubmission = false;
     },
-    disabledDate(current) {
-      return current && current < moment().endOf("day");
-    },
+    // disabledDate(current) {
+    //   return current && current < moment().endOf("day");
+    // },
     handleChange(info) {
       const status = info.file.status;
       if (status !== "uploading") {
