@@ -22,6 +22,7 @@ export default {
     },
     skpd: {
         findSkpd: (params) => axios.get('skpd/', params),
+        getSkpdbkd: (params) => axios.get('skpd/bkd/', params),
         getSkpd: () => axios.get('skpd'),
         addSkpd: (data) => axios.post('skpd', data),
         editSkpd: (data) => axios.put('skpd', data),

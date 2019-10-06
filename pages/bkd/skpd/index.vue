@@ -158,11 +158,13 @@ export default {
   },
   
   mounted () {
-    this.$store.dispatch('skpd/skpdfetch').then( ({ data }) => {
-      this.data = data.values
-      this.$store.commit('skpd/set', data.values)
-      console.log(data)
-    })
+    let idbkd = this.$store.state.auth.authLogin['bkdid']
+    
+    axios.get(`skpd/bkd/${idbkd}`).then(result => {
+        this.data = result.data.values;
+        //console.log(this.data)
+        this.$store.commit('skpd/set', result.data.values)
+      });
 
   },
 
@@ -177,12 +179,13 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-         
+          let idbkd = this.$store.state.auth.authLogin['bkdid']
           this.$store.dispatch('skpd/skpdadd', {
               namaSkpd: values.name,
               alamatSkpd: values.address,
               kabupatenSkpd: 'makassar',
               notelpSkpd: values.telp,
+              bkdid: idbkd,
 
             }).then(result => {
               this.alert = {type: 'success', message: result.data.message}
