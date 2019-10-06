@@ -258,17 +258,19 @@
 
 <script>
 export default {
-  computed: {
-    nama() {
-      if (this.$store.state.auth.authUser) {
-        return this.$store.state.auth.authUser.nama;
-      }
-      return "BKD";
-    }
-  },
-  methods: {
+   computed: {
+     nama() {
+       if(this.$store.state.localStorage.authUser){
+         return this.$store.state.localStorage.authUser.nama
+       }
+       return 'BKD'
+       
+     }
+   },
+   methods: {
     logOut() {
       this.$store.dispatch("auth/reset").then(() => {
+        this.$store.dispatch("localStorage/reset")
         this.$router.push("/");
       });
     }

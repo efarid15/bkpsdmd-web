@@ -314,15 +314,16 @@
 </template>
 <script>
 export default {
-  computed: {
-    nama() {
-      if (this.$store.state.auth.authUser) {
-        return this.$store.state.auth.authUser.nama;
-      }
-      return "Pengguna";
-    }
-  },
-  methods: {
+   computed: {
+     nama() {
+       if(this.$store.state.localStorage.authUser){
+         return this.$store.state.localStorage.authUser.nama
+       }
+       return 'Pengguna'
+       
+     }
+   },
+   methods: {
     logOut() {
       this.$store.dispatch("auth/reset").then(() => {
         this.$router.push("/");
