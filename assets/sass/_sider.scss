@@ -61,20 +61,20 @@
                 & i {
                     color: rgba($color: #ffffff, $alpha: .45);
                 }
-                & .mh-svg-icon {
-                    margin-bottom: -6px;
-                    margin-right: 8px;
-                    position: relative;
-                    & g [fill] {
-                        fill: rgba($color: #fff, $alpha: .25);
-                    }
+            }
+            & .mh-svg-icon {
+                margin-bottom: -6px;
+                margin-right: 8px;
+                position: relative;
+                & g [fill] {
+                    fill: rgba($color: #fff, $alpha: .25);
                 }
             }
         }
         & .ant-menu-submenu {
             & .ant-menu-sub {
                 & .ant-menu-item {
-                    padding-left: 24px !important;
+                    padding-left: 32px !important;
                     & i {
                         font-size: 10px;
                     }
