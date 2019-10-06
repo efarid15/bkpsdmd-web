@@ -61,6 +61,14 @@
                 & i {
                     color: rgba($color: #ffffff, $alpha: .45);
                 }
+                & .mh-svg-icon {
+                    margin-bottom: -6px;
+                    margin-right: 8px;
+                    position: relative;
+                    & g [fill] {
+                        fill: rgba($color: #fff, $alpha: .25);
+                    }
+                }
             }
         }
         & .ant-menu-submenu {
@@ -69,6 +77,14 @@
                     padding-left: 24px !important;
                     & i {
                         font-size: 10px;
+                    }
+                    & .mh-svg-icon {
+                        margin-bottom: -6px;
+                        margin-right: 8px;
+                        position: relative;
+                        & g [fill] {
+                            fill: rgba($color: #fff, $alpha: .25);
+                        }
                     }
                 }
             }
@@ -79,6 +95,14 @@
                 color: rgba($color: #ffffff, $alpha: 1);
                 & i {
                     color: rgba($color: #ffffff, $alpha: 1);
+                }
+                & .mh-svg-icon {
+                    margin-bottom: -6px;
+                    margin-right: 8px;
+                    position: relative;
+                    & g [fill] {
+                        fill: rgba($color: #fff, $alpha: .5);
+                    }
                 }
             }
         }
