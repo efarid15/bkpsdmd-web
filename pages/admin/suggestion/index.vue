@@ -11,7 +11,8 @@
       <a-list-item slot="renderItem" slot-scope="item, index" :key="index">
         <a-comment :author="item.author" :avatar="item.avatar">
           <div slot="content">
-            {{item.content}}
+            <h4>Titel Saran</h4>
+            <div>{{item.content}}</div>
             <div style="color:#9e9e9e;font-size:12px;margin-top:8px;">
               <a-tooltip :title="item.datetime.format('YYYY-MM-DD HH:mm:ss')">
                 <span>{{item.datetime.fromNow()}}</span>
