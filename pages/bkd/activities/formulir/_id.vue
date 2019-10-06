@@ -53,7 +53,7 @@
       <div class="title fs-18">Formulir Peserta Kegiatan</div>
 
       <div style="padding: 0 24px 24px 24px">
-        <a-form layout="vertical" :form="form" @submit="handleSubmit" hideRequiredMark>
+        <a-form layout="vertical" :form="form"  @submit="handleSubmit" hideRequiredMark>
           <div v-for="(member, index) in form.getFieldValue('keys')" :key="member">
             <a-row :gutter="16" type="flex" justify="space-around" align="middle">
               <a-col :xs="24" :sm="6" :md="6">
@@ -262,7 +262,6 @@ export default {
       
       this.$store.dispatch("skpd/skpdfetch").then(({ data }) => {
         this.skpd = data.values;
-        console.log(this.skpd);
         
       });
 
@@ -287,12 +286,13 @@ export default {
           this.peserta = []
           this.peserta = values
           //console.log(this.peserta)
-          
+          //let keys = this.form.getFieldValue("keys");
           //let pengajuanID = this.$route.params.id
           //let bkdID = this.$store.state.auth.authLogin["bkdid"]
-
+          //console.log(keys)
+      
           for(let index=0; index < this.peserta.keys.length; index++ ){
-            /*this.$store.dispatch('users/memberuseradd', {
+            this.$store.dispatch('users/memberuseradd', {
             nip: this.peserta.nip[index],
             idbkd: bkdID,
             idskpd: this.peserta.skpd[index],
@@ -319,12 +319,8 @@ export default {
             if (error.response && error.response.data) {
               
             }
-          })*/
-          console.log(this.peserta)
-          this.remove(`${keys}`)
-          console.log(index)
-          
-
+          })
+          //console.log(this.form.getFieldValue("keys"))
           
           }
 
