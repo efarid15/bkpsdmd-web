@@ -100,6 +100,13 @@ export const actions = {
                 return response
             })
     },
+    ruanganfind ({commit}, params) {
+        return axios.get('ruangan/')
+            .then(response => {
+                commit('setKampus', response.values)
+                return response
+            })
+    },
     kampusfindruangan ({commit}, params) {
         return axios.get('kampus/ruangan/')
             .then(response => {
@@ -116,6 +123,13 @@ export const actions = {
     },
     ruanganadd ({commit}, data) {
         return api.kampus.addRuangan(data)
+            .then(response => {
+                commit('setRuangan', response.data)
+                return response
+            })
+    },
+    ruanganedit ({commit}, data) {
+        return api.kampus.editRuangan(data)
             .then(response => {
                 commit('setRuangan', response.data)
                 return response

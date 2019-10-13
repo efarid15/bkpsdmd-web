@@ -113,7 +113,7 @@
       <a-form layout="vertical" :form="form" @submit="handleSubmitEdit" hideRequiredMark>
         <a-form-item label="Nama Tempat Kegiatan" has-feedback>
           <a-input
-            v-decorator="['nameEdit',{initialValue: 'Campus I', rules: [{ required: true, message: 'Harus di isi!' }]}]"
+             v-decorator="['nameEdit', {initialValue: 'Campus I', rules: [{ required: true, message: 'Harus di isi!', },]}]" disabled
           />
         </a-form-item>
          <a-form-item label="Ruangan" has-feedback>
@@ -383,23 +383,20 @@ export default {
 
 
     showEdit(key) {
-      axios.get(`kampus/${key}`).then(result => {
+      axios.get(`vruangan/${key}`).then(result => {
 
         console.log(result.data.values)
         
         let res = result.data.values[0]
-        this.$store.commit('tempat/setTempat', result.data.values[0])
+        this.$store.commit('kampus/setRuangan', result.data.values[0])
         
         
-        let namaTempat = res['namatempat']
-        let ruanganTempat = res['ruangan']
-        let alamatTempat = res['alamat']
-
+        let namaKampus = res['namakampus']
+        let ruanganKampus = res['namaruangan']
+        
         this.form.setFieldsValue({
-          nameEdit: namaTempat,
-          roomEdit: ruanganTempat,
-          addressEdit: alamatTempat,
-          
+          nameEdit: namaKampus,
+          roomEdit: ruanganKampus,
 
         });
 
@@ -414,20 +411,17 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          const resid = this.$store.state.tempat.tempat['id']
-          console.log(resid)
-          this.$store.dispatch('tempat/tempatedit', {
-            namaTempat: values.nameEdit,
-            ruanganTempat: values.roomEdit,
-            alamatTempat: values.addressEdit,
-            tempatId: resid,
+          const ruanganid = this.$store.state.kampus.ruangan['id']
+          this.$store.dispatch('kampus/ruanganedit', {
+            namaRuangan: values.roomEdit,
+            idRuangan: ruanganid,
 
           }).then(result => {
             this.alert = {type: 'success', message: result.data.message}
             
-            this.$store.dispatch('tempat/tempatfetch').then( ({ data }) => {
+            this.$store.dispatch('kampus/vkampusfetch').then( ({ data }) => {
             this.data = data.values
-            this.$store.commit('tempat/set', data.values)
+            this.$store.commit('kampus/set', data.values)
             console.log(data)
             this.visibleEdit = false
               })
@@ -445,10 +439,10 @@ export default {
     },
 
     onDelete (key) {
-      axios.delete(`tempat/${key}`).then(result => {
-         this.$store.dispatch('tempat/tempatfetch').then( ({ data }) => {
+      axios.delete(`ruangan/${key}`).then(result => {
+         this.$store.dispatch('kampus/vkampusfetch').then( ({ data }) => {
             this.data = data.values
-            this.$store.commit('tempat/set', data.values)
+            this.$store.commit('kampus/set', data.values)
       })  
       }).catch(error => {
             this.loading = false
