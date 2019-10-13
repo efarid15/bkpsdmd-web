@@ -354,6 +354,7 @@ export default {
       axios.get(`pengajuan/${key}`).then(result => {
         
             this.pengajuan = result.data.values
+            console.log(this.pengajuan)
             
             this.$store.commit("pengajuan/setPengajuan", result.data.values);
        
@@ -372,12 +373,12 @@ export default {
           let iddiklat = this.pengajuan[0]['namakegiatan']
           let idkategori = this.pengajuan[0]['idkategori']
           
-          if(idkategori === 0){
+          if(idkategori === "0"){
            this.visibleApprovelatpim = true
            this.visibleApprovelatsar = false
            console.log("latpim")
           }
-          else {
+          else if(idkategori === "1") {
            this.visibleApprovelatpim = false
            this.visibleApprovelatsar = true
            console.log("latsar")
@@ -519,42 +520,85 @@ export default {
         if (!err) {
           let idkategori = "0"
           let idpengajuan = this.$store.state.pengajuan.pengajuan[0]['id']
+          let iddiklat = this.$store.state.pengajuan.pengajuan[0]['iddiklat']
           let statuspengajuan = "A"
-          
-          //start approve
 
-          this.$store.dispatch('pengajuan/setapprove', {
-            pengajuanId: idpengajuan,
-            statusPengajuan: statuspengajuan,
-            
-          }).then(result => {
-            this.alert = {type: 'success', message: result.data.message}
-          
           //start simpan detail
             this.$store.dispatch('detailpengajuan/detailpengajuanadd', {
-              idKampus: camplatpim.values,
-              idRuangan: roomlatpim.values,
+              idJenisdiklat: iddiklat,
+              idKampus: values.camplatpim,
+              idRuangan: values.roomlatpim,
               idPengajuan: idpengajuan,
-              idMentor: pengajarlatpim.values,
-              tglStartoncamp1: tgllatpim1[0],
-              tglEndoncamp1: tgllatpim1[1], 
-              tglStartoncamp2: tgllatpim2[0],
-              tglEndoncamp2: tgllatpim2[1], 
-              tglStartoncamp3: tgllatpim3[0],
-              tglEndoncamp3: tgllatpim3[1],
-              tglMulai: tgllatpim1[0],
-              tglAkhir: tgllatpim3[1],
-              file: filelatpim.values
-    
+              idMentor: values.pengajarlatpim,
+              tglStartoncamp1: values.tgllatpim1[0],
+              tglEndoncamp1: values.tgllatpim1[1], 
+              tglStartoncamp2: values.tgllatpim2[0],
+              tglEndoncamp2: values.tgllatpim2[1], 
+              tglStartoncamp3: values.tgllatpim3[0],
+              tglEndoncamp3: values.tgllatpim3[1],
+              tglMulai: values.tgllatpim1[0],
+              tglAkhir: values.tgllatpim3[1],
+              file: values.filelatpim.file.name
             
               }).then(result => {
                 this.alert = {type: 'success', message: result.data.message}
+
+                //start approve
+
+                this.$store.dispatch('pengajuan/setapprove', {
+                pengajuanId: idpengajuan,
+                statusPengajuan: statuspengajuan,
+            
+                }).then(result => {
+                    this.alert = {type: 'success', message: result.data.message}
+                    // start get pengajuan 
+                    this.data = [];
                 
-                // start get pengajuan 
-                this.mounted();
+                this.$store.dispatch("pengajuan/pengajuanfetch").then(({ data }) => {
+                // end approve
+                
+                this.data = data.values;
+
+                for (let index = 0; index < this.data.length; index++) {
+                  const tglevent = moment(this.data[index]["tglkegiatan"]).format(
+                  "MMMM YYYY"
+                );
+                const tglsubmit = moment(this.data[index]["tglpengajuan"]).format(
+                "dddd, D MMMM YYYY"
+                );
+                this.$set(this.data[index], "tglkegiatan", tglevent);
+                this.$set(this.data[index], "tglpengajuan", tglsubmit);
+                const statpengajuan = this.data[index]["status"];
+                if (statpengajuan === "R") {
+                  this.$set(this.data[index], "status", "Menunggu Verifikasi");
+                }
+                const ptempat = this.data[index]["tempat"];
+                if (ptempat === "P") {
+                    this.$set(this.data[index], "tempat", "Pusat");
+                }
+              else if(ptempat === "K"){
+                  this.$set(this.data[index], "tempat", "Kabupaten");
+              }
+             }
+              this.$store.commit("pengajuan/set", data.values);
+              this.visibleApprovelatpim = false
+
+             });
 
                 //end get pengajuan
+   
+          
             
+                }).catch(error => {
+                    this.loading = false
+                    if (error.response && error.response.data) {
+              
+                  }
+                })
+
+          // end approve
+                
+                     
               }).catch(error => {
                 this.loading = false
                 if (error.response && error.response.data) {
@@ -563,16 +607,8 @@ export default {
             })
 
           //end simpan detail
-
-            
-          }).catch(error => {
-            this.loading = false
-            if (error.response && error.response.data) {
-              
-            }
-          })
-
-          // end approve
+          
+          
         }
       });
     },
