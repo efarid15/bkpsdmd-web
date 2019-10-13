@@ -25,7 +25,7 @@ export const mutations = {
 }
 
 export const actions = {
-    nuxtServerInit({ commit }, { req }) {
+   async nuxtServerInit({ commit }, { req }) {
         if (req.session && req.session.authLogin) {
             commit('set_login', req.session.authLogin)
         }
@@ -48,6 +48,7 @@ export const actions = {
                 commit('set_user', response.data.user)
                 setAuthToken(response.data.token)
                 cookies.set('x-access-token', response.data.token, { expires: 7000 })
+                console.log(response)
                 return response
             })
     },
