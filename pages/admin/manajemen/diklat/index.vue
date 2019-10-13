@@ -30,6 +30,13 @@
     <!-- if add diklat show modal -->
     <a-modal title="Tambah Diklat / Kegiatan" :footer="false" v-model="visibleAdd" @ok="handleAdd" centered>
       <a-form layout="vertical" :form="form" @submit="handleSubmitAdd" hideRequiredMark>
+        <a-form-item label="Kategori Diklat" :required="false">
+            <a-select style="width: 100%" v-decorator="['kategoriAdd', {rules: [{ required: true, message: 'Harus di pilih!' }]}]" showSearch placeholder="Pilih SKPD">
+                    <a-select-option value="0">LATPIM</a-select-option>
+                    <a-select-option value="1">LATSAR</a-select-option>
+            </a-select>
+                  
+        </a-form-item>
         <a-form-item label="Jenis Diklat / Kegiatan" has-feedback>
           <a-input
             v-decorator="[
@@ -58,7 +65,15 @@
     <!-- if edit diklat show modal -->
     <a-modal title="Edit Diklat/Kegiatan" :footer="false" v-model="visibleEdit" @ok="handleEdit" centered>
       <a-form layout="vertical" :form="form" @submit="handleSubmitEdit" hideRequiredMark>
-        <a-form-item label="Jenis Diklat / Kegiatan" has-feedback>
+        <a-form-item label="Kategori Diklat" :required="false">
+            <a-select style="width: 100%" v-decorator="['kategoriEdit', {rules: [{ required: true, message: 'Harus di pilih!' }]}]" showSearch placeholder="Pilih SKPD">
+                    <a-select-option value="0">LATPIM</a-select-option>
+                    <a-select-option value="1">LATSAR</a-select-option>
+            </a-select>
+                  
+        </a-form-item>
+
+        <a-form-item label="Diklat / Kegiatan" has-feedback>
           <a-input
             v-decorator="['name',{initialValue: 'Diklat I', rules: [{ required: true, message: 'Harus di isi!' }]}]"
           />
@@ -165,6 +180,7 @@ export default {
           this.$store.dispatch('diklat/diklatadd', {
               jenisDiklat: values.nameAdd,
               durasiJenis: values.timeAdd,
+              kategoriDiklat: values.kategoriAdd,
               
 
             }).then(result => {
@@ -202,13 +218,14 @@ export default {
         let res = result.data.values[0]
         this.$store.commit('diklat/setDiklat', result.data.values[0])
         
-        
+        let idKategori = res['idkategori']
         let jenisDiklat = res['jenisdiklat']
         let durasi = res['durasi']
         
         this.form.setFieldsValue({
           name: jenisDiklat,
           time: durasi,
+          kategoriEdit: idKategori,
           
 
         });
@@ -231,6 +248,7 @@ export default {
             jenisDiklat: values.name,
             durasiJenis: values.time,
             jenisId: resid,
+            kategoriDiklat: values.kategoriEdit
 
           }).then(result => {
             this.alert = {type: 'success', message: result.data.message}
@@ -238,8 +256,8 @@ export default {
             this.$store.dispatch('diklat/diklatfetch').then( ({ data }) => {
             this.data = data.values
             this.$store.commit('diklat/set', data.values)
-            console.log(data)
             this.visibleEdit = false
+            
               })
 
           }).catch(error => {

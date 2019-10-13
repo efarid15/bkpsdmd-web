@@ -12,7 +12,7 @@ export const mutations = {
 }
 
 export const actions = {
-    nuxtServerInit ({dispatch}, context) {
+    async nuxtServerInit ({dispatch}, context) {
         return new Promise((resolve, reject) => {
             const cookies = cookie.parse(context.req.headers.cookie || '')
             if (cookies.hasOwnProperty('x-access-token')) {
