@@ -6,24 +6,40 @@ import axios from "axios";
 
 export const state = () => ({
     list: [],
-    kampus: {},
+    listkampus: [],
+    campus: {},
+    ruangan: {},
 })
 
 export const mutations = {
     set(state, kampuss) {
         state.list = kampuss
     },
+    setKampus(state, campuss) {
+        state.listkampus = campuss
+    },
     add(state, value) {
         merge(state.list, value)
+    },
+    addKampus(state, value) {
+        merge(state.listkampus, value)
     },
     remove(state, {kampus}) {
         state.list.splice(state.list.indexOf(kampus), 1)
     },
-    setKampus(state, kampus) { state.kampus = kampus },
+    removeKampus(state, {kampus}) {
+        state.listkampus.splice(state.listkampus.indexOf(kampus), 1)
+    },
+    setCampus(state, campus) { state.campus = campus },
+    setRuangan(state, ruangan) { state.ruangan = ruangan },
 
-    removeKampus(state, kampus) { 
-        state.list.splice(state.list.indexOf(kampus), 1)
+    removeRuangan(state, ruangan) { 
+        state.list.splice(state.list.indexOf(ruangan), 1)
+     },
+     removeCampus(state, campus) { 
+        state.listkampus.splice(state.listkampus.indexOf(campus), 1)
      }
+    
 }
 
 export const actions = {
@@ -95,6 +111,13 @@ export const actions = {
         return api.kampus.addKampus(data)
             .then(response => {
                 commit('setKampus', response.data)
+                return response
+            })
+    },
+    ruanganadd ({commit}, data) {
+        return api.kampus.addRuangan(data)
+            .then(response => {
+                commit('setRuangan', response.data)
                 return response
             })
     },
