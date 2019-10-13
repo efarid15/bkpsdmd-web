@@ -275,6 +275,7 @@ export default {
         keys: nextKeys,
         
       });
+      console.log(keys)
 
       
     },
@@ -288,7 +289,7 @@ export default {
           //console.log(this.peserta)
           //let keys = this.form.getFieldValue("keys");
           //let pengajuanID = this.$route.params.id
-          //let bkdID = this.$store.state.auth.authLogin["bkdid"]
+          let bkdID = this.$store.state.localStorage.authUser["bkdid"]
           //console.log(keys)
       
           for(let index=0; index < this.peserta.keys.length; index++ ){

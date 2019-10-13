@@ -63,6 +63,8 @@
   </div>
 </template>
 <script>
+import {setAuthToken, resetAuthToken} from '~/utils/auth'
+
 export default {
   layout: "login",
   name: "login",
@@ -97,8 +99,9 @@ export default {
             })
             .then(result => {
               this.alert = { type: "success", message: result.data.message };
-              this.loading = false;
               this.user = result.data.user;
+              this.$store.commit("auth/set_user", result.data.user);
+              this.$store.commit("localStorage/set_user", result.data.user);
 
               switch (this.user["roleuser"]) {
                 case "admin":
@@ -114,11 +117,10 @@ export default {
                   this.$router.push("/member/dashboard");
                   break;
                 default:
-                  this.$router.push("/login");
+                  this.$router.push("/dashboard");
               }
               
-              this.$store.commit("auth/set_user", result.data.user);
-              this.$store.commit("localStorage/set_user", result.data.user);
+              
             })
             .catch(error => {
               this.loading = false;
@@ -127,6 +129,7 @@ export default {
                   type: "error",
                   message: error.response.data.message || error.reponse.status
                 };
+                console.log(error)
               }
             });
           // return this.$router.push("/dashboard");
