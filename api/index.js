@@ -57,6 +57,7 @@ export default {
         getVKampus: () => axios.get('vkampus'),
         addKampus: (data) => axios.post('kampus', data),
         addRuangan: (data) => axios.post('ruangan', data),
+        editRuangan: (data) => axios.put('ruangan', data),
         editKampus: (data) => axios.put('kampus', data),
         deleteKampus: (data) => axios.delete('kampus', data),
     },
