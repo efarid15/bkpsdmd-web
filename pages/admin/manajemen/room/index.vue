@@ -1,8 +1,32 @@
 <template>
   <div class="container">
+
+     <a-row :gutter="16" type="flex" justify="space-around" align="middle" class="p24">
+      <a-col :xs="12" :sm="12" :md="12">
+        <div class="title">Kampus Diklat</div>
+      </a-col>
+      <a-col :xs="12" :sm="12" :md="12" class="text-right">
+        <a-button
+          @click="showAddKampus"
+          type="primary"
+          icon="plus"
+        >Tambah</a-button>
+      </a-col>
+    </a-row>
+
+    <a-table :columns="camps" :dataSource="kampus" :scroll="{ x: 980 }" rowKey="id">
+      <span slot="actionkampus" slot-scope="text, record">
+        <a-button size="small" type="link" class="color-blue" @click="showEditKampus(record.id)">Edit</a-button>
+        <a-divider type="vertical"></a-divider>
+      </span>
+    </a-table>
+
+
+
+
     <a-row :gutter="16" type="flex" justify="space-around" align="middle" class="p24">
       <a-col :xs="12" :sm="12" :md="12">
-        <div class="title">Tempat Diklat / Kegiatan</div>
+        <div class="title">Ruangan Kampus</div>
       </a-col>
       <a-col :xs="12" :sm="12" :md="12" class="text-right">
         <a-button
@@ -26,28 +50,66 @@
       </span>
     </a-table>
 
-    <!-- if add room show modal -->
-    <a-modal title="Tambah Tempat Kegiatan" :footer="false" v-model="visibleAdd" @ok="handleAdd" centered>
-      <a-form layout="vertical" :form="form" @submit="handleSubmitAdd" hideRequiredMark>
-        <a-form-item label="Nama Tempat Kegiatan" has-feedback>
+    <!-- if add Kampus show modal -->
+    <a-modal title="Tambah Kampus" :footer="false" v-model="visibleAddKampus" @ok="handleAddKampus" centered>
+      <a-form layout="vertical" :form="form" @submit="handleSubmitAddKampus" hideRequiredMark>
+        <a-form-item label="Nama Kampus" has-feedback>
           <a-input
-            v-decorator="['nameAdd',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
+            v-decorator="['nameAddKampus',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
           />
+        </a-form-item>
+        <a-form-item label="Alamat">
+          <a-textarea :rows="4" v-decorator="['addressAddKampus',{rules: [{ required: true, message: 'Harus di isi!' }]}]" />
+        </a-form-item>
+        <a-button type="primary" html-type="submit">Simpan</a-button>
+      </a-form>
+    </a-modal>
+
+    <!-- if edit kampus show modal -->
+    <a-modal title="Edit Kampus" :footer="false" v-model="visibleEditKampus" @ok="handleEditKampus" centered>
+      <a-form layout="vertical" :form="form" @submit="handleSubmitEditKampus" hideRequiredMark>
+        <a-form-item label="Nama Kampus" has-feedback>
+          <a-input
+            v-decorator="['nameEditKampus',{initialValue: 'Campus I', rules: [{ required: true, message: 'Harus di isi!' }]}]"
+          />
+        </a-form-item>
+        <a-form-item label="Alamat">
+          <a-textarea :rows="4" v-decorator="['addressEdit',{initialValue: 'Jl. BTP Blok A No 537', rules: [{ required: true, message: 'Harus di isi!' }]}]" />
+        </a-form-item>
+        <a-button type="primary" html-type="submit">Simpan Perubahan</a-button>
+      </a-form>
+    </a-modal>
+
+    <!-- if add room show modal -->
+    <a-modal title="Tambah Ruangan" :footer="false" v-model="visibleAdd" @ok="handleAdd" centered>
+      <a-form layout="vertical" :form="form" @submit="handleSubmitAdd" hideRequiredMark>
+        <a-form-item label="Nama Kampus" has-feedback>
+          <a-select
+            v-decorator="['kampus',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
+            placeholder="Pilih Kampus"
+            setFieldsValue="selectKampus"
+            
+          >
+            <a-select-option
+              v-for="(item) in kampus"
+              :value="item.id"
+              v-bind:key="item.id"
+            >{{ item.namakampus }}</a-select-option>
+            <!-- <a-select-option value="1">Kegiatan 1</a-select-option>
+            <a-select-option value="2">Kegiatan 2</a-select-option>-->
+          </a-select>
         </a-form-item>
         <a-form-item label="Ruangan" has-feedback>
           <a-input
             v-decorator="['roomAdd',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
           />
         </a-form-item>
-        <a-form-item label="Alamat">
-          <a-textarea :rows="4" v-decorator="['addressAdd',{rules: [{ required: true, message: 'Harus di isi!' }]}]" />
-        </a-form-item>
         <a-button type="primary" html-type="submit">Simpan</a-button>
       </a-form>
     </a-modal>
 
     <!-- if edit room show modal -->
-    <a-modal title="Edit Tempat Kegiatan" :footer="false" v-model="visibleEdit" @ok="handleEdit" centered>
+    <a-modal title="Edit Ruangan" :footer="false" v-model="visibleEdit" @ok="handleEdit" centered>
       <a-form layout="vertical" :form="form" @submit="handleSubmitEdit" hideRequiredMark>
         <a-form-item label="Nama Tempat Kegiatan" has-feedback>
           <a-input
@@ -59,9 +121,6 @@
             v-decorator="['roomEdit',{initialValue: '1B Lantai 1', rules: [{ required: true, message: 'Harus di isi!' }]}]"
           />
         </a-form-item>
-        <a-form-item label="Alamat">
-          <a-textarea :rows="4" v-decorator="['addressEdit',{initialValue: 'Jl. BTP Blok A No 537', rules: [{ required: true, message: 'Harus di isi!' }]}]" />
-        </a-form-item>
         <a-button type="primary" html-type="submit">Simpan Perubahan</a-button>
       </a-form>
     </a-modal>
@@ -69,6 +128,29 @@
 </template>
 <script>
 import axios from 'axios'
+const camps = [
+  {
+    title: "No",
+    dataIndex: "id",
+    key: "id"
+  },
+  {
+    title: "Nama Kampus",
+    dataIndex: "namakampus",
+    key: "namakampus"
+  },
+  {
+    title: "Alamat",
+    dataIndex: "alamat",
+    key: "alamat"
+  },
+  {
+    title: "Action",
+    fixed: "right",
+    width: 160,
+    scopedSlots: { customRender: "actionkampus" }
+  }
+]
 const columns = [
   {
     title: "No",
@@ -76,7 +158,7 @@ const columns = [
     key: "id"
   },
   {
-    title: "Tempat Kegiatan",
+    title: "Nama Kampus",
     dataIndex: "namakampus",
     key: "namakampus"
   },
@@ -84,11 +166,6 @@ const columns = [
     title: "Ruangan",
     dataIndex: "namaruangan",
     key: "namaruangan"
-  },
-  {
-    title: "Alamat",
-    dataIndex: "alamat",
-    key: "alamat"
   },
   {
     title: "Action",
@@ -134,12 +211,22 @@ export default {
     return {
       visibleAdd: false,
       visibleEdit: false,
+      visibleAddKampus: false,
+      visibleEditKampus: false,
       data: [],
-      columns
+      kampus: [],
+      campus: {},
+      columns,
+      camps
     };
   },
 
   mounted () {
+    this.$store.dispatch('kampus/kampusfetch').then( ({ data }) => {
+      this.kampus = data.values
+      this.$store.commit('kampus/setKampus', data.values)
+    })
+
     this.$store.dispatch('kampus/vkampusfetch').then( ({ data }) => {
       this.data = data.values
       this.$store.commit('kampus/set', data.values)
@@ -150,6 +237,7 @@ export default {
   methods: {
     showAdd() {
       this.visibleAdd = true;
+      
     },
     handleAdd() {
       this.visibleAdd = false;
@@ -160,18 +248,17 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
 
-        this.$store.dispatch('tempat/tempatadd', {
-              namaTempat: values.nameAdd,
-              ruanganTempat: values.roomAdd,
-              alamatTempat: values.addressAdd,
+        this.$store.dispatch('kampus/ruanganadd', {
+              idKampus: values.kampus,
+              ruanganKampus: values.roomAdd,
               
 
             }).then(result => {
               this.alert = {type: 'success', message: result.data.message}
             
-              this.$store.dispatch('tempat/tempatfetch').then( ({ data }) => {
+              this.$store.dispatch('kampus/vkampusfetch').then( ({ data }) => {
                 this.data = data.values
-                this.$store.commit('tempat/set', data.values)
+                this.$store.commit('kampus/set', data.values)
                 this.visibleAdd = false
             
                }).catch(error => {
@@ -197,8 +284,108 @@ export default {
       });
     },
 
+    showAddKampus() {
+      this.visibleAddKampus = true;
+    },
+    handleAddKampus() {
+      this.visibleAddKampus = false;
+    },
+
+    showEditKampus(key){
+      axios.get(`kampus/${key}`).then(result => {
+        console.log(result.data.values)
+        
+        let res = result.data.values[0]
+        this.$store.commit('kampus/setCampus', result.data.values[0])
+        
+        
+        let namaTempat = res['namakampus']
+        let alamatTempat = res['alamat']
+
+        this.form.setFieldsValue({
+          nameEditKampus: namaTempat,
+          addressEdit: alamatTempat,
+          
+
+        });
+
+        
+      })
+
+      this.visibleEditKampus = true;
+    },
+
+    handleEditKampus() {
+      this.visibleEditKampus = false;
+    },
+
+    handleSubmitEditKampus(e) {
+      e.preventDefault();
+      this.form.validateFields((err, values) => {
+        if (!err) {
+           
+          const residkampus = this.$store.state.kampus.campus['id']
+
+          console.log(residkampus)
+          this.$store.dispatch('kampus/kampusedit', {
+            namaKampus: values.nameEditKampus,
+            alamatKampus: values.addressEdit,
+            kampusId: residkampus,
+
+          }).then(result => {
+            this.alert = {type: 'success', message: result.data.message}
+            
+            this.$store.dispatch('kampus/kampusfetch').then( ({ data }) => {
+            this.kampus = data.values
+            this.$store.commit('kampus/setKampus', data.values)
+            this.visibleEditKampus = false
+              })
+
+          }).catch(error => {
+            this.loading = false
+            if (error.response && error.response.data) {
+              //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+            }
+          })
+          
+        }
+      });
+    },
+
+    handleSubmitAddKampus(e) {
+      e.preventDefault();
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          
+          this.$store.dispatch('kampus/kampusadd', {
+            namaKampus: values.nameAddKampus,
+            alamatKampus: values.addressAddKampus,
+
+          }).then(result => {
+            this.alert = {type: 'success', message: result.data.message}
+            
+            this.$store.dispatch('kampus/kampusfetch').then( ({ data }) => {
+            this.kampus = data.values
+            this.$store.commit('kampus/setKampus', data.values)
+            this.visibleAddKampus = false
+              })
+
+          }).catch(error => {
+            this.loading = false
+            if (error.response && error.response.data) {
+              //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+            }
+          })
+          
+        }
+      });
+    },
+
+
     showEdit(key) {
-      axios.get(`tempat/${key}`).then(result => {
+      axios.get(`kampus/${key}`).then(result => {
+
+        console.log(result.data.values)
         
         let res = result.data.values[0]
         this.$store.commit('tempat/setTempat', result.data.values[0])
