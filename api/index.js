@@ -75,7 +75,7 @@ export default {
         setApprove: (data) => axios.put('pengajuan', data),
         setReject: (data) => axios.put('pengajuan/reject', data),
         addPengajuan: (data) => axios.post('pengajuan', data),
-        editPengajuan: (data) => axios.put('pengajuan', data),
+        //editPengajuan: (data) => axios.put('pengajuan', data),
     },
    
     kabupaten: {

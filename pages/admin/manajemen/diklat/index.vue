@@ -31,7 +31,7 @@
     <a-modal title="Tambah Diklat / Kegiatan" :footer="false" v-model="visibleAdd" @ok="handleAdd" centered>
       <a-form layout="vertical" :form="form" @submit="handleSubmitAdd" hideRequiredMark>
         <a-form-item label="Kategori Diklat" :required="false">
-            <a-select style="width: 100%" v-decorator="['kategoriAdd', {rules: [{ required: true, message: 'Harus di pilih!' }]}]" showSearch placeholder="Pilih SKPD">
+            <a-select style="width: 100%" v-decorator="['kategoriAdd', {rules: [{ required: true, message: 'Harus di pilih!' }]}]" showSearch placeholder="Pilih Kategori Diklat">
                     <a-select-option value="0">LATPIM</a-select-option>
                     <a-select-option value="1">LATSAR</a-select-option>
             </a-select>
@@ -66,7 +66,7 @@
     <a-modal title="Edit Diklat/Kegiatan" :footer="false" v-model="visibleEdit" @ok="handleEdit" centered>
       <a-form layout="vertical" :form="form" @submit="handleSubmitEdit" hideRequiredMark>
         <a-form-item label="Kategori Diklat" :required="false">
-            <a-select style="width: 100%" v-decorator="['kategoriEdit', {rules: [{ required: true, message: 'Harus di pilih!' }]}]" showSearch placeholder="Pilih SKPD">
+            <a-select style="width: 100%" v-decorator="['kategoriEdit', {rules: [{ required: true, message: 'Harus di pilih!' }]}]" showSearch placeholder="Pilih Kategori Diklat">
                     <a-select-option value="0">LATPIM</a-select-option>
                     <a-select-option value="1">LATSAR</a-select-option>
             </a-select>
