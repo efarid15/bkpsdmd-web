@@ -12,38 +12,53 @@
       <div style="padding: 24px">
         <div class="fs-16 cr-black" style="margin-bottom: 8px">Informasi Kegiatan</div>
         <a-row :gutter="16">
-          <a-col :xs="24" :sm="12" :md="10" style="margin-bottom: 16px">
+          <a-col :xs="24" :sm="12" :md="6" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Jenis Kegiatan</div>
             <div
               class="fs-14 cr-black text-capitalize"
             >{{ this.detail.jenisdiklat }}</div>
           </a-col>
-          <a-col :xs="24" :sm="12" :md="4" style="margin-bottom: 16px">
+          <a-col :xs="24" :sm="12" :md="6" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Jumlah Peserta</div>
             <div class="fs-14 cr-black text-capitalize">{{ this.detail.jmlpeserta }}</div>
           </a-col>
-          <a-col :xs="24" :sm="12" :md="5" style="margin-bottom: 16px">
+          <a-col :xs="24" :sm="12" :md="6" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Tanggal Mulai</div>
             <div class="fs-14 cr-black text-capitalize">{{ this.detail.tglmulai }}</div>
           </a-col>
-          <a-col :xs="24" :sm="12" :md="5" style="margin-bottom: 16px">
+          <a-col :xs="24" :sm="12" :md="6" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Tanggal Berakhir</div>
             <div class="fs-14 cr-black text-capitalize">{{ this.detail.tglberakhir }}</div>
           </a-col>
         </a-row>
 
         <a-row :gutter="16">
-          <a-col :xs="24" :sm="12" :md="10" style="margin-bottom: 16px">
+          <a-col :xs="24" :sm="12" :md="6" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Tempat Kegiatan</div>
             <div class="fs-14 cr-black text-capitalize">{{ this.detail.namakampus }}</div>
           </a-col>
-          <a-col :xs="24" :sm="12" :md="4" style="margin-bottom: 16px">
+          <a-col :xs="24" :sm="12" :md="6" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Ruangan</div>
             <div class="fs-14 cr-black text-capitalize">{{ this.detail.namaruangan }}</div>
           </a-col>
-          <a-col :xs="24" :sm="24" :md="10" style="margin-bottom: 16px">
+          <a-col :xs="24" :sm="24" :md="6" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Alamat</div>
             <div class="fs-14 cr-black text-capitalize">{{ this.detail.alamat }}</div>
+          </a-col>
+        </a-row>
+
+        <a-row :gutter="16">
+          <a-col :xs="12" :sm="8" :md="6" style="margin-bottom: 16px">
+            <div class="fs-12 cr-gray text-uppercase">Tgl on Campus I</div>
+            <div class="fs-14 cr-black text-capitalize">{{ this.detail.tglstartoncamp1 }} - {{ this.detail.tglendoncamp1 }}</div>
+          </a-col>
+          <a-col :xs="12" :sm="8" :md="6" style="margin-bottom: 16px">
+            <div class="fs-12 cr-gray text-uppercase">Tgl On Campus II</div>
+            <div class="fs-14 cr-black text-capitalize">{{ this.detail.tglstartoncamp2 }} - {{ this.detail.tglendoncamp2 }}</div>
+          </a-col>
+          <a-col :xs="12" :sm="8" :md="6" style="margin-bottom: 16px">
+            <div class="fs-12 cr-gray text-uppercase">Tgl on Campus III</div>
+            <div class="fs-14 cr-black text-capitalize"><span>{{ this.detail.tglstartoncamp3 }}</span> - {{ this.detail.tglendoncamp3 }}</div>
           </a-col>
         </a-row>
       </div>
@@ -226,7 +241,38 @@ export default {
         let tglend = moment(this.detail.tglberakhir).format('dddd, D MMMM YYYY')
         this.$set(this.detail, 'tglberakhir', tglend)
 
-        
+        let tglstart1 = moment(this.detail.tglstartoncamp1).format("DD MMM YYYY");
+      this.$set(this.detail, "tglstartoncamp1", tglstart1);
+      let tglend1 = moment(this.detail.tglendoncamp1).format("DD MMM YYYY");
+      this.$set(this.detail, "tglendoncamp1", tglend1);
+
+      let tglstart2 = moment(this.detail.tglstartoncamp2).format("DD MMM YYYY");
+      this.$set(this.detail, "tglstartoncamp2", tglstart2);
+      let tglend2 = moment(this.detail.tglendoncamp2).format("DD MMM YYYY");
+      this.$set(this.detail, "tglendoncamp2", tglend2);
+
+      
+      if(this.detail.tglstartoncamp3 != null){
+         let tglstart3 = moment(this.detail.tglstartoncamp3).format("DD MMM YYYY");
+         console.log(tglstart3)
+         this.$set(this.detail, "tglstartoncamp3", tglstart3);
+      }
+      else {
+         let tglstart3 = '-'
+         this.$set(this.detail, "tglstartoncamp3", tglstart3);
+         
+      }
+
+      if(this.detail.tglendoncamp3 != null){
+         let tglend3 = moment(this.detail.tglendoncamp3).format("DD MMM YYYY");
+         this.$set(this.detail, "tglendoncamp3", tglend3);
+      }
+      else {
+        let tglend3 = '-'
+         this.$set(this.detail, "tglendoncamp3", tglend3);
+         
+      }
+      
 
         });
       
@@ -256,6 +302,7 @@ export default {
       form.setFieldsValue({
         keys: keys.filter(key => key !== member)
       });
+      
     },
 
     add() {
@@ -275,7 +322,7 @@ export default {
         keys: nextKeys,
         
       });
-      console.log(keys)
+     // console.log(keys)
 
       
     },
@@ -288,11 +335,12 @@ export default {
           this.peserta = values
           //console.log(this.peserta)
           //let keys = this.form.getFieldValue("keys");
-          //let pengajuanID = this.$route.params.id
+          let pengajuanID = this.$route.params.id
           let bkdID = this.$store.state.localStorage.authUser["bkdid"]
-          //console.log(keys)
+                    //console.log(keys)
       
           for(let index=0; index < this.peserta.keys.length; index++ ){
+            
             this.$store.dispatch('users/memberuseradd', {
             nip: this.peserta.nip[index],
             idbkd: bkdID,
@@ -309,9 +357,6 @@ export default {
             let idpengajuan = this.$route.params.id 
              axios.get(`peserta/${idpengajuan}`).then(result => {
             this.data = result.data.values;
-            this.remove(index)
-
-            
           });
 
             
@@ -321,6 +366,8 @@ export default {
               
             }
           })
+          this.remove(index)
+
           //console.log(this.form.getFieldValue("keys"))
           
           }
