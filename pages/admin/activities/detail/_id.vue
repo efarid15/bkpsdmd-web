@@ -16,26 +16,33 @@
             <div class="fs-12 cr-gray text-uppercase" style="margin-bottom: 8px">Instansi/BKD</div>
             <div>
               <a-avatar icon="user" style="margin-right: 8px" />
-              {{ this.detail.namabkd }}
+              <strong>{{ this.detail.namabkd }}</strong>
             </div>
           </a-col>
         </a-row>
         <a-row :gutter="16">
-          <a-col :xs="24" :sm="12" :md="10" style="margin-bottom: 16px">
+          <a-col :xs="24" :sm="12" :md="8" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Jenis Kegiatan</div>
             <div class="fs-14 cr-black text-capitalize">{{ this.detail.jenisdiklat }}</div>
           </a-col>
-          <a-col :xs="24" :sm="12" :md="4" style="margin-bottom: 16px">
+          <a-col :xs="24" :sm="12" :md="8" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Jumlah Peserta</div>
             <div class="fs-14 cr-black text-capitalize">{{ this.detail.jmlpeserta }}</div>
           </a-col>
-          <a-col :xs="24" :sm="12" :md="5" style="margin-bottom: 16px">
-            <div class="fs-12 cr-gray text-uppercase">Tanggal Mulai</div>
-            <div class="fs-14 cr-black text-capitalize">{{ this.detail.tglmulai }}</div>
+          
+        </a-row>
+        <a-row :gutter="16">
+          <a-col :xs="12" :sm="8" :md="8" style="margin-bottom: 16px">
+            <div class="fs-12 cr-gray text-uppercase">Tgl on Campus I</div>
+            <div class="fs-14 cr-black text-capitalize">{{ this.detail.tglstartoncamp1 }} - {{ this.detail.tglendoncamp1 }}</div>
           </a-col>
-          <a-col :xs="24" :sm="12" :md="5" style="margin-bottom: 16px">
-            <div class="fs-12 cr-gray text-uppercase">Tanggal Berakhir</div>
-            <div class="fs-14 cr-black text-capitalize">{{ this.detail.tglberakhir }}</div>
+          <a-col :xs="12" :sm="8" :md="8" style="margin-bottom: 16px">
+            <div class="fs-12 cr-gray text-uppercase">Tgl On Campus II</div>
+            <div class="fs-14 cr-black text-capitalize">{{ this.detail.tglstartoncamp2 }} - {{ this.detail.tglendoncamp2 }}</div>
+          </a-col>
+          <a-col :xs="12" :sm="8" :md="6" style="margin-bottom: 16px">
+            <div class="fs-12 cr-gray text-uppercase">Tgl on Campus III</div>
+            <div class="fs-14 cr-black text-capitalize"><span>{{ this.detail.tglstartoncamp3 }}</span> - {{ this.detail.tglendoncamp3 }}</div>
           </a-col>
         </a-row>
       </div>
@@ -67,13 +74,13 @@ const columns = [
   },
   {
     title: "Nama Peserta",
-    dataIndex: "name",
-    key: "name"
+    dataIndex: "nama",
+    key: "nama"
   },
   {
     title: "Instansi / BKD",
-    dataIndex: "instansi",
-    key: "instansi"
+    dataIndex: "namabkd",
+    key: "namabkd"
   }
 ];
 
@@ -109,7 +116,7 @@ export default {
     return {
       detail: {},
       columns,
-      data
+      data: [],
     };
   },
 
@@ -117,14 +124,53 @@ export default {
     let idpengajuan = this.$route.params.id;
     axios.get(`pengajuan/approve/${idpengajuan}`).then(result => {
       this.detail = result.data.values[0];
+      console.log(this.detail)
 
-      let tglstart = moment(this.detail.tglmulai).format("dddd, D MMMM YYYY");
-      this.$set(this.detail, "tglmulai", tglstart);
-      let tglend = moment(this.detail.tglberakhir).format("dddd, D MMMM YYYY");
-      this.$set(this.detail, "tglberakhir", tglend);
+      let tglstart1 = moment(this.detail.tglstartoncamp1).format("DD MMM YYYY");
+      this.$set(this.detail, "tglstartoncamp1", tglstart1);
+      let tglend1 = moment(this.detail.tglendoncamp1).format("DD MMM YYYY");
+      this.$set(this.detail, "tglendoncamp1", tglend1);
+
+      let tglstart2 = moment(this.detail.tglstartoncamp2).format("DD MMM YYYY");
+      this.$set(this.detail, "tglstartoncamp2", tglstart2);
+      let tglend2 = moment(this.detail.tglendoncamp2).format("DD MMM YYYY");
+      this.$set(this.detail, "tglendoncamp2", tglend2);
+
+      
+      if(this.detail.tglstartoncamp3 != null){
+         let tglstart3 = moment(this.detail.tglstartoncamp3).format("DD MMM YYYY");
+         console.log(tglstart3)
+         this.$set(this.detail, "tglstartoncamp3", tglstart3);
+      }
+      else {
+         let tglstart3 = '-'
+         this.$set(this.detail, "tglstartoncamp3", tglstart3);
+         
+      }
+
+      if(this.detail.tglendoncamp3 != null){
+         let tglend3 = moment(this.detail.tglendoncamp3).format("DD MMM YYYY");
+         this.$set(this.detail, "tglendoncamp3", tglend3);
+      }
+      else {
+        let tglend3 = '-'
+         this.$set(this.detail, "tglendoncamp3", tglend3);
+         
+      }
+      
+
+  
+      
     });
 
     //this.baseaccount = this.$route.params.baseaccount;
-  }
+  },
+  mounted() {
+    let idpengajuan = this.$route.params.id;
+    axios.get(`peserta/${idpengajuan}`).then(result => {
+         this.data = result.data.values
+      });
+    
+  },
 };
 </script>
