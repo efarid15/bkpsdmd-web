@@ -2,6 +2,14 @@
   <div>
     <div class="container" style="margin-bottom: 16px">
       <a-row :gutter="16" type="flex" justify="space-around" align="middle" class="p24">
+      <a-alert
+              style="margin-bottom: 16px;"
+              v-if="alert"
+              :type="alert.type"
+              :message="alert.message"
+            />
+      </a-row>
+      <a-row :gutter="16" type="flex" justify="space-around" align="middle" class="p24">
         <a-col :xs="12" :sm="12" :md="12">
           <div class="title fs-18">Profil Kantor</div>
         </a-col>
@@ -30,30 +38,30 @@
         <a-list-item>
           <a-row :gutter="8" style="width: 100%">
             <a-col :xs="24" :sm="6" :md="4">
-              <span class="fs-14 cr-gray">Instansi</span>
+              <span class="fs-14 cr-gray">NIP</span>
             </a-col>
             <a-col :xs="24" :sm="18" :md="20">
-              <span class="fs-14 cr-black">Badan Kepegawaian Daerah Makassar</span>
+              <span class="fs-14 cr-black">{{ this.profil.nip }}</span>
             </a-col>
           </a-row>
         </a-list-item>
         <a-list-item>
           <a-row :gutter="8" style="width: 100%">
             <a-col :xs="24" :sm="6" :md="4">
-              <span class="fs-14 cr-gray">No. Telepon</span>
+              <span class="fs-14 cr-gray">Nama</span>
             </a-col>
             <a-col :xs="24" :sm="18" :md="20">
-              <span class="fs-14 cr-black">085213247455</span>
+              <span class="fs-14 cr-black">{{ this.profil.nama }}</span>
             </a-col>
           </a-row>
         </a-list-item>
         <a-list-item>
           <a-row :gutter="8" style="width: 100%">
             <a-col :xs="24" :sm="6" :md="4">
-              <span class="fs-14 cr-gray">Alamat</span>
+              <span class="fs-14 cr-gray">Email</span>
             </a-col>
             <a-col :xs="24" :sm="18" :md="20">
-              <span class="fs-14 cr-black">Jl. BTP Blok A No 537</span>
+              <span class="fs-14 cr-black">{{ this.profil.email }}</span>
             </a-col>
           </a-row>
         </a-list-item>
@@ -78,26 +86,21 @@
               </div>
             </a-upload>
           </a-form-item>
-          <a-form-item label="Nama Instansi" has-feedback>
-            <a-select
-              v-decorator="['bkd',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
-              placeholder="Pilih Instansi"
-              showSearch
-            >
-              <a-select-option :value="1">Badan Kepegawaian Daerah Makassar</a-select-option>
-            </a-select>
-          </a-form-item>
-
-          <a-form-item label="No. Telepon" has-feedback>
-            <a-input
-              v-decorator="['telpEdit',{initialValue: '315049', rules: [{ required: true, message: 'Harus di isi!' }]}]"
+          <a-form-item label="NIP" has-feedback>
+              <a-input
+              v-decorator="['nipEdit',{initialValue: '290876', rules: [{ required: true, message: 'Harus di isi!' }]}]"
             />
           </a-form-item>
 
-          <a-form-item label="Alamat">
-            <a-textarea
-              :rows="4"
-              v-decorator="['addressEdit',{initialValue: 'Jl. Ahmad Yani No.2', rules: [{ required: true, message: 'Harus di isi!' }]}]"
+          <a-form-item label="Nama" has-feedback>
+            <a-input
+              v-decorator="['namaEdit',{initialValue: 'Admin', rules: [{ required: true, message: 'Harus di isi!' }]}]"
+            />
+          </a-form-item>
+
+          <a-form-item label="Email" has-feedback>
+            <a-input
+              v-decorator="['emailEdit',{initialValue: 'admin@sipp-bpsdm.sulselprov.go.id', rules: [{ required: true, message: 'Harus di isi!' }]}]"
             />
           </a-form-item>
           <a-button type="primary" html-type="submit">Simpan Perubahan</a-button>
@@ -127,7 +130,7 @@
               <span class="fs-14 cr-gray">Username</span>
             </a-col>
             <a-col :xs="24" :sm="18" :md="20">
-              <span class="fs-14 cr-black">085213247455</span>
+              <span class="fs-14 cr-black">{{ this.profil.email }}</span>
             </a-col>
           </a-row>
         </a-list-item>
@@ -154,12 +157,6 @@
         centered
       >
         <a-form layout="vertical" :form="form" @submit="handleSubmitEditPassword" hideRequiredMark>
-          <a-form-item label="Password" has-feedback>
-            <a-input
-              v-decorator="['password',{rules: [{required: true, message: 'Harus di isi!',}],}]"
-              type="password"
-            />
-          </a-form-item>
           <a-form-item label="Password Baru" has-feedback>
             <a-input
               v-decorator="['newpassword',{rules: [{required: true, message: 'Harus di isi!',},{validator: validateToNextPassword,}],}]"
@@ -185,6 +182,8 @@ function getBase64(img, callback) {
   reader.addEventListener("load", () => callback(reader.result));
   reader.readAsDataURL(img);
 }
+import axios from "axios"
+
 export default {
   name: "profile",
   beforeCreate() {
@@ -195,19 +194,78 @@ export default {
       title: "Pengaturan Akun"
     };
   },
+  mounted () {
+    let userid = this.$store.state.localStorage.authUser['id']
+    
+    axios.get(`users/${userid}`).then(result => {
+        this.profil = result.data.values[0];
+        
+      });
+
+  },
   data() {
     return {
       visibleEdit: false,
       visibleEditPassword: false,
       confirmDirty: false,
       loading: false,
-      imageUrl: "https://img4.apk.tools/300/7/b/9/com.bkpsdmd.portal.sample.png"
+      alert: null,
+      imageUrl: "https://img4.apk.tools/300/7/b/9/com.bkpsdmd.portal.sample.png",
+      profil: {},
     };
   },
+
   methods: {
+    
+    handleSubmitEdit(e) {
+      e.preventDefault();
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          
+          let userid = this.$store.state.localStorage.authUser.id
+
+          axios.put('users', {
+            nip: values.nipEdit,
+            nama: values.namaEdit,
+            email: values.emailEdit,
+            user_id: this.$store.state.localStorage.authUser.id
+          }).then(result => {
+            //this.profil = result.data.values[0];
+            if(result.data.status = 200){
+              this.alert = {type: 'success', message: result.data.values}
+            }
+            
+            axios.get(`users/${userid}`).then(result => {
+              this.profil = result.data.values[0];
+        
+            });
+
+        
+          });
+
+
+          this.visibleEdit = false;
+        }
+      });
+    },
+
     showEdit() {
+
+      let nip = this.profil.nip
+      let nama = this.profil.nama
+      let email = this.profil.email
+
+      this.form.setFieldsValue({
+
+          nipEdit: nip,
+          namaEdit: nama,
+          emailEdit: email,
+          
+        });
+
       this.visibleEdit = true;
     },
+
     handleEdit() {
       this.visibleEdit = false;
     },
@@ -230,14 +288,6 @@ export default {
       }
       return isLt2M;
     },
-    handleSubmitEdit(e) {
-      e.preventDefault();
-      this.form.validateFields((err, values) => {
-        if (!err) {
-          this.visibleEdit = false;
-        }
-      });
-    },
 
     showEditPassword() {
       this.visibleEditPassword = true;
@@ -252,7 +302,7 @@ export default {
     compareToFirstPassword  (rule, value, callback) {
       const form = this.form;
       if (value && value !== form.getFieldValue('newpassword')) {
-        callback('Two passwords that you enter is inconsistent!');
+        callback('Password tidak cocok !');
       } else {
         callback();
       }
@@ -268,6 +318,19 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
+          this.alert = null;
+          axios.put('user/password', {
+            newPassword: values.newpassword,
+            userEmail: this.profil.email
+          }).then(result => {
+            //this.profil = result.data.values[0];
+            if(result.data.status = 200){
+              this.alert = {type: 'success', message: result.data.values}
+            }
+        
+          });
+
+
           this.visibleEditPassword = false;
         }
       });
