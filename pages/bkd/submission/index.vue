@@ -69,18 +69,18 @@
             v-decorator="['tempat',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
             placeholder="Pilih Tempat Kegiatan"
           >
-            <a-select-option value="1">Kantor Pusat</a-select-option>
-            <a-select-option value="2">Kabupaten</a-select-option>
+            <a-select-option value="P">Kantor Pusat</a-select-option>
+            <a-select-option value="K">Kabupaten</a-select-option>
           </a-select>
         </a-form-item>
 
         <a-form-item label="Dokumen Pengajuan">
           <a-upload-dragger
-            name="file"
+            name="dokumen"
             :multiple="true"
-            action="#"
+            action="/api/upload/bkd"
             @change="handleChange"
-            v-decorator="['file',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
+            v-decorator="['dokumen',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
           >
             <p class="ant-upload-drag-icon">
               <a-icon type="inbox" />
@@ -244,7 +244,9 @@ export default {
               idBkd: bkdid,
               namaKegiatan: values.kegiatan,
               jmlPeserta: values.jumlahpeserta,
-              tglKegiatan: tglku
+              tglKegiatan: tglku,
+              tempatpengajuan: values.tempat,
+              filepengajuan: values.dokumen.file.name
             })
             .then(result => {
               this.alert = { type: "success", message: result.data.message };
