@@ -7,6 +7,7 @@ import axios from "axios";
 export const state = () => ({
     list: [],
     pengajuan: {},
+    reject: {},
 })
 
 export const mutations = {
@@ -20,6 +21,7 @@ export const mutations = {
         state.list.splice(state.list.indexOf(pengajuan), 1)
     },
     setPengajuan(state, pengajuan) { state.pengajuan = pengajuan },
+    setReject(state, reject) { state.reject = reject },
 
     removePengajuan(state, pengajuan) { 
         state.list.splice(state.list.indexOf(pengajuan), 1)
@@ -99,6 +101,13 @@ export const actions = {
                 return response
             })
     },
+    rejectadd ({commit}, data) {
+        return api.pengajuan.addReject(data)
+            .then(response => {
+                commit('setReject', response.data)
+                return response
+            })
+    },
     pengajuanedit ({commit}, data) {
         return api.pengajuan.editPengajuan(data)
             .then(response => {
@@ -119,6 +128,15 @@ export const actions = {
     setapprove ({commit}, data) {
         console.log(data)
         return api.pengajuan.setApprove(data)
+            .then(response => {
+                //commit('removeBkd', response.data)
+                return response
+            })
+    },
+
+    setreject ({commit}, data) {
+        console.log(data)
+        return api.pengajuan.setReject(data)
             .then(response => {
                 //commit('removeBkd', response.data)
                 return response

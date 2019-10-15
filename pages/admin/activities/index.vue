@@ -4,6 +4,8 @@
 
     <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
       <span slot="action" slot-scope="text, record">
+        <nuxt-link :to="`/admin/activities/show/${record.id}`">Lihat</nuxt-link>
+        <a-divider type="vertical" />
         <nuxt-link to="/admin/activities/rundown">Rundown</nuxt-link>
         <a-divider type="vertical"></a-divider>
         <!-- <nuxt-link to="/admin/activities/detail">Detail</nuxt-link>-->
@@ -30,7 +32,7 @@ const columns = [
     title: "Action",
     key: "operation",
     fixed: "right",
-    width: 170,
+    width: 300,
     scopedSlots: { customRender: "action" }
   }
 ];
