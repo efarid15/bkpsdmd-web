@@ -7,10 +7,13 @@
         {{record.tempat}}
       </span>
       <span slot="action" slot-scope="text, record">
+        <nuxt-link :to="`/admin/submission/detail/${record.id}`">Lihat</nuxt-link>
+        <a-divider type="vertical" />
         <a @click="showApprove(record.id)" class="color-blue">Approve</a>
         <a-divider type="vertical" />
-        <a @click="showReject" class="color-red">Tolak</a>
+        <a @click="showReject(record.id)" class="color-red">Tolak</a>
       </span>
+
     </a-table>
 
     <!-- if approve latpim show modal -->
@@ -97,11 +100,11 @@
 
         <a-form-item label="Dokumen Persetujuan">
           <a-upload-dragger
-            name="file"
-            :multiple="true"
-            action="#"
+            name="dokumen"
+            :multiple="false"
+            action="/api/upload"
             @change="handleChange"
-            v-decorator="['filelatpim',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
+            v-decorator="['dokumen',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
           >
             <p class="ant-upload-drag-icon">
               <a-icon type="inbox" />
@@ -190,11 +193,11 @@
 
         <a-form-item label="Dokumen Persetujuan">
           <a-upload-dragger
-            name="file"
+            name="dokumen"
             :multiple="true"
-            action="#"
+            action="/api/upload"
             @change="handleChange"
-            v-decorator="['filelatsar',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
+            v-decorator="['dokumen',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
           >
             <p class="ant-upload-drag-icon">
               <a-icon type="inbox" />
@@ -217,11 +220,11 @@
       <a-form layout="vertical" :form="form" @submit="handleSubmitReject" hideRequiredMark>
         <a-form-item label="Dokumen Penolakan">
           <a-upload-dragger
-            name="file"
+            name="dokumen"
             :multiple="true"
-            action="#"
+            action="/api/upload/reject"
             @change="handleChange"
-            v-decorator="['fileReject',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
+            v-decorator="['dokumen',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
           >
             <p class="ant-upload-drag-icon">
               <a-icon type="inbox" />
@@ -233,7 +236,7 @@
         <a-form-item label="Alasan Penolakan">
           <a-textarea
             :rows="4"
-            v-decorator="['rejectDesc',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
+            v-decorator="['alasan',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
           />
         </a-form-item>
 
@@ -261,7 +264,7 @@ const columns = [
     title: "Action",
     key: "operation",
     fixed: "right",
-    width: 150,
+    width: 200,
     scopedSlots: { customRender: "action" }
   }
 ];
@@ -412,11 +415,7 @@ export default {
     handleSubmitLatsar(e) {
       e.preventDefault();
       this.form.validateFields((err, values) => {
-        if (!err) {
-
-
-          console.log(values.filelatsar.file.name)
-           
+        if (!err) {  
           let idkategori = "0"
           let idpengajuan = this.$store.state.pengajuan.pengajuan[0]['id']
           let iddiklat = this.$store.state.pengajuan.pengajuan[0]['iddiklat']
@@ -437,9 +436,7 @@ export default {
               tglEndoncamp3: null,
               tglMulai: values.tgllatsar1[0],
               tglAkhir: values.tgllatsar2[1],
-              file: values.filelatsar.file.name
-    
-            
+              dokumenpengajuan: values.dokumen.file.name
               }).then(result => {
                 this.alert = {type: 'success', message: result.data.message}
 
@@ -537,9 +534,7 @@ export default {
               tglStartoncamp3: values.tgllatpim3[0],
               tglEndoncamp3: values.tgllatpim3[1],
               tglMulai: values.tgllatpim1[0],
-              tglAkhir: values.tgllatpim3[1],
-              file: values.filelatpim.file.name
-            
+              tglAkhir: values.tgllatpim3[1]
               }).then(result => {
                 this.alert = {type: 'success', message: result.data.message}
 
@@ -614,7 +609,15 @@ export default {
     },
     // end submit latpim
 
-    showReject() {
+    showReject(key) {
+      axios.get(`pengajuan/${key}`).then(result => {
+
+        this.pengajuan = result.data.values
+            console.log(this.pengajuan)
+            
+            this.$store.commit("pengajuan/setPengajuan", result.data.values);
+
+      });
       this.visibleReject = true;
     },
     handleReject() {
@@ -624,7 +627,80 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          this.visibleReject = false;
+          let idpengajuan = this.$store.state.pengajuan.pengajuan[0]['id']
+          let statuspengajuan = "T"
+           this.$store.dispatch('pengajuan/rejectadd', {
+              idPengajuan: idpengajuan,
+              alasan: values.alasan,
+              dokumenreject: values.dokumen.file.name
+              }).then(result => {
+                this.alert = {type: 'success', message: result.data.message}
+
+                //start approve
+
+                this.$store.dispatch('pengajuan/setreject', {
+                pengajuanId: idpengajuan,
+                statusPengajuan: statuspengajuan,
+            
+                }).then(result => {
+                    this.alert = {type: 'success', message: result.data.message}
+                    // start get pengajuan 
+                    this.data = [];
+                
+                this.$store.dispatch("pengajuan/pengajuanfetch").then(({ data }) => {
+                // end approve
+                
+                this.data = data.values;
+
+                for (let index = 0; index < this.data.length; index++) {
+                  const tglevent = moment(this.data[index]["tglkegiatan"]).format(
+                  "MMMM YYYY"
+                );
+                const tglsubmit = moment(this.data[index]["tglpengajuan"]).format(
+                "dddd, D MMMM YYYY"
+                );
+                this.$set(this.data[index], "tglkegiatan", tglevent);
+                this.$set(this.data[index], "tglpengajuan", tglsubmit);
+                const statpengajuan = this.data[index]["status"];
+                if (statpengajuan === "R") {
+                  this.$set(this.data[index], "status", "Menunggu Verifikasi");
+                }
+                const ptempat = this.data[index]["tempat"];
+                if (ptempat === "P") {
+                    this.$set(this.data[index], "tempat", "Pusat");
+                }
+              else if(ptempat === "K"){
+                  this.$set(this.data[index], "tempat", "Kabupaten");
+              }
+             }
+              this.$store.commit("pengajuan/set", data.values);
+              this.visibleReject = false
+
+             });
+
+                //end get pengajuan
+   
+          
+            
+                }).catch(error => {
+                    this.loading = false
+                    if (error.response && error.response.data) {
+              
+                  }
+                })
+
+          // end approve
+                
+                     
+              }).catch(error => {
+                this.loading = false
+                if (error.response && error.response.data) {
+              
+              }
+            })
+
+          //end simpan detail
+          
         }
       });
     }

@@ -45,15 +45,28 @@ module.exports = {
     modules: [
         ['nuxt-vuex-localstorage', {
             mode: 'debug'
-          }]
+          }],
+          '@nuxtjs/axios',
+            '@nuxtjs/proxy'
     ],
     /*
      ** Build configuration
      */
+    axios: {
+        proxy: true
+      },
+      
+      proxy: {
+        '/api/': { target: 'https://api.bkpsdmd-sulsel.online/', pathRewrite: {'^/api/': ''}, changeOrigin: true },
+        '/pdf/': { target: 'http://www.pt-jakarta.go.id/', pathRewrite: {'^/pdf/': ''}, changeOrigin: true }
+      },
     build: {
         /*
          ** You can extend webpack config here
          */
-        extend(config, ctx) {}
+        vendor: ['vue-pdf'],
+        extend(config, ctx) {
+            config.output.globalObject = 'this'
+        }
     }
 }
