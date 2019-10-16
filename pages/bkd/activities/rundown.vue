@@ -220,6 +220,7 @@ import moment from "moment";
 let id = 0;
 export default {
   name: "rundown",
+  middleware: "auth",
   layout: "bkd",
   beforeCreate() {
     this.form = this.$form.createForm(this);

@@ -117,13 +117,8 @@ const data = [
 ];
 
 export default {
-  fetch ({store, redirect}) {
-    if (!store.state.auth.authLogin) {
-      redirect('/')
-    }
-  },
-
   name: "room",
+  middleware: "auth",
   beforeCreate() {
     this.form = this.$form.createForm(this);
   },

@@ -51,8 +51,8 @@
 </template>
 <script>
 export default {
-  name: "dashboard",
   middleware: 'auth',
+  name: "dashboard",
   layout: "bkd",
   head() {
     return {
