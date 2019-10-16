@@ -1,6 +1,6 @@
 <template>
-<div>
-<a-button
+  <div>
+    <a-button
       @click="$router.go(-1)"
       type="link"
       class="cr-gray"
@@ -8,55 +8,48 @@
       style="margin-bottom: 8px"
     >Kembali</a-button>
 
-    <div class="container">
-        <div style="width: 100%">
-          <img style="display: inline-block; width: 50%" :src="src"   />
-      <!-- <client-only>
+    <div class="container" style="padding: 16px">
+      <a-row type="flex" justify="space-around" align="middle">
+        <a-col :xs="24" :sm="24" :md="16" :lg="12">
+          <expandable-image :src="src" />
+          <!-- <img style="max-width: 100%" :src="src" /> -->
+          <!-- <client-only>
          <vuePdf style="display: inline-block; width: 100%" :src="src"></vuePdf>
-      </client-only> -->
-   </div>
+          </client-only>-->
+        </a-col>
+      </a-row>
     </div>
-
-</div>
+  </div>
 </template>
 
 <script>
-
 import axios from "axios";
 import moment from "moment";
 
 var vuePdf;
 if (process.browser) {
-  vuePdf = require('vue-pdf').default
+  vuePdf = require("vue-pdf").default;
 }
-export default { 
-   
-   components: {
-      vuePdf
-   },
+export default {
+  components: {
+    vuePdf
+  },
 
-   data() {
+  data() {
     return {
       data: [],
       detail: [],
-      src: '',
+      src: ""
     };
   },
 
-  created(){
+  created() {
     let idpengajuan = this.$route.params.id;
     axios.get(`pengajuan/${idpengajuan}`).then(result => {
       this.detail = result.data.values[0];
-      this.src = "/api/uploads/bkd/"+this.detail.filepengajuan
-      console.log(this.src)
-      
-  
-      
+      this.src = "/api/uploads/bkd/" + this.detail.filepengajuan;
+      console.log(this.src);
     });
-
-  },
-
-
-  
-}
+  }
+};
 </script>

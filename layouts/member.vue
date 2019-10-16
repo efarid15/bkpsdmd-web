@@ -5,11 +5,9 @@
         <sider-member />
       </a-layout-sider>
       <a-layout>
-        <a-affix :offsetTop="0">
-          <a-layout-header style="background: #fff;">
-            <header-member />
-          </a-layout-header>
-        </a-affix>
+        <a-layout-header style="background: #fff;">
+          <header-member />
+        </a-layout-header>
         <a-layout-content style="margin: 16px">
           <nuxt />
         </a-layout-content>
