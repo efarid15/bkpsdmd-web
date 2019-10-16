@@ -90,6 +90,11 @@ export default {
         getDetailpengajuan: () => axios.get('detailpengajuan'),
         addDetailpengajuan: (data) => axios.post('detailpengajuan', data),
     },
+    rundown: {
+        findRundown: (params) => axios.get('rundown/', params),
+        listRundown: () => axios.get('detailpengajuan'),
+        addRundown: (data) => axios.post('rundown', data),
+    },
 
 
    
