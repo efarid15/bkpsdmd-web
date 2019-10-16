@@ -49,7 +49,6 @@ export const actions = {
                 commit('set_user', response.data.user)
                 setAuthToken(response.data.token)
                 cookies.set('x-access-token', response.data.token, { expires: 7000 })
-                console.log(response)
                 return response
             })
     },

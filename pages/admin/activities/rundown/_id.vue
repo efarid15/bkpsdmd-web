@@ -52,67 +52,18 @@
       <div class="title p24">Rundown Kegiatan</div>
 
       <div style="padding: 0 24px 24px 24px;">
-        <a-timeline>
+        <a-timeline v-for="item in data" :key="item.id">
           <a-timeline-item>
             <div class="fw-500 cr-black">
-              <span class="fs-15">Hari ke 1</span>
+              <span class="fs-15">Hari ke {{ item.day }}</span>
               <a-divider type="vertical"></a-divider>
-              <span class="fs-14">Senin, 12 Januari 2020</span>
+              <span class="fs-14">{{ item.hari }}</span>
             </div>
             <div
               class="fs-14 fw-400 cr-black"
-            >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem pariatur explicabo ullam hic recusandae vel? Ab officia dolorem odio aperiam! Similique totam eos reprehenderit ipsa iure odio corporis molestiae illum!</div>
+            >{{ item.deskripsi }}</div>
           </a-timeline-item>
-          <a-timeline-item>
-            <div class="fw-500 cr-black">
-              <span class="fs-15">Hari ke 2</span>
-              <a-divider type="vertical"></a-divider>
-              <span class="fs-14">Selasa, 13 Januari 2020</span>
-            </div>
-            <div
-              class="fs-14 fw-400 cr-black"
-            >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem pariatur explicabo ullam hic recusandae vel? Ab officia dolorem odio aperiam! Similique totam eos reprehenderit ipsa iure odio corporis molestiae illum!</div>
-          </a-timeline-item>
-          <a-timeline-item>
-            <div class="fw-500 cr-black">
-              <span class="fs-15">Hari ke 3</span>
-              <a-divider type="vertical"></a-divider>
-              <span class="fs-14">Rabu, 14 Januari 2020</span>
-            </div>
-            <div
-              class="fs-14 fw-400 cr-black"
-            >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem pariatur explicabo ullam hic recusandae vel? Ab officia dolorem odio aperiam! Similique totam eos reprehenderit ipsa iure odio corporis molestiae illum!</div>
-          </a-timeline-item>
-          <a-timeline-item>
-            <div class="fw-500 cr-black">
-              <span class="fs-15">Hari ke 4</span>
-              <a-divider type="vertical"></a-divider>
-              <span class="fs-14">Kamis, 15 Januari 2020</span>
-            </div>
-            <div
-              class="fs-14 fw-400 cr-black"
-            >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem pariatur explicabo ullam hic recusandae vel? Ab officia dolorem odio aperiam! Similique totam eos reprehenderit ipsa iure odio corporis molestiae illum!</div>
-          </a-timeline-item>
-          <a-timeline-item>
-            <div class="fw-500 cr-black">
-              <span class="fs-15">Hari ke 5</span>
-              <a-divider type="vertical"></a-divider>
-              <span class="fs-14">Jumat, 16 Januari 2020</span>
-            </div>
-            <div
-              class="fs-14 fw-400 cr-black"
-            >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem pariatur explicabo ullam hic recusandae vel? Ab officia dolorem odio aperiam! Similique totam eos reprehenderit ipsa iure odio corporis molestiae illum!</div>
-          </a-timeline-item>
-          <a-timeline-item>
-            <div class="fw-500 cr-black">
-              <span class="fs-15">Hari ke 6</span>
-              <a-divider type="vertical"></a-divider>
-              <span class="fs-14">Sabtu, 17 Januari 2020</span>
-            </div>
-            <div
-              class="fs-14 fw-400 cr-black"
-            >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem pariatur explicabo ullam hic recusandae vel? Ab officia dolorem odio aperiam! Similique totam eos reprehenderit ipsa iure odio corporis molestiae illum!</div>
-          </a-timeline-item>
+          
         </a-timeline>
       </div>
     </div>
@@ -155,28 +106,6 @@ import moment from "moment";
 
 moment.locale("id");
 
-const columns = [
-  {
-    title: "No",
-    dataIndex: "key",
-    key: "key"
-  },
-  {
-    title: "NIP",
-    dataIndex: "nip",
-    key: "nip"
-  },
-  {
-    title: "Nama Peserta",
-    dataIndex: "nama",
-    key: "nama"
-  },
-  {
-    title: "Instansi / BKD",
-    dataIndex: "namabkd",
-    key: "namabkd"
-  }
-];
 
 export default {
   name: "rundown",
@@ -193,7 +122,6 @@ export default {
   data() {
     return {
       detail: {},
-      columns,
       data: [],
       visible: false,
       config: {
@@ -206,8 +134,7 @@ export default {
     let idpengajuan = this.$route.params.id;
     axios.get(`pengajuan/approve/${idpengajuan}`).then(result => {
       this.detail = result.data.values[0];
-      console.log(this.detail)
-
+      
       let tglstart1 = moment(this.detail.tglstartoncamp1).format("DD MMM YYYY");
       this.$set(this.detail, "tglstartoncamp1", tglstart1);
       let tglend1 = moment(this.detail.tglendoncamp1).format("DD MMM YYYY");
@@ -248,6 +175,17 @@ export default {
     //this.baseaccount = this.$route.params.baseaccount;
   },
   mounted() {
+    let idpengajuan = this.$route.params.id;
+    axios.get(`rundown/${idpengajuan}`).then(result => {
+         this.data = result.data.values
+         for (let index = 0; index < this.data.length; index++) {
+
+             let tglevent = moment(this.data[index]['hari']).format('dddd, DD MMMM YYYY')
+             this.$set(this.data[index], 'hari', tglevent)
+
+           }
+         console.log(this.data)
+      });
     
   },
 
@@ -258,6 +196,7 @@ export default {
       },
 
     showModal() {
+      let idpengajuan = this.$route.params.id;
       this.visible = true;
     },
 
@@ -270,6 +209,39 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
+
+          let idpengajuan = this.$route.params.id;
+
+          
+          axios.post('rundown', {
+                    idpengajuan: idpengajuan,
+                    day: values.dayAdd,
+                    deskripsi: values.eventAdd,
+                    hari: values.tglAdd
+
+                })
+                .then(result => {
+                    
+                    let idpengajuan = this.$route.params.id;
+
+                    axios.get(`rundown/${idpengajuan}`).then(result => {
+                    this.data = result.data.values;
+                    for (let index = 0; index < this.data.length; index++) {
+
+                      let tglevent = moment(this.data[index]['hari']).format('dddd, DD MMMM YYYY')
+                      this.$set(this.data[index], 'hari', tglevent)
+                    }
+                    this.visible = false;
+                    
+                    
+                  });
+
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+           
+
         }
       });
     }
