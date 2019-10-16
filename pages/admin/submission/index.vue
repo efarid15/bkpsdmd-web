@@ -534,7 +534,8 @@ export default {
               tglStartoncamp3: values.tgllatpim3[0],
               tglEndoncamp3: values.tgllatpim3[1],
               tglMulai: values.tgllatpim1[0],
-              tglAkhir: values.tgllatpim3[1]
+              tglAkhir: values.tgllatpim3[1],
+              dokumenpengajuan: values.dokumen.file.name
               }).then(result => {
                 this.alert = {type: 'success', message: result.data.message}
 
