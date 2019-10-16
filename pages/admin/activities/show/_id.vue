@@ -10,10 +10,11 @@
 
     <div class="container">
         <div style="width: 100%">
-      <client-only>
-         <vuePdf style="display: inline-block; width: 100%" :src="src"></vuePdf>
-      </client-only>
-   </div>
+            <!-- <client-only>
+              <vuePdf style="display: inline-block; width: 100%" :src="src"></vuePdf>
+            </client-only>-->
+            <img style="display: inline-block; width: 100%" src="src" />
+        </div>
     </div>
 
 </div>

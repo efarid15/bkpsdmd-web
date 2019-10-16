@@ -280,12 +280,8 @@ const data = [
 ];
 
 export default {
-  fetch({ store, redirect }) {
-    if (!store.state.auth.authUser) {
-      redirect("/");
-    }
-  },
   name: "submission",
+  middleware: "auth",
   beforeCreate() {
     this.form = this.$form.createForm(this);
   },

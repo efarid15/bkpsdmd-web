@@ -133,13 +133,8 @@ const data = [
 
 export default {
 
-  fetch ({store, redirect}) {
-    if (!store.state.auth.authLogin) {
-      redirect('/')
-    }
-  },
-
   name: "diklat",
+  middleware: "auth",
   beforeCreate() {
     this.form = this.$form.createForm(this);
   },
