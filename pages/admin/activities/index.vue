@@ -6,7 +6,7 @@
       <span slot="action" slot-scope="text, record">
         <nuxt-link :to="`/admin/activities/show/${record.id}`">Lihat</nuxt-link>
         <a-divider type="vertical" />
-        <nuxt-link to="/admin/activities/rundown">Rundown</nuxt-link>
+        <nuxt-link :to="`/admin/activities/rundown/${record.id}`">Rundown</nuxt-link>
         <a-divider type="vertical"></a-divider>
         <!-- <nuxt-link to="/admin/activities/detail">Detail</nuxt-link>-->
         <nuxt-link :to="`/admin/activities/detail/${record.id}`">Detail</nuxt-link>
