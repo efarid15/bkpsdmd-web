@@ -15,28 +15,34 @@
           <a-col :xs="24" :sm="24" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase" style="margin-bottom: 8px">Instansi/BKD</div>
             <div>
-              <a-avatar icon="user" style="margin-right: 8px" />BKD Kabupaten Gowa
+              <a-avatar icon="user" style="margin-right: 8px" />
+              <strong>{{ this.detail.namabkd }}</strong>
             </div>
           </a-col>
         </a-row>
         <a-row :gutter="16">
-          <a-col :xs="24" :sm="12" :md="10" style="margin-bottom: 16px">
+          <a-col :xs="24" :sm="12" :md="8" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Jenis Kegiatan</div>
-            <div
-              class="fs-14 cr-black text-capitalize"
-            >Diklat Prajabatan Golongan I Angkatan X dan XI Tahun 2019</div>
+            <div class="fs-14 cr-black text-capitalize">{{ this.detail.jenisdiklat }}</div>
           </a-col>
-          <a-col :xs="24" :sm="12" :md="4" style="margin-bottom: 16px">
+          <a-col :xs="24" :sm="12" :md="8" style="margin-bottom: 16px">
             <div class="fs-12 cr-gray text-uppercase">Jumlah Peserta</div>
-            <div class="fs-14 cr-black text-capitalize">40 Orang</div>
+            <div class="fs-14 cr-black text-capitalize">{{ this.detail.jmlpeserta }}</div>
           </a-col>
-          <a-col :xs="24" :sm="12" :md="5" style="margin-bottom: 16px">
-            <div class="fs-12 cr-gray text-uppercase">Tanggal Mulai</div>
-            <div class="fs-14 cr-black text-capitalize">Senin, 20 Oktober 2019</div>
+          
+        </a-row>
+        <a-row :gutter="16">
+          <a-col :xs="12" :sm="8" :md="8" style="margin-bottom: 16px">
+            <div class="fs-12 cr-gray text-uppercase">Tgl on Campus I</div>
+            <div class="fs-14 cr-black text-capitalize">{{ this.detail.tglstartoncamp1 }} - {{ this.detail.tglendoncamp1 }}</div>
           </a-col>
-          <a-col :xs="24" :sm="12" :md="5" style="margin-bottom: 16px">
-            <div class="fs-12 cr-gray text-uppercase">Tanggal Berakhir</div>
-            <div class="fs-14 cr-black text-capitalize">Senin, 20 Desember 2019</div>
+          <a-col :xs="12" :sm="8" :md="8" style="margin-bottom: 16px">
+            <div class="fs-12 cr-gray text-uppercase">Tgl On Campus II</div>
+            <div class="fs-14 cr-black text-capitalize">{{ this.detail.tglstartoncamp2 }} - {{ this.detail.tglendoncamp2 }}</div>
+          </a-col>
+          <a-col :xs="12" :sm="8" :md="6" style="margin-bottom: 16px">
+            <div class="fs-12 cr-gray text-uppercase">Tgl on Campus III</div>
+            <div class="fs-14 cr-black text-capitalize"><span>{{ this.detail.tglstartoncamp3 }}</span> - {{ this.detail.tglendoncamp3 }}</div>
           </a-col>
         </a-row>
       </div>
@@ -119,96 +125,59 @@
       <!-- if add rundown -->
       <a-modal title="Rundown Kegiatan" :footer="false" v-model="visible" @ok="handleOk">
         <a-form layout="vertical" :form="form" @submit="handleSubmit" hideRequiredMark>
-          <div v-for="(days, index) in form.getFieldValue('keys')" :key="days">
-            <a-row :gutter="16" type="flex" justify="space-around" align="middle">
-              <a-col :xs="24" :sm="12" :md="12">
-                <a-form-item :label="index === 0 ? '' : ''" :required="false">
-                  <a-input
-                    v-decorator="[`name[${days}]`,
-                    {
-                        validateTrigger: ['change', 'blur'],
-                        initialValue: `Hari ke ${days}`,
-                        rules: [{
-                        required: true,
-                        whitespace: true,
-                        message: 'Harus di isi!',
-                        }],
-                    }
-                    ]"
-                    placeholder="Nama Peserta"
-                    disabled
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :xs="24" :sm="12" :md="12">
-                <a-form-item :label="index === 0 ? '' : ''" :required="false">
-                  <a-date-picker
-                    :disabledDate="disabledDate"
-                    v-decorator="[`date[${days}]`, config]"
-                  />
-                </a-form-item>
-              </a-col>
-            </a-row>
-            <a-row :gutter="16" type="flex" justify="space-around" align="middle">
-              <a-col :xs="24" :sm="20" :md="20">
-                <a-form-item :label="index === 0 ? '' : ''" :required="false" class="mb-0">
-                  <a-textarea
-                    :rows="4"
-                    v-decorator="[`desc[${days}]`,
-                    {
-                        validateTrigger: ['change', 'blur'],
-                        rules: [{
-                        required: true,
-                        whitespace: true,
-                        message: 'Harus di isi!',
-                        }],
-                    }
-                    ]"
-                    placeholder="Deskripsi Kegiatan"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :xs="12" :sm="4" :md="4">
-                <a-form-item class="mb-0">
-                  <div
-                    v-if="form.getFieldValue('keys').length > 0"
-                    :disabled="form.getFieldValue('keys').length === 0"
-                    @click="() => remove(days)"
-                  >
-                    <a-button type="danger" block>
-                      <a-icon type="minus" />
-                    </a-button>
-                  </div>
-                </a-form-item>
-              </a-col>
-            </a-row>
-            <a-divider></a-divider>
-          </div>
+        
+        <a-form-item label="Tgl Kegiatan" has-feedback>
+              <a-date-picker @change="onChangeTgl" 
+               v-decorator="['tglAdd',{rules: [{ required: true, message: 'Harus di isi!' }]}]" 
+               />
+        </a-form-item>
+        <a-form-item label="Hari Ke" has-feedback>
+          <a-input
+            v-decorator="['dayAdd',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
+          />
+        </a-form-item>
+        <a-form-item label="Kegiatan" has-feedback>
+          <a-textarea
+            v-decorator="['eventAdd',{rules: [{ required: true, message: 'Harus di isi!' }]}]" :autosize="{ minRows: 3, maxRows: 6 }"
+          />
+        </a-form-item>
+        <a-button type="primary" html-type="submit">Simpan</a-button>
 
-          <a-row :gutter="16">
-            <a-col :xs="24" :sm="12" :md="12">
-              <a-button type="dashed" @click="add" block style="margin-bottom: 8px">
-                <a-icon type="plus" />Tambah
-              </a-button>
-            </a-col>
-            <a-col :xs="24" :sm="12" :md="12">
-              <a-button
-                v-if="form.getFieldValue('keys').length > 0"
-                type="primary"
-                html-type="submit"
-                block
-                style="margin-bottom: 8px"
-              >Simpan</a-button>
-            </a-col>
-          </a-row>
         </a-form>
       </a-modal>
     </div>
+
   </div>
 </template>
 <script>
+import axios from "axios";
 import moment from "moment";
-let id = 0;
+
+moment.locale("id");
+
+const columns = [
+  {
+    title: "No",
+    dataIndex: "key",
+    key: "key"
+  },
+  {
+    title: "NIP",
+    dataIndex: "nip",
+    key: "nip"
+  },
+  {
+    title: "Nama Peserta",
+    dataIndex: "nama",
+    key: "nama"
+  },
+  {
+    title: "Instansi / BKD",
+    dataIndex: "namabkd",
+    key: "namabkd"
+  }
+];
+
 export default {
   name: "rundown",
   middleware: "auth",
@@ -223,45 +192,70 @@ export default {
   },
   data() {
     return {
+      detail: {},
+      columns,
+      data: [],
       visible: false,
       config: {
         rules: [{ type: "object", required: true, message: "Harus di isi!" }]
       }
     };
   },
-  methods: {
-    moment,
-    remove(days) {
-      const { form } = this;
-      // can use data-binding to get
-      const keys = form.getFieldValue("keys");
-      // We need at least one passenger
-      if (keys.length === 0) {
-        return;
+
+  created() {
+    let idpengajuan = this.$route.params.id;
+    axios.get(`pengajuan/approve/${idpengajuan}`).then(result => {
+      this.detail = result.data.values[0];
+      console.log(this.detail)
+
+      let tglstart1 = moment(this.detail.tglstartoncamp1).format("DD MMM YYYY");
+      this.$set(this.detail, "tglstartoncamp1", tglstart1);
+      let tglend1 = moment(this.detail.tglendoncamp1).format("DD MMM YYYY");
+      this.$set(this.detail, "tglendoncamp1", tglend1);
+
+      let tglstart2 = moment(this.detail.tglstartoncamp2).format("DD MMM YYYY");
+      this.$set(this.detail, "tglstartoncamp2", tglstart2);
+      let tglend2 = moment(this.detail.tglendoncamp2).format("DD MMM YYYY");
+      this.$set(this.detail, "tglendoncamp2", tglend2);
+
+      
+      if(this.detail.tglstartoncamp3 != null){
+         let tglstart3 = moment(this.detail.tglstartoncamp3).format("DD MMM YYYY");
+         console.log(tglstart3)
+         this.$set(this.detail, "tglstartoncamp3", tglstart3);
+      }
+      else {
+         let tglstart3 = '-'
+         this.$set(this.detail, "tglstartoncamp3", tglstart3);
+         
       }
 
-      // can use data-binding to set
-      form.setFieldsValue({
-        keys: keys.filter(key => key !== days)
-      });
-    },
+      if(this.detail.tglendoncamp3 != null){
+         let tglend3 = moment(this.detail.tglendoncamp3).format("DD MMM YYYY");
+         this.$set(this.detail, "tglendoncamp3", tglend3);
+      }
+      else {
+        let tglend3 = '-'
+         this.$set(this.detail, "tglendoncamp3", tglend3);
+         
+      }
+      
 
-    add() {
-      const { form } = this;
-      // can use data-binding to get
-      const keys = form.getFieldValue("keys");
-      const nextKeys = keys.concat(++id);
-      // can use data-binding to set
-      // important! notify form to detect changes
-      form.setFieldsValue({
-        keys: nextKeys
-      });
-    },
+  
+      
+    });
 
-    disabledDate(current) {
-      // Can not select days before today and today
-      return current && current < moment().endOf("day");
-    },
+    //this.baseaccount = this.$route.params.baseaccount;
+  },
+  mounted() {
+    
+  },
+
+  methods: {
+    moment,
+    onChangeTgl(date, dateString) {
+        console.log(date, dateString);
+      },
 
     showModal() {
       this.visible = true;
