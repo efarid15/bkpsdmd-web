@@ -15,7 +15,7 @@
 
         <span slot="action" slot-scope="text, record">
           <span v-if="record.progress === 'Progress'">
-            <nuxt-link to="/bkd/activities/rundown">Rundown</nuxt-link>
+            <nuxt-link :to="`/bkd/activities/rundown/${record.id}`">Rundown</nuxt-link>
             <a-divider type="vertical"></a-divider>
             <nuxt-link :to="`/bkd/activities/formulir/${record.id}`">Formulir</nuxt-link>
             

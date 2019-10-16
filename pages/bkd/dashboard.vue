@@ -51,7 +51,6 @@
 </template>
 <script>
 export default {
-  middleware: 'auth',
   name: "dashboard",
   layout: "bkd",
   head() {

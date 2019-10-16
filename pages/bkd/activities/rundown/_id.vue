@@ -68,35 +68,6 @@
       </div>
     </div>
 
-    <div class="container">
-      <div style="padding: 24px;text-align:center">
-        <a-button type="primary" size="large" icon="plus" @click="showModal">Buat Rundown Kegiatan</a-button>
-      </div>
-
-      <!-- if add rundown -->
-      <a-modal title="Rundown Kegiatan" :footer="false" v-model="visible" @ok="handleOk">
-        <a-form layout="vertical" :form="form" @submit="handleSubmit" hideRequiredMark>
-        
-        <a-form-item label="Tgl Kegiatan" has-feedback>
-              <a-date-picker @change="onChangeTgl" 
-               v-decorator="['tglAdd',{rules: [{ required: true, message: 'Harus di isi!' }]}]" 
-               />
-        </a-form-item>
-        <a-form-item label="Hari Ke" has-feedback>
-          <a-input
-            v-decorator="['dayAdd',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
-          />
-        </a-form-item>
-        <a-form-item label="Kegiatan" has-feedback>
-          <a-textarea
-            v-decorator="['eventAdd',{rules: [{ required: true, message: 'Harus di isi!' }]}]" :autosize="{ minRows: 3, maxRows: 6 }"
-          />
-        </a-form-item>
-        <a-button type="primary" html-type="submit">Simpan</a-button>
-
-        </a-form>
-      </a-modal>
-    </div>
 
   </div>
 </template>
@@ -110,16 +81,16 @@ moment.locale("id");
 export default {
   name: "rundown",
   middleware: "auth",
+  layout: "bkd",
   beforeCreate() {
     this.form = this.$form.createForm(this);
     this.form.getFieldDecorator("keys", { initialValue: [], preserve: true });
   },
   head() {
     return {
-      title: "Rundown Kegiatan - BPSDM"
+      title: "Rundown Kegiatan - BKD"
     };
   },
-  
   data() {
     return {
       detail: {},
@@ -196,56 +167,7 @@ export default {
         console.log(date, dateString);
       },
 
-    showModal() {
-      let idpengajuan = this.$route.params.id;
-      this.visible = true;
-    },
-
-    handleOk(e) {
-      console.log(e);
-      this.visible = false;
-    },
-
-    handleSubmit(e) {
-      e.preventDefault();
-      this.form.validateFields((err, values) => {
-        if (!err) {
-
-          let idpengajuan = this.$route.params.id;
-
-          
-          axios.post('rundown', {
-                    idpengajuan: idpengajuan,
-                    day: values.dayAdd,
-                    deskripsi: values.eventAdd,
-                    hari: values.tglAdd
-
-                })
-                .then(result => {
-                    
-                    let idpengajuan = this.$route.params.id;
-
-                    axios.get(`rundown/${idpengajuan}`).then(result => {
-                    this.data = result.data.values;
-                    for (let index = 0; index < this.data.length; index++) {
-
-                      let tglevent = moment(this.data[index]['hari']).format('dddd, DD MMMM YYYY')
-                      this.$set(this.data[index], 'hari', tglevent)
-                    }
-                    this.visible = false;
-                    
-                    
-                  });
-
-                })
-                .catch(function (error) {
-                    console.log(error)
-                });
-           
-
-        }
-      });
-    }
+    
   }
 };
 </script>
