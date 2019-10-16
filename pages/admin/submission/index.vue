@@ -107,7 +107,7 @@
             v-decorator="['dokumen',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
           >
             <img v-if="imageUrl" :src="imageUrl" alt="avatar" />
-            <div v-else>
+            <div v-else style="margin: 0 auto">
               <a-icon :type="loading ? 'loading' : 'plus'" />
               <div class="ant-upload-text">Upload</div>
             </div>
@@ -216,7 +216,7 @@
             v-decorator="['dokumen',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
           >
             <img v-if="imageUrl" :src="imageUrl" alt="avatar" />
-            <div v-else>
+            <div v-else style="margin: 0 auto">
               <a-icon :type="loading ? 'loading' : 'plus'" />
               <div class="ant-upload-text">Upload</div>
             </div>
