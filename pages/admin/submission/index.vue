@@ -264,7 +264,7 @@ const columns = [
     title: "Action",
     key: "operation",
     fixed: "right",
-    width: 200,
+    width: 240,
     scopedSlots: { customRender: "action" }
   }
 ];
