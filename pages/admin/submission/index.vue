@@ -5,9 +5,9 @@
     <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
       <span slot="tempat" slot-scope="text, record" :key="record">{{record.tempat}}</span>
       <span slot="action" slot-scope="text, record">
-        <nuxt-link :to="`/admin/submission/detail/${record.id}`">Lihat</nuxt-link>
+        <nuxt-link :to="`/admin/submission/detail/${record.id}`">Dokumen</nuxt-link>
         <a-divider type="vertical" />
-        <a @click="showApprove(record.id)" class="color-blue">Approve</a>
+        <a @click="showApprove(record.id)" class="color-green">Approve</a>
         <a-divider type="vertical" />
         <a @click="showReject(record.id)" class="color-red">Tolak</a>
       </span>
