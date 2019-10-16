@@ -78,7 +78,7 @@
           <a-upload-dragger
             name="dokumen"
             :multiple="true"
-            action="https://api.bkpsdmd-sulsel.online/upload/bkd"
+            action="/api/upload/bkd"
             @change="handleChange"
             v-decorator="['dokumen',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
           >
