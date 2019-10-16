@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="title">Daftar Pengajuan</div>
+    <div class="title p24">Daftar Pengajuan</div>
 
     <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
       <span slot="tempat" slot-scope="text, record" :key="record">
@@ -264,7 +264,7 @@ const columns = [
     title: "Action",
     key: "operation",
     fixed: "right",
-    width: 200,
+    width: 240,
     scopedSlots: { customRender: "action" }
   }
 ];
@@ -280,12 +280,8 @@ const data = [
 ];
 
 export default {
-  fetch({ store, redirect }) {
-    if (!store.state.auth.authUser) {
-      redirect("/");
-    }
-  },
   name: "submission",
+  middleware: "auth",
   beforeCreate() {
     this.form = this.$form.createForm(this);
   },

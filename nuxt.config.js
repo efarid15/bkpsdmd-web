@@ -20,7 +20,7 @@ module.exports = {
     /*
      ** Customize the progress-bar color
      */
-    loading: { color: '#fff' },
+    loading: { color: '#000' },
     /*
      ** Global CSS
      */
@@ -33,7 +33,7 @@ module.exports = {
      */
     plugins: [
         { src: '@/plugins/antd-ui' },
-        '~/api/init.js'
+        { src: '@/api/init' }
     ],
     /*
      ** Nuxt.js dev-modules
@@ -45,21 +45,21 @@ module.exports = {
     modules: [
         ['nuxt-vuex-localstorage', {
             mode: 'debug'
-          }],
-          '@nuxtjs/axios',
-            '@nuxtjs/proxy'
+        }],
+        '@nuxtjs/axios',
+        '@nuxtjs/proxy'
     ],
     /*
      ** Build configuration
      */
     axios: {
         proxy: true
-      },
-      
-      proxy: {
-        '/api': { target: 'https://api.bkpsdmd-sulsel.online', pathRewrite: {'^/api': '/'}, changeOrigin: true },
-        '/pdf': { target: 'http://www.pt-jakarta.go.id', pathRewrite: {'^/pdf': '/'}, changeOrigin: true }
-      },
+    },
+
+    proxy: {
+        '/api': { target: 'https://api.bkpsdmd-sulsel.online', pathRewrite: { '^/api': '/' }, changeOrigin: true },
+        '/pdf': { target: 'http://www.pt-jakarta.go.id', pathRewrite: { '^/pdf': '/' }, changeOrigin: true }
+    },
     build: {
         /*
          ** You can extend webpack config here

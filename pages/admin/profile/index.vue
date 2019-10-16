@@ -186,6 +186,7 @@ import axios from "axios"
 
 export default {
   name: "profile",
+  middleware: "auth",
   beforeCreate() {
     this.form = this.$form.createForm(this);
   },

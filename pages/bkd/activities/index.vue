@@ -82,6 +82,7 @@ const data = [
 
 export default {
   name: "activities",
+  middleware: "auth",
   layout: "bkd",
   head() {
     return {

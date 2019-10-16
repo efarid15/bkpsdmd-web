@@ -18,6 +18,7 @@ export const mutations = {
     },
     reset_user(state) {
         state.authUser = null
+        localStorage.clear()
     },
     reset_login(state) {
         state.authLogin = null
@@ -56,6 +57,7 @@ export const actions = {
     reset({ commit }) {
         commit('reset_user')
         commit('reset_login')
+        localStorage.clear()
         resetAuthToken()
         cookies.remove('x-access-token')
         return Promise.resolve()

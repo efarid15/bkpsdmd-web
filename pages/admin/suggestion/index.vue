@@ -29,6 +29,7 @@ import axios from "axios";
 moment.locale("id");
 export default {
   name: "suggestion",
+  middleware: "auth",
   head() {
     return {
       title: "Kotak Saran - SIPP BPSDM"

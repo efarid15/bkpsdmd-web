@@ -52,7 +52,7 @@
 <script>
 export default {
   name: "dashboard",
-  middleware: 'auth',
+  
   head() {
     return {
       title:

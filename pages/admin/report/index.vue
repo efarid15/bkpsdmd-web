@@ -46,6 +46,7 @@ const data = [
 ];
 export default {
   name: "report",
+  middleware: "auth",
   head() {
     return {
       title: "Laporan Kegiatan - BKPSDMD"

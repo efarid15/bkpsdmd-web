@@ -150,6 +150,7 @@ const data = [
 export default {
     
 name: "userbkd",
+middleware: "auth",
   beforeCreate() {
     this.form = this.$form.createForm(this);
   },
