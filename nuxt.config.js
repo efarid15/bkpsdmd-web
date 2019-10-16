@@ -57,8 +57,8 @@ module.exports = {
       },
       
       proxy: {
-        '/api/': { target: 'https://api.bkpsdmd-sulsel.online/', pathRewrite: {'^/api/': ''}, changeOrigin: true },
-        '/pdf/': { target: 'http://www.pt-jakarta.go.id/', pathRewrite: {'^/pdf/': ''}, changeOrigin: true }
+        '/api': { target: 'https://api.bkpsdmd-sulsel.online', pathRewrite: {'^/api': '/'}, changeOrigin: true },
+        '/pdf': { target: 'http://www.pt-jakarta.go.id', pathRewrite: {'^/pdf': '/'}, changeOrigin: true }
       },
     build: {
         /*

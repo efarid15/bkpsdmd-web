@@ -102,7 +102,7 @@
           <a-upload-dragger
             name="dokumen"
             :multiple="false"
-            action="https://api.bkpsdmd-sulsel.online/upload"
+            action="/api/upload"
             @change="handleChange"
             v-decorator="['dokumen',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
           >
@@ -195,7 +195,7 @@
           <a-upload-dragger
             name="dokumen"
             :multiple="true"
-            action="https://api.bkpsdmd-sulsel.online/upload"
+            action="/api/upload"
             @change="handleChange"
             v-decorator="['dokumen',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
           >
@@ -222,7 +222,7 @@
           <a-upload-dragger
             name="dokumen"
             :multiple="true"
-            action="https://api.bkpsdmd-sulsel.online/upload/reject"
+            action="/api/upload/reject"
             @change="handleChange"
             v-decorator="['dokumen',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
           >
