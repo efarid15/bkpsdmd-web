@@ -4,7 +4,7 @@
 
     <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
       <span slot="action" slot-scope="text, record">
-        <nuxt-link :to="`/admin/activities/show/${record.id}`">Lihat</nuxt-link>
+        <nuxt-link :to="`/admin/activities/show/${record.id}`">Dokumen</nuxt-link>
         <a-divider type="vertical" />
         <nuxt-link :to="`/admin/activities/rundown/${record.id}`">Rundown</nuxt-link>
         <a-divider type="vertical"></a-divider>
