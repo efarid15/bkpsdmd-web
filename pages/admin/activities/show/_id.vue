@@ -11,12 +11,13 @@
     <div class="container" style="padding: 16px">
       <a-row type="flex" justify="space-around" align="middle">
         <a-col :xs="24" :sm="24" :md="16" :lg="12">
-          <expandable-image v-if="src === []" :src="src" />
+          <expandable-image :src="src" />
+          <!-- <expandable-image v-if="src === []" :src="src" />-->
           <!-- <img style="max-width: 100%" :src="src" /> -->
           <!-- <client-only>
          <vuePdf style="display: inline-block; width: 100%" :src="src"></vuePdf>
           </client-only>-->
-          <a-empty v-else />
+         
         </a-col>
       </a-row>
     </div>
