@@ -31,6 +31,7 @@
         "nuxt-vuex-localstorage": "^1.2.6",
         "querystring": "^0.2.0",
         "sass": "^1.22.12",
+        "vue-expandable-image": "^0.1.0",
         "vue-pdf": "^4.0.7",
         "whatwg-fetch": "^3.0.0"
     },
