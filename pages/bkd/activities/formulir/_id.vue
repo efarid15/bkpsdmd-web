@@ -306,12 +306,13 @@ export default {
     },
 
     add() {
-      
-      this.$store.dispatch("skpd/skpdfetch").then(({ data }) => {
-        this.skpd = data.values;
+
+     let idbkd = this.$store.state.localStorage.authUser['bkdid']
+      axios.get(`skpd/bkd/${idbkd}`).then(result => {
+        this.skpd = result.data.values;
         
       });
-
+      
       const { form } = this;
       // can use data-binding to get
       const keys = form.getFieldValue("keys");

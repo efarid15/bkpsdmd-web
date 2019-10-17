@@ -74,6 +74,7 @@ export default {
         getPengajuan: () => axios.get('pengajuan'),
         getApprove: () => axios.get('pengajuan/approve'),
         getApprovekabupaten: () => axios.get('pengajuan/approvekabupaten'),
+        findApprovekabupaten: (params) => axios.get('pengajuan/approvekabupaten/', params),
         findApprove: (params) => axios.get('pengajuan/approve', params),
         setApprove: (data) => axios.put('pengajuan', data),
         setReject: (data) => axios.put('pengajuan/reject', data),
