@@ -100,8 +100,8 @@ export default {
             })
             .then(result => {
               this.alert = { type: "success", message: result.data.message };
-              console.log(result.data.user.email)
-
+              this.user = result.data.user
+              
               //this.user = result.data.user;
               this.token = result.data.token;
                 this.$store.dispatch("auth/fetch", {
