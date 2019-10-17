@@ -62,6 +62,9 @@
             <div
               class="fs-14 fw-400 cr-black"
             >{{ item.deskripsi }}</div>
+            <div
+              class="fs-14 fw-400 cr-black"
+            >Widyaiswara / Fasilitator : {{ item.nama }}</div>
           </a-timeline-item>
           
         </a-timeline>
@@ -82,6 +85,24 @@
                v-decorator="['tglAdd',{rules: [{ required: true, message: 'Harus di isi!' }]}]" 
                />
         </a-form-item>
+        <a-form-item label="Widyaiswara / Narasumber" has-feedback>
+          <a-select
+            v-decorator="['widyaiswara',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
+            placeholder="Pilih Widiasuara/Narasumber"
+            showSearch
+          >
+            <a-select-option
+              v-for="(item) in mentor"
+              :value="item.id"
+              v-bind:key="item.id+15"
+            >{{ item.nama }}</a-select-option>
+          </a-select>
+          <!-- <a-select>
+            <a-select-option :value="1">Widya Pitaloka</a-select-option>
+            <a-select-option :value="2">Nur Elsa</a-select-option>
+          </a-select>-->
+
+        </a-form-item>
         <a-form-item label="Hari Ke" has-feedback>
           <a-input
             v-decorator="['dayAdd',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
@@ -92,6 +113,7 @@
             v-decorator="['eventAdd',{rules: [{ required: true, message: 'Harus di isi!' }]}]" :autosize="{ minRows: 3, maxRows: 6 }"
           />
         </a-form-item>
+        
         <a-button type="primary" html-type="submit">Simpan</a-button>
 
         </a-form>
@@ -124,6 +146,7 @@ export default {
     return {
       detail: {},
       data: [],
+      mentor: {},
       visible: false,
       config: {
         rules: [{ type: "object", required: true, message: "Harus di isi!" }]
@@ -198,6 +221,13 @@ export default {
 
     showModal() {
       let idpengajuan = this.$route.params.id;
+      this.$store
+          .dispatch("widyaiswara/widyaiswarafetch")
+          .then(({ data }) => {
+            this.mentor = data.values;
+            this.$store.commit("widyaiswara/set", data.values);
+          });
+
       this.visible = true;
     },
 
@@ -218,7 +248,8 @@ export default {
                     idpengajuan: idpengajuan,
                     day: values.dayAdd,
                     deskripsi: values.eventAdd,
-                    hari: values.tglAdd
+                    hari: values.tglAdd,
+                    idwidyaiswara: values.widyaiswara
 
                 })
                 .then(result => {

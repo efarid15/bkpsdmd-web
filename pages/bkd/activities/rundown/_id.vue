@@ -62,6 +62,9 @@
             <div
               class="fs-14 fw-400 cr-black"
             >{{ item.deskripsi }}</div>
+            <div
+              class="fs-14 fw-400 cr-black"
+            >Widyaiswara / Fasilitator : {{ item.nama }}</div>
           </a-timeline-item>
           
         </a-timeline>
