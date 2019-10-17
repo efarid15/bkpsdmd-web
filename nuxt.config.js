@@ -47,9 +47,15 @@ module.exports = {
         ['nuxt-vuex-localstorage', {
             mode: 'debug'
         }],
-        '@nuxtjs/axios',
-        '@nuxtjs/proxy'
+        ['@nuxtjs/axios'],
+        ['@nuxtjs/proxy'],
+        ["@nuxtjs/moment"]
     ],
+
+    moment: {
+        defaultLocale: "id",
+        locales: ["id"]
+    },
     /*
      ** Build configuration
      */
