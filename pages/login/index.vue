@@ -73,6 +73,8 @@ export default {
       email: "",
       password: "",
       user: {},
+      token: "",
+      otentikasi: {},
       alert: null,
       loading: null
     };
@@ -92,14 +94,23 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           this.alert = null;
-          this.$store
-            .dispatch("auth/login", {
+          this.$store.dispatch("auth/login", {
               email: values.email,
               password: values.password
             })
             .then(result => {
               this.alert = { type: "success", message: result.data.message };
-              this.user = result.data.user;
+              console.log(result.data.user.email)
+
+              //this.user = result.data.user;
+              this.token = result.data.token;
+                this.$store.dispatch("auth/fetch", {
+                  token: this.token,
+                })
+                .then(response => {
+                  this.otentikasi = response.data.result
+                  this.$store.commit("auth/set_login", this.otentikasi)
+                })
               this.$store.commit("auth/set_user", result.data.user);
               this.$store.commit("localStorage/set_user", result.data.user);
 
