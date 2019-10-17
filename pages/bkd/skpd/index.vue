@@ -157,7 +157,7 @@ export default {
   },
 
   mounted() {
-    let idbkd = this.$store.state.auth.authLogin["bkdid"];
+    let idbkd = this.$store.state.auth.authUser["bkdid"];
 
     axios.get(`skpd/bkd/${idbkd}`).then(result => {
       this.data = result.data.values;
@@ -177,7 +177,7 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          let idbkd = this.$store.state.auth.authLogin["bkdid"];
+          let idbkd = this.$store.state.auth.authUser["bkdid"];
           this.$store
             .dispatch("skpd/skpdadd", {
               namaSkpd: values.name,
