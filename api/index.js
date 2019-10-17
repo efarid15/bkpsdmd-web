@@ -72,6 +72,7 @@ export default {
     pengajuan: {
         findPengajuan: (params) => axios.get('pengajuan/', params),
         getPengajuan: () => axios.get('pengajuan'),
+        getCountpengajuan: () => axios.get('pengajuan/count'),
         getApprove: () => axios.get('pengajuan/approve'),
         getApprovekabupaten: () => axios.get('pengajuan/approvekabupaten'),
         findApprovekabupaten: (params) => axios.get('pengajuan/approvekabupaten/', params),

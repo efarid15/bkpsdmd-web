@@ -161,7 +161,7 @@ export default {
 
     axios.get(`skpd/bkd/${idbkd}`).then(result => {
       this.data = result.data.values;
-      //console.log(this.data)
+      console.log(this.data)
       this.$store.commit("skpd/set", result.data.values);
     });
   },
