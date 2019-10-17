@@ -30,6 +30,36 @@
             <div class="heading">
               <div class="divider"></div>
               <h2>
+                Jadwal Pelaksanaan Pelatihan Dasar (Latsar)
+                <br />Pemerintah Provinsi Sulawesi Selatan dan Kabupaten/Kota Se SulSel
+                <br />Periode Agustus Sampai Dengan Oktober 2019
+              </h2>
+            </div>
+
+            <a-table :columns="columns" :dataSource="latsar" bordered :scroll="{ x: 980 }">
+              <span slot="nama" slot-scope="text, record">
+                <span>{{record.nama}}</span> <span>Angkatan {{record.angkatan}}</span>
+              </span>
+              <span slot="pembukaan" slot-scope="text, record">
+                <span>{{moment(record.pembukaan, "YYYY-MM-DD").format('dddd')}}, {{moment(record.pembukaan, "YYYY-MM-DD").format('LL')}}</span>
+              </span>
+              <span slot="penutupan" slot-scope="text, record">
+                <span>{{moment(record.penutupan, "YYYY-MM-DD").format('dddd')}}, {{moment(record.penutupan, "YYYY-MM-DD").format('LL')}}</span>
+              </span>
+              <span slot="tempat" slot-scope="text, record">
+                <span>{{record.tempat}}</span> <span>{{record.campus}}</span>
+              </span>
+            </a-table>
+          </a-col>
+        </a-row>
+      </div>
+
+      <div class="ant-items--body">
+        <a-row type="flex" justify="space-around" align="middle">
+          <a-col :xs="24" :sm="24" :md="20" :lg="20">
+            <div class="heading">
+              <div class="divider"></div>
+              <h2>
                 Tempat Kegiatan
                 <strong>Campus I</strong>
               </h2>
@@ -191,54 +221,6 @@
           </a-col>
         </a-row>
       </div>
-
-      <div class="ant-items--body">
-        <a-row type="flex" justify="space-around" align="middle">
-          <a-col :xs="24" :sm="24" :md="20" :lg="20">
-            <div class="heading">
-              <div class="divider"></div>
-              <h2>
-                Jadwal Pelaksanaan Pelatihan Dasar (Latsar)
-                <br />Pemerintah Provinsi Sulawesi Selatan dan Kabupaten/Kota Se SulSel
-                <br />Periode Agustus Sampai Dengan Oktober 2019
-              </h2>
-            </div>
-
-            <a-list
-              :grid="{ gutter: 16, xs: 1, sm: 2, md: 3, lg: 3, xl: 3, xxl: 3 }"
-              :pagination="pagination"
-              :dataSource="data"
-            >
-              <a-list-item slot="renderItem" slot-scope="item, index">
-                <a-card hoverable>
-                  <a-list-item-meta>
-                    <div slot="title" class="fs-15 cr-black mb-4">{{item.title}}</div>
-                    <div slot="description">
-                      <div class="d-flex align-items-center mb-4">
-                        <div class="mr4">
-                          <a-icon type="calendar" />
-                        </div>
-                        <div>
-                          <span>{{moment(item.dateStart, "YYYY-MM-DD").format('ddd')}}, {{moment(item.dateStart, "YYYY-MM-DD").format('ll')}}</span> -
-                          <span>{{moment(item.dateEnd, "YYYY-MM-DD").format('ddd')}}, {{moment(item.dateEnd, "YYYY-MM-DD").format('ll')}}</span>
-                        </div>
-                      </div>
-
-                      <div class="d-flex align-items-center">
-                        <div class="mr4">
-                          <a-icon type="environment" />
-                        </div>
-                        <div>{{item.place}}</div>
-                      </div>
-                    </div>
-                    <a-avatar style="backgroundColor:#4481eb" slot="avatar" icon="bulb" />
-                  </a-list-item-meta>
-                </a-card>
-              </a-list-item>
-            </a-list>
-          </a-col>
-        </a-row>
-      </div>
     </a-layout-content>
     <a-layout-footer>
       <span>&copy; 2019 SIPP BPSDM</span>
@@ -247,98 +229,558 @@
 </template>
 <script>
 import moment from "moment";
-const data = [
+const columns = [
   {
-    title: "Latsar Kab. Bulukumba, Angkatan 28",
-    dateStart: "2019-08-01",
-    dateEnd: "2019-09-30",
-    place: "BPSDM (Kampus 1)"
+    title: "No",
+    dataIndex: "key",
+    key: "key"
   },
   {
-    title: "Latsar Kab. Bulukumba, Angkatan 29",
-    dateStart: "2019-08-01",
-    dateEnd: "2019-09-30",
-    place: "BPSDM (Kampus 1)"
+    title: "Provinsi dan Kab/Kota",
+    dataIndex: "provinsi",
+    key: "provinsi"
   },
+  {
+    title: "Nama Kegiatan",
+    dataIndex: "nama",
+    key: "nama",
+    scopedSlots: { customRender: "nama" }
+  },
+  {
+    title: "Tanggal Kegiatan",
+    children: [
+      {
+        title: "Pembukaan",
+        dataIndex: "pembukaan",
+        key: "pembukaan",
+        scopedSlots: { customRender: "pembukaan" }
+      },
+      {
+        title: "Penutupan",
+        dataIndex: "penutupan",
+        key: "penutupan",
+        scopedSlots: { customRender: "penutupan" }
+      }
+    ]
+  },
+  {
+    title: "Tempat Pelaksanaan",
+    dataIndex: "tempat",
+    key: "tempat",
+    scopedSlots: { customRender: "tempat" }
+  }
+];
 
+const latsar = [
   {
-    title: "Latsar BPSDM Prov. Sul Sel, Angkatan 33",
-    dateStart: "2019-08-05",
-    dateEnd: "2019-10-04",
-    place: "BPSDM (Kampus 2)"
+    key: 1,
+    provinsi: "Kab. Bulukumba",
+    nama: "Latsar",
+    angkatan: "28",
+    pembukaan: "2019-08-01",
+    penutupan: "2019-09-30",
+    tempat: "BPSDM",
+    campus: "Kampus 1"
   },
   {
-    title: "Latsar BPSDM Prov. Sul Sel, Angkatan 37",
-    dateStart: "2019-08-06",
-    dateEnd: "2019-10-07",
-    place: "BPSDM (Kampus 1)"
+    key: 2,
+    provinsi: "Kab. Bulukumba",
+    nama: "Latsar",
+    angkatan: "29",
+    pembukaan: "2019-08-01",
+    penutupan: "2019-09-30",
+    tempat: "BPSDM",
+    campus: "Kampus 1"
   },
   {
-    title: "Latsar BPSDM Prov. Sul Sel, Angkatan 46",
-    dateStart: "2019-08-28",
-    dateEnd: "2019-10-25",
-    place: "BPSDM (Kampus 2)"
+    key: 3,
+    provinsi: "BPSDM Prov. Sul Sel",
+    nama: "Latsar",
+    angkatan: "33",
+    pembukaan: "2019-08-05",
+    penutupan: "2019-10-04",
+    tempat: "BPSDM",
+    campus: "Kampus 2"
   },
   {
-    title: "Latsar BPSDM Prov. Sul Sel, Angkatan 47",
-    dateStart: "2019-08-28",
-    dateEnd: "2019-10-25",
-    place: "BPSDM (Kampus 2)"
+    key: 4,
+    provinsi: "BPSDM Prov. Sul Sel",
+    nama: "Latsar",
+    angkatan: "37",
+    pembukaan: "2019-08-06",
+    penutupan: "2019-10-07",
+    tempat: "BPSDM",
+    campus: "Kampus 1"
   },
   {
-    title: "Latsar BPSDM Prov. Sul Sel, Angkatan 48",
-    dateStart: "2019-08-28",
-    dateEnd: "2019-10-25",
-    place: "BPSDM (Kampus 2)"
+    key: 5,
+    provinsi: "BPSDM Prov. Sul Sel",
+    nama: "Latsar",
+    angkatan: "46",
+    pembukaan: "2019-08-28",
+    penutupan: "2019-10-25",
+    tempat: "BPSDM",
+    campus: "Kampus 2"
   },
   {
-    title: "Latsar BPSDM Prov. Sul Sel, Angkatan 84",
-    dateStart: "2019-10-07",
-    dateEnd: "2019-12-02",
-    place: "BPSDM (Kampus 1)"
+    key: 6,
+    provinsi: "BPSDM Prov. Sul Sel",
+    nama: "Latsar",
+    angkatan: "47",
+    pembukaan: "2019-08-28",
+    penutupan: "2019-10-25",
+    tempat: "BPSDM",
+    campus: "Kampus 2"
   },
   {
-    title: "Latsar BPSDM Prov. Sul Sel, Angkatan 85",
-    dateStart: "2019-10-07",
-    dateEnd: "2019-12-02",
-    place: "BPSDM (Kampus 1)"
+    key: 7,
+    provinsi: "BPSDM Prov. Sul Sel",
+    nama: "Latsar",
+    angkatan: "48",
+    pembukaan: "2019-08-28",
+    penutupan: "2019-10-25",
+    tempat: "BPSDM",
+    campus: "Kampus 2"
   },
   {
-    title: "Latsar BPSDM Prov. Sul Sel, Angkatan 86",
-    dateStart: "2019-10-10",
-    dateEnd: "2019-12-09",
-    place: "BPSDM (Kampus 2)"
-  },
-
-  {
-    title: "Latsar Kab. Pinrang, Angkatan 30",
-    dateStart: "2019-08-01",
-    dateEnd: "2019-10-02",
-    place: "Kab. Pinrang"
+    key: 8,
+    provinsi: "BPSDM Prov. Sul Sel",
+    nama: "Latsar",
+    angkatan: "84",
+    pembukaan: "2019-10-07",
+    penutupan: "2019-12-02",
+    tempat: "BPSDM",
+    campus: "Kampus 1"
   },
   {
-    title: "Latsar Kab. Pinrang, Angkatan 31",
-    dateStart: "2019-08-01",
-    dateEnd: "2019-10-02",
-    place: "Kab. Pinrang"
+    key: 9,
+    provinsi: "BPSDM Prov. Sul Sel",
+    nama: "Latsar",
+    angkatan: "85",
+    pembukaan: "2019-10-07",
+    penutupan: "2019-12-02",
+    tempat: "BPSDM",
+    campus: "Kampus 1"
   },
   {
-    title: "Latsar Kab. Pinrang, Angkatan 32",
-    dateStart: "2019-08-01",
-    dateEnd: "2019-10-02",
-    place: "Kab. Pinrang"
+    key: 10,
+    provinsi: "BPSDM Prov. Sul Sel",
+    nama: "Latsar",
+    angkatan: "86",
+    pembukaan: "2019-10-10",
+    penutupan: "2019-12-09",
+    tempat: "BPSDM",
+    campus: "Kampus 2"
   },
   {
-    title: "Latsar Kab. Pinrang, Angkatan 69",
-    dateStart: "2019-09-23",
-    dateEnd: "2019-11-20",
-    place: "Kab. Pinrang"
+    key: 11,
+    provinsi: "Kab. Pinrang",
+    nama: "Latsar",
+    angkatan: "30",
+    pembukaan: "2019-08-01",
+    penutupan: "2019-10-02",
+    tempat: "Kab. Pinrang",
+    campus: ""
   },
   {
-    title: "Latsar Kab. Pinrang, Angkatan 70",
-    dateStart: "2019-09-23",
-    dateEnd: "2019-11-20",
-    place: "Kab. Pinrang"
+    key: 12,
+    provinsi: "Kab. Pinrang",
+    nama: "Latsar",
+    angkatan: "31",
+    pembukaan: "2019-08-01",
+    penutupan: "2019-10-02",
+    tempat: "Kab. Pinrang",
+    campus: ""
+  },
+  {
+    key: 13,
+    provinsi: "Kab. Pinrang",
+    nama: "Latsar",
+    angkatan: "32",
+    pembukaan: "2019-08-01",
+    penutupan: "2019-10-02",
+    tempat: "Kab. Pinrang",
+    campus: ""
+  },
+  {
+    key: 14,
+    provinsi: "Kab. Pinrang",
+    nama: "Latsar",
+    angkatan: "69",
+    pembukaan: "2019-09-23",
+    penutupan: "2019-11-20",
+    tempat: "Kab. Pinrang",
+    campus: ""
+  },
+  {
+    key: 15,
+    provinsi: "Kab. Pinrang",
+    nama: "Latsar",
+    angkatan: "70",
+    pembukaan: "2019-09-23",
+    penutupan: "2019-11-20",
+    tempat: "Kab. Pinrang",
+    campus: ""
+  },
+  {
+    key: 16,
+    provinsi: "Kab. Enrekang",
+    nama: "Latsar",
+    angkatan: "34",
+    pembukaan: "2019-08-05",
+    penutupan: "2019-10-05",
+    tempat: "BPSDM",
+    campus: "Kampus 2"
+  },
+  {
+    key: 17,
+    provinsi: "Kab. Enrekang",
+    nama: "Latsar",
+    angkatan: "35",
+    pembukaan: "2019-08-05",
+    penutupan: "2019-10-05",
+    tempat: "BPSDM",
+    campus: "Kampus 2"
+  },
+  {
+    key: 18,
+    provinsi: "Kab. Enrekang",
+    nama: "Latsar",
+    angkatan: "36",
+    pembukaan: "2019-08-05",
+    penutupan: "2019-10-05",
+    tempat: "BPSDM",
+    campus: "Kampus 2"
+  },
+  {
+    key: 19,
+    provinsi: "Kota Parepare",
+    nama: "Latsar",
+    angkatan: "38",
+    pembukaan: "2019-08-22",
+    penutupan: "2019-10-19",
+    tempat: "Kota Parepare",
+    campus: ""
+  },
+  {
+    key: 20,
+    provinsi: "Kota Parepare",
+    nama: "Latsar",
+    angkatan: "39",
+    pembukaan: "2019-08-22",
+    penutupan: "2019-10-19",
+    tempat: "Kota Parepare",
+    campus: ""
+  },
+  {
+    key: 21,
+    provinsi: "Kota Parepare",
+    nama: "Latsar",
+    angkatan: "40",
+    pembukaan: "2019-08-22",
+    penutupan: "2019-10-19",
+    tempat: "Kota Parepare",
+    campus: ""
+  },
+  {
+    key: 22,
+    provinsi: "Kota Parepare",
+    nama: "Latsar",
+    angkatan: "44",
+    pembukaan: "2019-08-26",
+    penutupan: "2019-10-29",
+    tempat: "Kota Parepare",
+    campus: ""
+  },
+  {
+    key: 23,
+    provinsi: "Kota Parepare",
+    nama: "Latsar",
+    angkatan: "45",
+    pembukaan: "2019-08-26",
+    penutupan: "2019-10-29",
+    tempat: "Kota Parepare",
+    campus: ""
+  },
+  {
+    key: 24,
+    provinsi: "Kab. Toraja Utara",
+    nama: "Latsar",
+    angkatan: "41",
+    pembukaan: "2019-08-26",
+    penutupan: "2019-10-23",
+    tempat: "Kab. Toraja Utara",
+    campus: ""
+  },
+  {
+    key: 25,
+    provinsi: "Kab. Toraja Utara",
+    nama: "Latsar",
+    angkatan: "42",
+    pembukaan: "2019-08-26",
+    penutupan: "2019-10-23",
+    tempat: "Kab. Toraja Utara",
+    campus: ""
+  },
+  {
+    key: 26,
+    provinsi: "Kab. Toraja Utara",
+    nama: "Latsar",
+    angkatan: "43",
+    pembukaan: "2019-08-26",
+    penutupan: "2019-10-23",
+    tempat: "Kab. Toraja Utara",
+    campus: ""
+  },
+  {
+    key: 27,
+    provinsi: "Kota Palopo",
+    nama: "Latsar",
+    angkatan: "49",
+    pembukaan: "2019-09-02",
+    penutupan: "2019-10-30",
+    tempat: "Kota Palopo",
+    campus: ""
+  },
+  {
+    key: 28,
+    provinsi: "Kota Palopo",
+    nama: "Latsar",
+    angkatan: "50",
+    pembukaan: "2019-09-10",
+    penutupan: "2019-11-07",
+    tempat: "Kota Palopo",
+    campus: ""
+  },
+  {
+    key: 29,
+    provinsi: "Kota Palopo",
+    nama: "Latsar",
+    angkatan: "51",
+    pembukaan: "2019-09-23",
+    penutupan: "2019-11-20",
+    tempat: "Kota Palopo",
+    campus: ""
+  },
+  {
+    key: 30,
+    provinsi: "Kota Palopo",
+    nama: "Latsar",
+    angkatan: "4 (K2)",
+    pembukaan: "2019-09-02",
+    penutupan: "2019-09-09",
+    tempat: "Kota Palopo",
+    campus: ""
+  },
+  {
+    key: 31,
+    provinsi: "Kab. Wajo",
+    nama: "Latsar",
+    angkatan: "52",
+    pembukaan: "2019-09-09",
+    penutupan: "2019-11-06",
+    tempat: "BPSDM",
+    campus: "Kampus 1"
+  },
+  {
+    key: 32,
+    provinsi: "Kab. Wajo",
+    nama: "Latsar",
+    angkatan: "53",
+    pembukaan: "2019-09-09",
+    penutupan: "2019-11-06",
+    tempat: "BPSDM",
+    campus: "Kampus 1"
+  },
+  {
+    key: 33,
+    provinsi: "Kab. Wajo",
+    nama: "Latsar",
+    angkatan: "54",
+    pembukaan: "2019-09-09",
+    penutupan: "2019-11-06",
+    tempat: "BPSDM",
+    campus: "Kampus 1"
+  },
+  {
+    key: 34,
+    provinsi: "Kab. Wajo",
+    nama: "Latsar",
+    angkatan: "55",
+    pembukaan: "2019-09-23",
+    penutupan: "2019-11-21",
+    tempat: "BPSDM",
+    campus: "Kampus 2"
+  },
+  {
+    key: 35,
+    provinsi: "Kab. Luwu",
+    nama: "Latsar",
+    angkatan: "58",
+    pembukaan: "2019-09-11",
+    penutupan: "2019-11-08",
+    tempat: "Belopa Kab. Luwu",
+    campus: ""
+  },
+  {
+    key: 36,
+    provinsi: "Kab. Luwu",
+    nama: "Latsar",
+    angkatan: "59",
+    pembukaan: "2019-09-11",
+    penutupan: "2019-11-08",
+    tempat: "Belopa Kab. Luwu",
+    campus: ""
+  },
+  {
+    key: 37,
+    provinsi: "Kab. Luwu",
+    nama: "Latsar",
+    angkatan: "60",
+    pembukaan: "2019-09-11",
+    penutupan: "2019-11-08",
+    tempat: "Belopa Kab. Luwu",
+    campus: ""
+  },
+  {
+    key: 38,
+    provinsi: "Kab. Bantaeng",
+    nama: "Latsar",
+    angkatan: "61",
+    pembukaan: "2019-09-16",
+    penutupan: "2019-11-14",
+    tempat: "Kab. Bantaeng",
+    campus: ""
+  },
+  {
+    key: 39,
+    provinsi: "Kab. Bantaeng",
+    nama: "Latsar",
+    angkatan: "62",
+    pembukaan: "2019-09-16",
+    penutupan: "2019-11-14",
+    tempat: "Kab. Bantaeng",
+    campus: ""
+  },
+  {
+    key: 40,
+    provinsi: "Kab. Bantaeng",
+    nama: "Latsar",
+    angkatan: "63",
+    pembukaan: "2019-09-16",
+    penutupan: "2019-11-14",
+    tempat: "Kab. Bantaeng",
+    campus: ""
+  },
+  {
+    key: 41,
+    provinsi: "Kab. Bone",
+    nama: "Latsar",
+    angkatan: "66",
+    pembukaan: "2019-09-19",
+    penutupan: "2019-11-16",
+    tempat: "BPSDM",
+    campus: "Kampus 2"
+  },
+  {
+    key: 42,
+    provinsi: "Kab. Bone",
+    nama: "Latsar",
+    angkatan: "67",
+    pembukaan: "2019-09-19",
+    penutupan: "2019-11-16",
+    tempat: "BPSDM",
+    campus: "Kampus 2"
+  },
+  {
+    key: 43,
+    provinsi: "Kab. Bone",
+    nama: "Latsar",
+    angkatan: "68",
+    pembukaan: "2019-09-19",
+    penutupan: "2019-11-16",
+    tempat: "BPSDM",
+    campus: "Kampus 2"
+  },
+  {
+    key: 44,
+    provinsi: "Kab. Kep. Selayar",
+    nama: "Latsar",
+    angkatan: "71",
+    pembukaan: "2019-10-07",
+    penutupan: "2019-12-02",
+    tempat: "BPSDM",
+    campus: "Kampus 1"
+  },
+  {
+    key: 45,
+    provinsi: "Kab. Kep. Selayar",
+    nama: "Latsar",
+    angkatan: "72",
+    pembukaan: "2019-10-07",
+    penutupan: "2019-12-02",
+    tempat: "BPSDM",
+    campus: "Kampus 1"
+  },
+  {
+    key: 46,
+    provinsi: "Kab. Kep. Selayar",
+    nama: "Latsar",
+    angkatan: "73",
+    pembukaan: "2019-10-07",
+    penutupan: "2019-12-02",
+    tempat: "BPSDM",
+    campus: "Kampus 1"
+  },
+  {
+    key: 47,
+    provinsi: "Kab. Kep. Selayar",
+    nama: "Latsar",
+    angkatan: "74",
+    pembukaan: "2019-10-07",
+    penutupan: "2019-12-02",
+    tempat: "BPSDM",
+    campus: "Kampus 1"
+  },
+  {
+    key: 48,
+    provinsi: "Kementrian Hukum dan HAM Prov. Sulawesi Utara",
+    nama: "Latsar",
+    angkatan: "75",
+    pembukaan: "2019-10-10",
+    penutupan: "2019-12-09",
+    tempat: "BPSDM",
+    campus: "Kampus 2"
+  },
+  {
+    key: 49,
+    provinsi: "Kementrian Hukum dan HAM Prov. Sulawesi Utara",
+    nama: "Latsar",
+    angkatan: "76",
+    pembukaan: "2019-10-10",
+    penutupan: "2019-12-09",
+    tempat: "BPSDM",
+    campus: "Kampus 2"
+  },
+  {
+    key: 50,
+    provinsi: "Kementrian Hukum dan HAM Prov. Sulawesi Utara",
+    nama: "Latsar",
+    angkatan: "77",
+    pembukaan: "2019-10-10",
+    penutupan: "2019-12-09",
+    tempat: "BPSDM",
+    campus: "Kampus 2"
+  },
+  {
+    key: 51,
+    provinsi: "Kementrian Hukum dan HAM Prov. Sulawesi Utara",
+    nama: "Latsar",
+    angkatan: "78",
+    pembukaan: "2019-10-10",
+    penutupan: "2019-12-09",
+    tempat: "BPSDM",
+    campus: "Kampus 2"
   }
 ];
 export default {
@@ -346,13 +788,8 @@ export default {
   layout: "login",
   data() {
     return {
-      data,
-      pagination: {
-        onChange: page => {
-          console.log(page);
-        },
-        pageSize: 12
-      }
+      latsar,
+      columns
     };
   },
   methods: {
