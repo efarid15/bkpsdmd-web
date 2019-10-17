@@ -98,6 +98,15 @@ export const actions = {
                 return error
             })
     },
+    pengajuancountfetch ({commit}) {
+        return api.pengajuan.getCountpengajuan()
+            .then(response => {
+                return response
+            })
+            .catch(error => {
+                return error
+            })
+    },
     approvefindkabupaten ({commit}, params) {
         return axios.get('pengajuan/approvekabupaten')
             .then(response => {
