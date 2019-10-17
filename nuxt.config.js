@@ -33,6 +33,7 @@ module.exports = {
      */
     plugins: [
         { src: '@/plugins/antd-ui' },
+        { src: '@/plugins/vPreview', mode: 'client' },
         { src: '@/api/init' }
     ],
     /*
