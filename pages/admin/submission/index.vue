@@ -58,7 +58,6 @@
           <a-range-picker
             style="width: 100%"
             :placeholder="['Tanggal Mulai', 'Tanggal Berakhir']"
-            :disabledDate="disabledDate"
             v-decorator="['tgllatpim1', config]"
           />
         </a-form-item>
@@ -66,7 +65,6 @@
           <a-range-picker
             style="width: 100%"
             :placeholder="['Tanggal Mulai', 'Tanggal Berakhir']"
-            :disabledDate="disabledDate"
             v-decorator="['tgllatpim2', config]"
           />
         </a-form-item>
@@ -74,7 +72,6 @@
           <a-range-picker
             style="width: 100%"
             :placeholder="['Tanggal Mulai', 'Tanggal Berakhir']"
-            :disabledDate="disabledDate"
             v-decorator="['tgllatpim3', config]"
           />
         </a-form-item>
@@ -175,7 +172,6 @@
           <a-range-picker
             style="width: 100%"
             :placeholder="['Tanggal Mulai', 'Tanggal Berakhir']"
-            :disabledDate="disabledDate"
             v-decorator="['tgllatsar1', config]"
           />
         </a-form-item>
@@ -183,7 +179,6 @@
           <a-range-picker
             style="width: 100%"
             :placeholder="['Tanggal Mulai', 'Tanggal Berakhir']"
-            :disabledDate="disabledDate"
             v-decorator="['tgllatsar2', config]"
           />
         </a-form-item>
@@ -401,7 +396,7 @@ export default {
     },
 
     disabledDate(current) {
-      return current && current < moment().endOf("day");
+      //return current && current < moment().endOf("day");
     },
 
     showApprove(key) {
