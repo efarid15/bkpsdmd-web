@@ -23,6 +23,7 @@ const columns = [
   { title: "Peserta", dataIndex: "jmlpeserta", key: "jmlpeserta" },
   { title: "Tanggal Kegiatan", dataIndex: "tglkegiatan", key: "tgl" },
   { title: "Tanggal Pengajuan", dataIndex: "tglpengajuan", key: "tglpengajuan" },
+  { title: "Status", dataIndex: "status", key: "status" },
   
 ];
 
@@ -68,6 +69,14 @@ export default {
 
         let tglevent = moment(this.data[index]['tglkegiatan']).format('dddd, D MMMM YYYY')
         let tglsub = moment(this.data[index]["tglpengajuan"]).format('dddd, D MMMM YYYY')
+        let konfirmasi = this.data[index]["status"]
+        if(konfirmasi === 'A'){
+           this.$set(this.data[index], 'status', 'Disetujui')
+        }
+        else {
+          this.$set(this.data[index], 'status', 'Ditolak')
+        }
+        
         this.$set(this.data[index], "tglpengajuan", tglsub);
         this.$set(this.data[index], 'tglkegiatan', tglevent)
 
