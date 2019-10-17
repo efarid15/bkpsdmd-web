@@ -262,22 +262,7 @@
               <div class="ant-upload-text">Upload</div>
             </div>
           </a-upload>
-          <!-- <a-upload-dragger
-            :multiple="false"
-            name="dokumen"
-            action="/api/upload/reject"
-            @change="handleChange"
-            :beforeUpload="beforeUpload"
-            v-decorator="['dokumen',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
-          >
-            <div style="padding: 24px">
-              <p class="ant-upload-drag-icon">
-                <a-icon type="inbox" />
-              </p>
-              <p class="ant-upload-text fs-14 cr-gray">Click or drag file to this area to upload</p>
-            </div>
-          </a-upload-dragger> -->
-        </a-form-item>
+          </a-form-item>
 
         <a-form-item label="Alasan Penolakan">
           <a-textarea
@@ -286,6 +271,37 @@
           />
         </a-form-item>
 
+        <a-button type="primary" html-type="submit">Kirim</a-button>
+      </a-form>
+    </a-modal>
+
+    <!-- if reject show modal -->
+    <a-modal
+      title="Konfirmasi Diklat Kabupaten"
+      :footer="false"
+      v-model="visibleApproveKabupaten"
+      @ok="handleKabupaten"
+    >
+      <a-form layout="vertical" :form="form" @submit="handleSubmitKabupaten" hideRequiredMark>
+        <a-form-item label="Dokumen Diklat Kabupaten/Kota">
+          <a-upload
+            name="dokumen"
+            listType="picture-card"
+            class="avatar-uploader"
+            :showUploadList="false"
+            action="/api/upload"
+            :beforeUpload="beforeUpload"
+            @change="handleChange"
+            v-decorator="['dokumen',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
+          >
+            <img v-if="imageUrl" :src="imageUrl" alt="avatar" />
+            <div v-else style="margin: 0 auto">
+              <a-icon :type="loading ? 'loading' : 'plus'" />
+              <div class="ant-upload-text">Upload</div>
+            </div>
+          </a-upload>
+        
+        </a-form-item>
         <a-button type="primary" html-type="submit">Kirim</a-button>
       </a-form>
     </a-modal>
@@ -345,6 +361,7 @@ export default {
       visibleReject: false,
       visibleApprovelatsar: false,
       visibleApprovelatpim: false,
+      visibleApproveKabupaten: false,
       selectKampus: "",
       loading: false,
       imageUrl: "",
@@ -420,19 +437,38 @@ export default {
 
         let iddiklat = this.pengajuan[0]["namakegiatan"];
         let idkategori = this.pengajuan[0]["idkategori"];
+        let tempat = this.pengajuan[0]["tempat"];
+        console.log(tempat)
+        // jika kategori pusat
 
-        if (idkategori === "0") {
-          this.visibleApprovelatpim = true;
-          this.visibleApprovelatsar = false;
-          console.log("latpim");
-        } else if (idkategori === "1") {
-          this.visibleApprovelatpim = false;
-          this.visibleApprovelatsar = true;
+        if(tempat === "P"){
+          this.visibleApproveKabupaten = false;
+          if (idkategori === "0") {
+            this.visibleApprovelatpim = true;
+            this.visibleApprovelatsar = false;
+            console.log("latpim");
+          } else if (idkategori === "1") {
+            this.visibleApprovelatpim = false;
+            this.visibleApprovelatsar = true;
           console.log("latsar");
+          }
+
+        } else if(tempat === "K"){
+           this.visibleApproveKabupaten = true;
+           this.visibleApprovelatpim = false;
+            this.visibleApprovelatsar = false;
+            console.log(this.pengajuan)
         }
+
+                
+
+        
       });
 
       //this.visibleApprove = true;
+    },
+    handleKabupaten() {
+      this.visibleApproveKabupaten = false;
     },
     handleApprovelatsar() {
       this.visibleApprovelatsar = false;
@@ -482,6 +518,110 @@ export default {
     //   }
     //   return isLt2M;
     // },
+
+    handleSubmitKabupaten(e) {
+      e.preventDefault();
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          let iddiklat = this.pengajuan[0]["namakegiatan"];
+          let idkategori = this.pengajuan[0]["idkategori"];
+          let tempat = this.pengajuan[0]["tempat"];
+          let idpengajuan = this.pengajuan[0]["id"];
+          let statuspengajuan = "A";
+          /*let idkategori = "0";
+          let idpengajuan = this.$store.state.pengajuan.pengajuan[0]["id"];
+          let iddiklat = this.$store.state.pengajuan.pengajuan[0]["iddiklat"];
+          let statuspengajuan = "A";*/
+
+          //start simpan detail
+          this.$store
+            .dispatch("detailpengajuan/detailpengajuanadd", {
+              idJenisdiklat: iddiklat,
+              idKampus: null,
+              idRuangan: null,
+              idPengajuan: idpengajuan,
+              idMentor: null,
+              tglStartoncamp1: null,
+              tglEndoncamp1: null,
+              tglStartoncamp2: null,
+              tglEndoncamp2: null,
+              tglStartoncamp3: null,
+              tglEndoncamp3: null,
+              tglMulai: null,
+              tglAkhir: null,
+              dokumenpengajuan: values.dokumen.file.name
+            })
+            .then(result => {
+              this.alert = { type: "success", message: result.data.message };
+
+              //start approve
+
+              this.$store
+                .dispatch("pengajuan/setapprove", {
+                  pengajuanId: idpengajuan,
+                  statusPengajuan: statuspengajuan
+                })
+                .then(result => {
+                  this.alert = {
+                    type: "success",
+                    message: result.data.message
+                  };
+
+                  // start get pengajuan
+                  this.data = [];
+
+                  this.$store
+                    .dispatch("pengajuan/pengajuanfetch")
+                    .then(({ data }) => {
+                      // end approve
+
+                      this.data = data.values;
+
+                      for (let index = 0; index < this.data.length; index++) {
+                        const tglevent = moment(
+                          this.data[index]["tglkegiatan"]
+                        ).format("MMMM YYYY");
+                        const tglsubmit = moment(
+                          this.data[index]["tglpengajuan"]
+                        ).format("dddd, D MMMM YYYY");
+                        this.$set(this.data[index], "tglkegiatan", tglevent);
+                        this.$set(this.data[index], "tglpengajuan", tglsubmit);
+                        const statpengajuan = this.data[index]["status"];
+                        if (statpengajuan === "R") {
+                          this.$set(
+                            this.data[index],
+                            "status",
+                            "Menunggu Verifikasi"
+                          );
+                        }
+                        const ptempat = this.data[index]["tempat"];
+                        if (ptempat === "P") {
+                          this.$set(this.data[index], "tempat", "Pusat");
+                        } else if (ptempat === "K") {
+                          this.$set(this.data[index], "tempat", "Kabupaten");
+                        }
+                      }
+                      this.$store.commit("pengajuan/set", data.values);
+                      this.visibleApproveKabupaten = false;
+                    });
+
+                  //end get pengajuan
+                })
+                .catch(error => {
+                  this.loading = false;
+                  if (error.response && error.response.data) {
+                  }
+                });
+            })
+            .catch(error => {
+              this.loading = false;
+              if (error.response && error.response.data) {
+              }
+            });
+
+        }
+      })
+    },
 
     handleSubmitLatsar(e) {
       e.preventDefault();

@@ -14,10 +14,16 @@ export const mutations = {
     set(state, events) {
         state.list = events
     },
+    setapprovekabupaten(state, events) {
+        state.list = events
+    },
     add(state, value) {
         merge(state.list, value)
     },
     remove(state, {pengajuan}) {
+        state.list.splice(state.list.indexOf(pengajuan), 1)
+    },
+    removeapprovekabupaten(state, {pengajuan}) {
         state.list.splice(state.list.indexOf(pengajuan), 1)
     },
     setPengajuan(state, pengajuan) { state.pengajuan = pengajuan },
@@ -65,6 +71,18 @@ export const actions = {
             })
             .catch(error => {
                 commit('remove_pengajuan')
+                return error
+            })
+    },
+
+    approvefetchkabupaten ({commit}) {
+        return api.pengajuan.getApprovekabupaten()
+            .then(response => {
+                commit('setapprovekabupaten', response.values)
+                return response
+            })
+            .catch(error => {
+                commit('removeapprovekabupaten')
                 return error
             })
     },
