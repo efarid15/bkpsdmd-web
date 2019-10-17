@@ -126,6 +126,16 @@
     }
 }
 
+.ant-list {
+    & .ant-row {
+        & .ant-list-item {
+            & .ant-card {
+                min-height: 148px;
+            }
+        }
+    }
+}
+
 @media (max-width: 768px) {
     .ant-layout--onepages {
         & .ant-carousel--slide {
