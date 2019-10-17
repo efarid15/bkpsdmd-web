@@ -199,7 +199,8 @@
               <div class="divider"></div>
               <h2>
                 Jadwal Pelaksanaan Pelatihan Dasar (Latsar)
-                <br />Pemerintah Provinsi Sulawesi Selatan dan Kabupaten/Kota Se SulSel Periode Agustus Sampai Dengan Oktober 2019
+                <br />Pemerintah Provinsi Sulawesi Selatan dan Kabupaten/Kota Se SulSel
+                <br />Periode Agustus Sampai Dengan Oktober 2019
               </h2>
             </div>
 
@@ -230,11 +231,7 @@
                         <div>{{item.place}}</div>
                       </div>
                     </div>
-                    <a-avatar
-                      style="backgroundColor:#4481eb"
-                      slot="avatar"
-                      icon="bulb"
-                    />
+                    <a-avatar style="backgroundColor:#4481eb" slot="avatar" icon="bulb" />
                   </a-list-item-meta>
                 </a-card>
               </a-list-item>
