@@ -5,13 +5,7 @@
         <a-col :xs="12" :sm="12" :md="12">
           <div class="title">Profil kantor</div>
         </a-col>
-        <a-col :xs="12" :sm="12" :md="12" class="text-right">
-          <a-button
-            @click="showEdit"
-            type="danger"
-            icon="edit"
-          >Edit</a-button>
-        </a-col>
+        
       </a-row>
 
       <a-list itemLayout="horizontal" style="padding: 0 20px 10px 20px">
@@ -33,7 +27,7 @@
               <span class="fs-14 cr-gray">Instansi</span>
             </a-col>
             <a-col :xs="24" :sm="18" :md="20">
-              <span class="fs-14 cr-black">Badan Kepegawaian Daerah Makassar</span>
+              <span class="fs-14 cr-black">{{ instansi }}</span>
             </a-col>
           </a-row>
         </a-list-item>
@@ -43,7 +37,7 @@
               <span class="fs-14 cr-gray">No. Telepon</span>
             </a-col>
             <a-col :xs="24" :sm="18" :md="20">
-              <span class="fs-14 cr-black">085213247455</span>
+              <span class="fs-14 cr-black">{{ notelp }}</span>
             </a-col>
           </a-row>
         </a-list-item>
@@ -53,7 +47,7 @@
               <span class="fs-14 cr-gray">Alamat</span>
             </a-col>
             <a-col :xs="24" :sm="18" :md="20">
-              <span class="fs-14 cr-black">Jl. BTP Blok A No 537</span>
+              <span class="fs-14 cr-black">{{ alamat }}</span>
             </a-col>
           </a-row>
         </a-list-item>
@@ -180,6 +174,7 @@
   </div>
 </template>
 <script>
+import axios from "axios"
 function getBase64(img, callback) {
   const reader = new FileReader();
   reader.addEventListener("load", () => callback(reader.result));
@@ -202,13 +197,29 @@ export default {
       visibleEditPassword: false,
       confirmDirty: false,
       loading: false,
+      instansi: "",
+      notelp: "",
+      alamat: "",
+      profil: {},
       imageUrl: "https://img4.apk.tools/300/7/b/9/com.bkpsdmd.portal.sample.png"
     };
   },
+  mounted (){
+     let idbkd = this.$store.state.localStorage.authUser['bkdid']
+     
+    axios.get(`bkd/${idbkd}`).then(result => {
+      this.profil = result.data.values[0];
+      this.instansi = this.profil['namabkd'];
+      this.alamat = this.profil['alamat']
+      this.notelp = this.profil['notelp']
+      console.log(this.instansi)
+      this.$store.commit("bkd/set", result.data.values);
+    });
+    
+
+  },
   methods: {
-    showEdit() {
-      this.visibleEdit = true;
-    },
+    
     handleEdit() {
       this.visibleEdit = false;
     },
@@ -269,6 +280,7 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
+          
           this.visibleEditPassword = false;
         }
       });
