@@ -157,7 +157,7 @@ export default {
   },
 
   mounted() {
-    let idbkd = this.$store.state.auth.authUser["bkdid"];
+    let idbkd = this.$store.state.localStorage.authUser['bkdid']
 
     axios.get(`skpd/bkd/${idbkd}`).then(result => {
       this.data = result.data.values;
