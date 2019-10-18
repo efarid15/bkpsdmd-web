@@ -202,7 +202,6 @@ export default {
     this.$store.dispatch('bkd/bkdfetch').then( ({ data }) => {
       this.data = data.values
       this.$store.commit('bkd/set', data.values)
-      console.log(data)
     })
 
   },
