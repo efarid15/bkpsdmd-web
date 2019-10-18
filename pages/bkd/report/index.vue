@@ -1,23 +1,28 @@
 <template>
   <div class="container">
     <div class="title p24">Laporan kegiatan</div>
-    <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }">
+    <a-table :columns="columns" :dataSource="report" :scroll="{ x: 980 }" rowKey="id">
+      <span slot="tglmulai" slot-scope="text, record">
+                <span>{{moment(record.tglmulai, "YYYY-MM-DD").format('dddd')}}, {{moment(record.tglmulai, "YYYY-MM-DD").format('LL')}}</span>
+      </span>
       <span slot="status" slot-scope="text, record">
-        <span class="color-green">Terlaksana</span>
+        <span class="color-green">Disetujui</span>
       </span>
     </a-table>
   </div>
 </template>
 <script>
+import axios from "axios"
+import moment from "moment"
 const columns = [
   {
     title: "Nama Kegiatan",
-    dataIndex: "name",
-    key: "name"
+    dataIndex: "jenisdiklat",
+    key: "jenisdiklat"
   },
-  { title: "SKPD", dataIndex: "skpd", key: "skpd" },
-  { title: "Jumlah Peserta", dataIndex: "jumlah", key: "jumlah" },
-  { title: "Waktu Kegiatan", dataIndex: "createdAt", key: "createdAt" },
+  { title: "BKD", dataIndex: "namabkd", key: "namabkd" },
+  { title: "Jumlah Peserta", dataIndex: "jmlpeserta", key: "jmlpeserta" },
+  { title: "Waktu Kegiatan", dataIndex: "tglmulai", key: "tglmulai", scopedSlots: { customRender: "tglmulai" } },
   {
     title: "Status",
     key: "status",
@@ -44,7 +49,7 @@ const data = [
   }
 ];
 export default {
-  name: "submission",
+  name: "report",
   layout: "bkd",
   head() {
     return {
@@ -53,9 +58,22 @@ export default {
   },
   data() {
     return {
+      report: [],
       data,
       columns
     };
+  },
+  mounted(){
+    let idbkd = this.$store.state.localStorage.authUser['bkdid']
+       axios.get(`pengajuan/approve/bkd/${idbkd}`).then(result => {
+        this.report = result.data.values;
+      
+      this.$store.commit('pengajuan/set', result.data.values)
+       });
+
+  },
+  methods: {
+    moment
   }
 };
 </script>
