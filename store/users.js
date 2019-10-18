@@ -7,6 +7,7 @@ import axios from "axios";
 export const state = () => ({
     list: [],
     user: {},
+    userbkd: {},
     member: {},
 })
 
@@ -21,6 +22,10 @@ export const mutations = {
         state.list.splice(state.list.indexOf(user), 1)
     },
     setUser(state, user) { state.user = user },
+    
+    setUserbkd(state, userbkd) { state.userbkd = userbkd },
+
+
 
     setMember(state, member) { state.member = member },
 
@@ -80,6 +85,13 @@ export const actions = {
         return api.users.addBkduser(data)
             .then(response => {
                 commit('setUser', response.data)
+                return response
+            })
+    },
+    useredit ({commit}, data) {
+        return api.users.editUser(data)
+            .then(response => {
+                commit('setUserbkd', response.data)
                 return response
             })
     },
