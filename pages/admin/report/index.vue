@@ -2,23 +2,27 @@
   <div class="container">
     <div class="title p24">Laporan Kegiatan</div>
     
-    <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }">
+    <a-table :columns="columns" :dataSource="report" :scroll="{ x: 980 }" rowKey="id">
+      <span slot="tglmulai" slot-scope="text, record">
+                <span>{{moment(record.tglmulai, "YYYY-MM-DD").format('dddd')}}, {{moment(record.tglmulai, "YYYY-MM-DD").format('LL')}}</span>
+      </span>
       <span slot="status" slot-scope="text, record">
-        <span class="color-green">Terlaksana</span>
+        <span class="color-green">Disetujui</span>
       </span>
     </a-table>
   </div>
 </template>
 <script>
+import moment from "moment"
 const columns = [
   {
     title: "Nama Kegiatan",
-    dataIndex: "name",
+    dataIndex: "jenisdiklat",
     key: "name"
   },
-  { title: "BKD", dataIndex: "bkd", key: "bkd" },
-  { title: "Jumlah Peserta", dataIndex: "jumlah", key: "jumlah" },
-  { title: "Waktu Kegiatan", dataIndex: "createdAt", key: "createdAt" },
+  { title: "BKD", dataIndex: "namabkd", key: "namabkd" },
+  { title: "Jumlah Peserta", dataIndex: "jmlpeserta", key: "jmlpeserta" },
+  { title: "Waktu Kegiatan", dataIndex: "tglmulai", key: "tglmulai", scopedSlots: { customRender: "tglmulai" } },
   {
     title: "Status",
     key: "status",
@@ -54,9 +58,19 @@ export default {
   },
   data() {
     return {
+      report: [],
       data,
       columns
     };
+  },
+  mounted(){
+    this.$store.dispatch('pengajuan/approvefind').then( ({ data }) => {
+      this.report = data.values
+         
+    })
+  },
+  methods: {
+    moment
   }
 };
 </script>
