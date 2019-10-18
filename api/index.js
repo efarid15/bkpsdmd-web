@@ -10,6 +10,7 @@ export default {
         findUser: (params) => axios.get('users/', params),
         getBkduser: () => axios.get('bkduser'),
         addBkduser: (data) => axios.post('bkduser', data),
+        editUser: (data) => axios.put('users/bkd', data),
         addMemberuser: (data) => axios.post('memberuser', data), 
         
     },
