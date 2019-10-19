@@ -34,7 +34,8 @@ module.exports = {
     plugins: [
         { src: '@/plugins/antd-ui' },
         { src: '@/plugins/vPreview', mode: 'client' },
-        { src: '@/api/init' }
+        { src: '@/api/init' },
+       
     ],
     /*
      ** Nuxt.js dev-modules
