@@ -98,6 +98,17 @@ export const actions = {
                 return error
             })
     },
+    livepengajuanfetch ({commit}) {
+        return api.pengajuan.getLivepengajuan()
+            .then(response => {
+                commit('set', response.values)
+                return response
+            })
+            .catch(error => {
+                commit('remove_pengajuan')
+                return error
+            })
+    },
     pengajuancountfetch ({commit}) {
         return api.pengajuan.getCountpengajuan()
             .then(response => {

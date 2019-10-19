@@ -45,6 +45,12 @@
           </a-select>
         </a-form-item>
 
+        <a-form-item label="Angkatan" has-feedback>
+          <a-input
+            v-decorator="['angkatan',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
+          />
+        </a-form-item>
+
         <a-form-item label="Bulan Kegiatan" has-feedback>
           <a-month-picker style="width: 100%" placeholder="Pilih Bulan" v-decorator="['tgladd', config]" />
         </a-form-item>
@@ -107,6 +113,7 @@ const columns = [
     dataIndex: "jenisdiklat",
     key: "jenisdiklat"
   },
+  { title: "Angkatan", dataIndex: "namaangkatan", key: "namaangkatan" },
   { title: "Peserta", dataIndex: "jmlpeserta", key: "jmlpeserta" },
   { title: "Tanggal Kegiatan", dataIndex: "tglkegiatan", key: "tglkegiatan" },
   {
@@ -246,7 +253,8 @@ export default {
               jmlPeserta: values.jumlahpeserta,
               tglKegiatan: tglku,
               tempatpengajuan: values.tempat,
-              filepengajuan: values.dokumen.file.name
+              filepengajuan: values.dokumen.file.name,
+              angkatan: values.angkatan
             })
             .then(result => {
               this.alert = { type: "success", message: result.data.message };

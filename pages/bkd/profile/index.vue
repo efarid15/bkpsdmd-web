@@ -2,16 +2,18 @@
   <div>
     <div class="container" style="margin-bottom: 16px">
       <a-row :gutter="16" type="flex" justify="space-around" align="middle" class="p24">
+      <a-alert
+              style="margin-bottom: 16px;"
+              v-if="alert"
+              :type="alert.type"
+              :message="alert.message"
+            />
+      </a-row>
+      <a-row :gutter="16" type="flex" justify="space-around" align="middle" class="p24">
         <a-col :xs="12" :sm="12" :md="12">
           <div class="title">Profil kantor</div>
         </a-col>
-        <a-col :xs="12" :sm="12" :md="12" class="text-right">
-          <a-button
-            @click="showEdit"
-            type="danger"
-            icon="edit"
-          >Edit</a-button>
-        </a-col>
+        
       </a-row>
 
       <a-list itemLayout="horizontal" style="padding: 0 20px 10px 20px">
@@ -33,7 +35,7 @@
               <span class="fs-14 cr-gray">Instansi</span>
             </a-col>
             <a-col :xs="24" :sm="18" :md="20">
-              <span class="fs-14 cr-black">Badan Kepegawaian Daerah Makassar</span>
+              <span class="fs-14 cr-black">{{ instansi }}</span>
             </a-col>
           </a-row>
         </a-list-item>
@@ -43,7 +45,7 @@
               <span class="fs-14 cr-gray">No. Telepon</span>
             </a-col>
             <a-col :xs="24" :sm="18" :md="20">
-              <span class="fs-14 cr-black">085213247455</span>
+              <span class="fs-14 cr-black">{{ notelp }}</span>
             </a-col>
           </a-row>
         </a-list-item>
@@ -53,7 +55,7 @@
               <span class="fs-14 cr-gray">Alamat</span>
             </a-col>
             <a-col :xs="24" :sm="18" :md="20">
-              <span class="fs-14 cr-black">Jl. BTP Blok A No 537</span>
+              <span class="fs-14 cr-black">{{ alamat }}</span>
             </a-col>
           </a-row>
         </a-list-item>
@@ -127,7 +129,7 @@
               <span class="fs-14 cr-gray">Username</span>
             </a-col>
             <a-col :xs="24" :sm="18" :md="20">
-              <span class="fs-14 cr-black">085213247455</span>
+              <span class="fs-14 cr-black">{{ email }}</span>
             </a-col>
           </a-row>
         </a-list-item>
@@ -154,12 +156,6 @@
         centered
       >
         <a-form layout="vertical" :form="form" @submit="handleSubmitEditPassword" hideRequiredMark>
-          <a-form-item label="Password" has-feedback>
-            <a-input
-              v-decorator="['password',{rules: [{required: true, message: 'Harus di isi!',}],}]"
-              type="password"
-            />
-          </a-form-item>
           <a-form-item label="Password Baru" has-feedback>
             <a-input
               v-decorator="['newpassword',{rules: [{required: true, message: 'Harus di isi!',},{validator: validateToNextPassword,}],}]"
@@ -180,6 +176,7 @@
   </div>
 </template>
 <script>
+import axios from "axios"
 function getBase64(img, callback) {
   const reader = new FileReader();
   reader.addEventListener("load", () => callback(reader.result));
@@ -202,13 +199,32 @@ export default {
       visibleEditPassword: false,
       confirmDirty: false,
       loading: false,
+      alert: null,
+      instansi: "",
+      notelp: "",
+      alamat: "",
+      email: "",
+      profil: {},
       imageUrl: "https://img4.apk.tools/300/7/b/9/com.bkpsdmd.portal.sample.png"
     };
   },
+  mounted (){
+     let idbkd = this.$store.state.localStorage.authUser['bkdid']
+     this.email = this.$store.state.localStorage.authUser['email']
+    axios.get(`bkd/${idbkd}`).then(result => {
+
+      this.profil = result.data.values[0];
+      this.instansi = this.profil['namabkd'];
+      this.alamat = this.profil['alamat']
+      this.notelp = this.profil['notelp']
+      console.log(this.instansi)
+      this.$store.commit("bkd/set", result.data.values);
+    });
+    
+
+  },
   methods: {
-    showEdit() {
-      this.visibleEdit = true;
-    },
+    
     handleEdit() {
       this.visibleEdit = false;
     },
@@ -235,12 +251,14 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
+
           this.visibleEdit = false;
         }
       });
     },
 
     showEditPassword() {
+      console.log(this.email)
       this.visibleEditPassword = true;
     },
     handleEditPassword() {
@@ -269,6 +287,18 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
+          this.alert = null;
+          axios.put('user/password', {
+            newPassword: values.confirm,
+            userEmail: this.email
+          }).then(result => {
+            //this.profil = result.data.values[0];
+            if(result.data.status = 200){
+              this.alert = {type: 'success', message: result.data.values}
+            }
+        
+          });
+
           this.visibleEditPassword = false;
         }
       });

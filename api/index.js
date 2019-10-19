@@ -10,6 +10,7 @@ export default {
         findUser: (params) => axios.get('users/', params),
         getBkduser: () => axios.get('bkduser'),
         addBkduser: (data) => axios.post('bkduser', data),
+        editUser: (data) => axios.put('users/bkd', data),
         addMemberuser: (data) => axios.post('memberuser', data), 
         
     },
@@ -72,6 +73,7 @@ export default {
     pengajuan: {
         findPengajuan: (params) => axios.get('pengajuan/', params),
         getPengajuan: () => axios.get('pengajuan'),
+        getLivepengajuan: () => axios.get('livepengajuan'),
         getCountpengajuan: () => axios.get('pengajuan/count'),
         getApprove: () => axios.get('pengajuan/approve'),
         getApprovekabupaten: () => axios.get('pengajuan/approvekabupaten'),

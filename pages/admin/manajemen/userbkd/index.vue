@@ -15,9 +15,9 @@
     
     <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
       <span slot="action" slot-scope="text, record">
-        <!--<a-button size="small" type="link" class="color-blue" @click="showEdit(record.id)">Edit</a-button>
+        <a-button size="small" type="link" class="color-blue" @click="showEdit(record.id)">Edit</a-button>
         <a-divider type="vertical"></a-divider>
-        <a-popconfirm
+        <!--<a-popconfirm
           v-if="data.length"
           title="Sure to delete?"
           @confirm="() => onDelete(record.id)">
@@ -54,7 +54,7 @@
         </a-col>
       </a-row>
           
-    <a-row :gutter="8">
+      <a-row :gutter="8">
         <a-col :span="6">
 
            <a-form-item label="Role" has-feedback>
@@ -83,26 +83,51 @@
           </a-form-item>
 
         </a-col>
-    </a-row>
+      </a-row>
           
-
-          
-          
-
-          <!-- <a-form-item label="No. Telepon" has-feedback>
-            <a-input
-              v-decorator="['telpEdit',{initialValue: '315049', rules: [{ required: true, message: 'Harus di isi!' }]}]"
-            />
-          </a-form-item>-->
-
           
           <a-button type="primary" html-type="submit">Simpan</a-button>
+      </a-form>
+    </a-modal>
+
+    <!-- Modal Edit Akun -->
+    <a-modal title="Edit User BKD" :footer="false" v-model="visibleEdit" @ok="handleEdit" centered>
+        <a-form layout="vertical" :form="form" @submit="handleSubmitEdit" hideRequiredMark>
+
+          <a-form-item label="Nama Pengguna">
+            <a-input
+              v-decorator="['namaEdit',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
+              placeholder="Nama Admin"
+            />
+          </a-form-item>
+          <a-form-item label="Nama Instansi" has-feedback>
+            <a-select
+              v-decorator="['bkdEdit',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
+              placeholder="Pilih Instansi"
+              showSearch
+            >
+            <a-select-option  v-for="(item) in bkdlist" :value="item.id" v-bind:key="item.id+16">{{ item.namabkd }}</a-select-option>
+              
+            </a-select>
+          </a-form-item>
+          <a-form-item label="Email Pengguna">
+            <a-input
+              v-decorator="['emailEdit',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
+              placeholder="Email"
+            />
+          </a-form-item>
+
+          <a-button type="primary" html-type="submit">Simpan</a-button>
+
         </a-form>
-      </a-modal>
+    </a-modal>
+
 
   </div>
 </template>
 <script>
+
+import axios from "axios"
 
 const columns = [
   { title: "Nama", dataIndex: "nama", key: "nama" },
@@ -111,12 +136,12 @@ const columns = [
   { title: "Alamat BKD", dataIndex: "alamat", key: "alamat" },
   { title: "Kabupaten / Kota", dataIndex: "kabupaten_kota", key: "kabupaten_kota" },
 
-  /*{
+  {
     title: "Action",
     fixed: "right",
     width: 160,
     scopedSlots: { customRender: "action" }
-  }*/
+  }
 ];
 
 const data = [
@@ -163,6 +188,9 @@ middleware: "auth",
     return {
       visibleAdd: false,
       visibleEdit: false,
+      email: "",
+      nama: "",
+      idbkd: "",
       bkdlist: {},
       data: [],
       columns
@@ -189,13 +217,82 @@ middleware: "auth",
       this.visibleAdd = true;
     },
 
+    showEdit(key){
+      this.$store.dispatch('bkd/bkdfetch').then( ({ data }) => {
+          this.bkdlist = data.values
+      })
+
+      axios.get(`users/${key}`).then(result => {
+
+          this.$store.commit('users/setUserbkd', result.data.values[0])
+          this.nama = result.data.values[0]['nama']
+          this.email = result.data.values[0]['email']
+          this.idbkd = result.data.values[0]['bkdid']
+
+          this.form.setFieldsValue({
+          namaEdit: this.nama,
+          emailEdit: this.email,
+          bkdEdit: this.idbkd,
+
+        });
+
+      });
+
+      this.visibleEdit = true;
+
+    },
+
+    handleEdit() {
+       this.visibleEdit = false;
+    },
+
 
 
     handleAdd() {
       this.visibleAdd = false;
     },
 
+    handleSubmitEdit(e) {
+      e.preventDefault();
+      this.form.validateFields((err, values) => {
+        if (!err) {
 
+          let userid = this.$store.state.users.userbkd['id']
+          let bkdid = this.$store.state.users.userbkd['bkdid']
+          
+          this.$store.dispatch('users/useredit', {
+              userid: userid,
+              bkdid: bkdid,
+              nama: values.namaEdit,
+              email: values.emailEdit,
+        
+            }).then(result => {
+              this.alert = {type: 'success', message: result.data.message}
+            
+              this.$store.dispatch('users/bkduserfetch').then( ({ data }) => {
+                this.data = data.values
+                this.$store.commit('users/set', data.values)
+                this.visibleEdit = false
+            
+               }).catch(error => {
+                this.loading = false
+                if (error.response && error.response.data) {
+              //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+                 }
+              })
+              
+
+
+            }).catch(error => {
+              this.loading = false
+              if (error.response && error.response.data) {
+                //this.alert = {type: 'error', message: error.response.data.message || error.reponse.status}
+              }
+            })
+
+        }
+      });
+    },
     handleSubmitAdd(e) {
       e.preventDefault();
       this.form.validateFields((err, values) => {
