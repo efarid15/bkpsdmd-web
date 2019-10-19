@@ -1,4 +1,5 @@
 <template>
+<div>
   <a-row :gutter="16">
     <a-col :xs="24" :sm="12" :md="6" :style="{ marginBottom: '16px' }">
       <div class="container">
@@ -64,6 +65,9 @@
       </div>
     </a-col>
   </a-row>
+
+  
+  </div>
 </template>
 <script>
 
@@ -71,7 +75,6 @@ import axios from "axios"
 
 export default {
   name: "dashboard",
-  
   head() {
     return {
       title:
@@ -81,6 +84,7 @@ export default {
   data() {
     return {
       count: {},
+      
     };
   },
   mounted(){
