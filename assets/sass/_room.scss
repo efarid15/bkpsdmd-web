@@ -1,0 +1,77 @@
+.mD-header--room {
+    background-image: url('https://assets.website-files.com/5bfd1275cc56e15ce750b18e/5c289afb9a15758033893a7f_49.%20Soft%20Peach.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+    padding: 48px 24px;
+    & .ant-btn {
+        text-shadow: none;
+        box-shadow: none;
+        border: none;
+    }
+    & h2 {
+        text-transform: uppercase;
+        margin-bottom: 0;
+        margin-top: 16px;
+    }
+}
+
+.md-items--room {
+    background-color: #ffffff;
+    padding: 40px 16px;
+    & .ant-row--gutters {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        & .ant-card {
+            height: 100%;
+            & .ant-card-cover {
+                overflow: hidden;
+                height: 200px;
+                & .expandable-image {
+                    height: 200px;
+                    & img {
+                        border-radius: 0;
+                        position: static;
+                        min-height: 100%;
+                        object-fit: cover;
+                    }
+                }
+            }
+            & .ant-card-body {
+                padding-right: 0;
+                padding-left: 0;
+                & .ant-card-meta-title {
+                    & h2 {
+                        text-transform: uppercase;
+                        line-height: normal;
+                        font-weight: 600;
+                        color: #000000;
+                        font-size: 16px;
+                        margin: 0 0 4px 0;
+                    }
+                    & p {
+                        text-transform: capitalize;
+                        line-height: normal;
+                        font-weight: 400;
+                        color: #636363;
+                        font-size: 13px;
+                        margin: 0;
+                    }
+                }
+                & .ant-card-meta-description {
+                    & p {
+                        text-transform: capitalize;
+                        line-height: normal;
+                        font-weight: 400;
+                        color: #636363;
+                        font-size: 13px;
+                        margin: 8px 0;
+                    }
+                }
+            }
+        }
+    }
+}
