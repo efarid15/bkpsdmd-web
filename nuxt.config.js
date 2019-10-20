@@ -34,9 +34,7 @@ module.exports = {
     plugins: [
         { src: '@/plugins/antd-ui' },
         { src: '@/plugins/vPreview', mode: 'client' },
-        { src: '@/api/init' },
-        { src: '@/plugins/ga.js', ssr: false }
-       
+        { src: '@/api/init' }
     ],
     /*
      ** Nuxt.js dev-modules
@@ -53,7 +51,18 @@ module.exports = {
         }],
         ['@nuxtjs/axios'],
         ['@nuxtjs/proxy'],
-        ["@nuxtjs/moment"]
+        ["@nuxtjs/moment"],
+        ['@nuxtjs/google-gtag', { 
+            id: 'UA-150420686-1',
+            config: {
+                anonymize_ip: true, // anonymize IP 
+                send_page_view: false, // might be necessary to avoid duplicated page track on page reload
+                linker: {
+                    domains: ['sipp-bpsdm.sulselprov.go.id']
+                }
+            },
+            debug: true,
+         }]
     ],
 
     moment: {
