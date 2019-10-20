@@ -35,6 +35,7 @@ module.exports = {
         { src: '@/plugins/antd-ui' },
         { src: '@/plugins/vPreview', mode: 'client' },
         { src: '@/api/init' },
+        { src: '~plugins/ga.js', ssr: false }
        
     ],
     /*
