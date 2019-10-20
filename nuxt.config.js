@@ -63,7 +63,11 @@ module.exports = {
                 }
             },
             debug: true,
-         }]
+         }],
+         ['@nuxtjs/robots', { 
+            UserAgent: '*',
+            Disallow: () => '/' 
+          }]
     ],
 
     moment: {
