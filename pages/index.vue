@@ -30,26 +30,36 @@
             <div class="heading">
               <div class="divider"></div>
               <h2>
-                Jadwal Pelaksanaan Kegiatan Diklat 
+                Jadwal Pelaksanaan Kegiatan Diklat
                 <br />Pemerintah Provinsi Sulawesi Selatan dan Kabupaten/Kota Se SulSel
-                <br />Periode {{ bulanlalu }} - {{ bulanini }}
+                <br />
+                Periode {{ bulanlalu }} - {{ bulanini }}
               </h2>
             </div>
 
-            <a-table :columns="columns" :dataSource="live" :scroll="{ x: 980 }" rowKey="id">
-              <span slot="jenisdiklat" slot-scope="text, record">
-                <span>{{record.jenisdiklat}}</span> <span>Angkatan {{record.namaangkatan}}</span>
-              </span>
-              <span slot="tglmulai" slot-scope="text, record">
-                <span>{{moment(record.tglmulai, "YYYY-MM-DD").format('ddd')}}, {{moment(record.tglmulai, "YYYY-MM-DD").format('ll')}}</span>
-              </span>
-              <span slot="tglberakhir" slot-scope="text, record">
-                <span>{{moment(record.tglberakhir, "YYYY-MM-DD").format('ddd')}}, {{moment(record.tglberakhir, "YYYY-MM-DD").format('ll')}}</span>
-              </span>
-              <span slot="namakampus" slot-scope="text, record">
-                <span>BPSDM {{record.namakampus}}</span>
-              </span>
-            </a-table>
+            <a-card class="ant-card__schedule" :bordered="false">
+              <a-table
+                class="ant-table__schedule"
+                :columns="columns"
+                :dataSource="live"
+                :scroll="{ x: 980 }"
+                rowKey="id"
+              >
+                <span slot="jenisdiklat" slot-scope="text, record">
+                  <span>{{record.jenisdiklat}}</span>
+                  <span>Angkatan {{record.namaangkatan}}</span>
+                </span>
+                <span slot="tglmulai" slot-scope="text, record">
+                  <span>{{moment(record.tglmulai, "YYYY-MM-DD").format('ddd')}}, {{moment(record.tglmulai, "YYYY-MM-DD").format('ll')}}</span>
+                </span>
+                <span slot="tglberakhir" slot-scope="text, record">
+                  <span>{{moment(record.tglberakhir, "YYYY-MM-DD").format('ddd')}}, {{moment(record.tglberakhir, "YYYY-MM-DD").format('ll')}}</span>
+                </span>
+                <span slot="namakampus" slot-scope="text, record">
+                  <span>BPSDM {{record.namakampus}}</span>
+                </span>
+              </a-table>
+            </a-card>
           </a-col>
         </a-row>
       </div>
@@ -281,7 +291,6 @@ const latsar = [
     tempat: "BPSDM",
     campus: "Kampus 1"
   }
-  
 ];
 export default {
   name: "onepages",
@@ -292,18 +301,19 @@ export default {
       latsar,
       columns,
       bulanini: "",
-      bulanlalu: "",
+      bulanlalu: ""
     };
   },
-  mounted(){
-     this.$store.dispatch('pengajuan/livepengajuanfetch').then( ({ data }) => {
-      this.live = data.values
-      this.$store.commit('pengajuan/set', data.values)
-         this.bulanlalu = moment().subtract(3, 'months').endOf('month').format('MMMM')
-         this.bulanini = moment().format('MMMM YYYY')
-         
-    })
-
+  mounted() {
+    this.$store.dispatch("pengajuan/livepengajuanfetch").then(({ data }) => {
+      this.live = data.values;
+      this.$store.commit("pengajuan/set", data.values);
+      this.bulanlalu = moment()
+        .subtract(3, "months")
+        .endOf("month")
+        .format("MMMM");
+      this.bulanini = moment().format("MMMM YYYY");
+    });
   },
   methods: {
     moment
