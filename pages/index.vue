@@ -45,10 +45,6 @@
                 :scroll="{ x: 980 }"
                 rowKey="id"
               >
-                <span slot="jenisdiklat" slot-scope="text, record">
-                  <span>{{record.jenisdiklat}}</span>
-                  <span>Angkatan {{record.namaangkatan}}</span>
-                </span>
                 <span slot="tglmulai" slot-scope="text, record">
                   <span>{{moment(record.tglmulai, "YYYY-MM-DD").format('ddd')}}, {{moment(record.tglmulai, "YYYY-MM-DD").format('ll')}}</span>
                 </span>
@@ -251,10 +247,14 @@ const columns = [
     key: "namabkd"
   },
   {
-    title: "Nama Kegiatan / Angkatan",
+    title: "Nama Kegiatan",
     dataIndex: "jenisdiklat",
     key: "jenisdiklat",
-    scopedSlots: { customRender: "jenisdiklat" }
+  },
+  {
+    title: "Angkatan",
+    dataIndex: "namaangkatan",
+    key: "namaangkatan"
   },
   {
     title: "Tanggal Kegiatan",
