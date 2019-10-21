@@ -41,10 +41,10 @@
                 <span>{{record.jenisdiklat}}</span> <span>Angkatan {{record.namaangkatan}}</span>
               </span>
               <span slot="tglmulai" slot-scope="text, record">
-                <span>{{moment(record.tglmulai, "YYYY-MM-DD").format('dddd')}}, {{moment(record.tglmulai, "YYYY-MM-DD").format('LL')}}</span>
+                <span>{{moment(record.tglmulai, "YYYY-MM-DD").format('ddd')}}, {{moment(record.tglmulai, "YYYY-MM-DD").format('ll')}}</span>
               </span>
               <span slot="tglberakhir" slot-scope="text, record">
-                <span>{{moment(record.tglberakhir, "YYYY-MM-DD").format('dddd')}}, {{moment(record.tglberakhir, "YYYY-MM-DD").format('LL')}}</span>
+                <span>{{moment(record.tglberakhir, "YYYY-MM-DD").format('ddd')}}, {{moment(record.tglberakhir, "YYYY-MM-DD").format('ll')}}</span>
               </span>
               <span slot="namakampus" slot-scope="text, record">
                 <span>BPSDM {{record.namakampus}}</span>
