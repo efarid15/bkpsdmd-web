@@ -8,7 +8,8 @@
       </div>
       <div style="margin-right: 16px" class="hidden-dekstop fs-18 cr-black">SIPP BPSDM</div>
       <div class="hidden-mobile">
-        <a-badge status="success" text="Online" />
+        <div v-if="$nuxt.isOnline"><a-badge status="success" text="Online" /></div>
+        <div v-else><a-badge status="error" text="Offline" /></div>
       </div>
 
       <div class="ml-auto">
@@ -382,6 +383,7 @@
   </div>
 </template>
 <script>
+
 export default {
   data() {
     return {
