@@ -51,24 +51,9 @@
     <div class="container" style="margin-bottom: 16px">
       <div class="title p24">Rundown Kegiatan</div>
 
-      <div style="padding: 0 24px 24px 24px;">
-        <a-timeline v-for="item in data" :key="item.id">
-          <a-timeline-item>
-            <div class="fw-500 cr-black">
-              <span class="fs-15">Hari ke {{ item.day }}</span>
-              <a-divider type="vertical"></a-divider>
-              <span class="fs-14">{{ item.hari }}</span>
-            </div>
-            <div
-              class="fs-14 fw-400 cr-black"
-            >{{ item.deskripsi }}</div>
-            <div
-              class="fs-14 fw-400 cr-black"
-            >Widyaiswara / Fasilitator : {{ item.nama }}</div>
-          </a-timeline-item>
-          
-        </a-timeline>
-      </div>
+      <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
+      </a-table>
+
     </div>
 
     <div class="container">
@@ -80,10 +65,14 @@
       <a-modal title="Rundown Kegiatan" :footer="false" v-model="visible" @ok="handleOk">
         <a-form layout="vertical" :form="form" @submit="handleSubmit" hideRequiredMark>
         
-        <a-form-item label="Tgl Kegiatan" has-feedback>
+        <a-form-item label="Tgl Kegiatan / Jam" has-feedback>
               <a-date-picker @change="onChangeTgl" 
                v-decorator="['tglAdd',{rules: [{ required: true, message: 'Harus di isi!' }]}]" 
                />
+               <a-divider type="vertical" />
+                <a-time-picker :defaultValue="moment('12:08', 'HH:mm')" format="HH:mm"
+                v-decorator="['jamAdd',{rules: [{ required: true, message: 'Harus di isi!' }]}]"  />
+
         </a-form-item>
         <a-form-item label="Widyaiswara / Narasumber" has-feedback>
           <a-select
@@ -128,6 +117,19 @@ import moment from "moment";
 
 moment.locale("id");
 
+const columns = [
+  {
+    title: "Tgl Kegiatan",
+    dataIndex: "hari",
+    key: "hari"
+  },
+  { title: "Hari Ke", dataIndex: "day", key: "day" },
+  { title: "Jam", dataIndex: "jam", key: "jam" },
+  { title: "Fasilitator / Widyaiswara", dataIndex: "nama", key: "nama" },
+  { title: "Materi / Acara", dataIndex: "deskripsi", key: "deskripsi" },
+  
+];
+
 
 export default {
   name: "rundown",
@@ -144,6 +146,8 @@ export default {
   
   data() {
     return {
+      moment,
+      columns,
       detail: {},
       data: [],
       mentor: {},
@@ -249,7 +253,8 @@ export default {
                     day: values.dayAdd,
                     deskripsi: values.eventAdd,
                     hari: values.tglAdd,
-                    idwidyaiswara: values.widyaiswara
+                    idwidyaiswara: values.widyaiswara,
+                    jam: values.jamAdd
 
                 })
                 .then(result => {
