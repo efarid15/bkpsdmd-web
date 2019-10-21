@@ -25,6 +25,7 @@ const columns = [
     dataIndex: "jenisdiklat",
     key: "jenisdiklat"
   },
+  { title: "Angkatan", dataIndex: "namaangkatan", key: "namaangkatan" },
   { title: "BKD", dataIndex: "namabkd", key: "namabkd" },
   { title: "Peserta", dataIndex: "jmlpeserta", key: "jmlpeserta" },
   { title: "Tanggal Kegiatan", dataIndex: "tglmulai", key: "tgl" },
