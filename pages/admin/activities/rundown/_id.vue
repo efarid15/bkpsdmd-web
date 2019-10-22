@@ -52,6 +52,8 @@
       <div class="title p24">Rundown Kegiatan</div>
 
       <a-table :columns="columns" :dataSource="data" :scroll="{ x: 980 }" rowKey="id">
+        <span slot="deskripsi" slot-scope="text, record"><span class="text-capitalize">{{ record.deskripsi }}</span></span>
+        <span slot="jam" slot-scope="text, record"><span>{{moment(record.jam, "HH:mm").format('HH:mm')}}</span></span>
       </a-table>
 
     </div>
@@ -124,9 +126,9 @@ const columns = [
     key: "hari"
   },
   { title: "Hari Ke", dataIndex: "day", key: "day" },
-  { title: "Jam", dataIndex: "jam", key: "jam" },
+  { title: "Jam", dataIndex: "jam", key: "jam", scopedSlots: { customRender: "jam" } },
   { title: "Fasilitator / Widyaiswara", dataIndex: "nama", key: "nama" },
-  { title: "Materi / Acara", dataIndex: "deskripsi", key: "deskripsi" },
+  { title: "Materi / Acara", dataIndex: "deskripsi", key: "deskripsi", scopedSlots: { customRender: "deskripsi" } },
   
 ];
 
