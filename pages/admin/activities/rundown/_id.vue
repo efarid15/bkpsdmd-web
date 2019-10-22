@@ -70,7 +70,7 @@
                v-decorator="['tglAdd',{rules: [{ required: true, message: 'Harus di isi!' }]}]" 
                />
                <a-divider type="vertical" />
-                <a-time-picker :defaultValue="moment('12:08', 'HH:mm')" format="HH:mm"
+                <a-time-picker format="HH:mm" @change="onChange"
                 v-decorator="['jamAdd',{rules: [{ required: true, message: 'Harus di isi!' }]}]"  />
 
         </a-form-item>
@@ -94,7 +94,7 @@
         </a-form-item>
         <a-form-item label="Hari Ke" has-feedback>
           <a-input
-            v-decorator="['dayAdd',{rules: [{ required: true, message: 'Harus di isi!' }]}]"
+            v-decorator="['dayAdd',{initialValue: '3', rules: [{ required: true, message: 'Harus di isi!' }]}]"
           />
         </a-form-item>
         <a-form-item label="Kegiatan" has-feedback>
@@ -219,11 +219,15 @@ export default {
 
   methods: {
     moment,
+    onChange(time, timeString) {
+        console.log(time, timeString);
+      },
     onChangeTgl(date, dateString) {
         console.log(date, dateString);
       },
 
     showModal() {
+
       let idpengajuan = this.$route.params.id;
       this.$store
           .dispatch("widyaiswara/widyaiswarafetch")
@@ -241,20 +245,20 @@ export default {
     },
 
     handleSubmit(e) {
+
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
 
           let idpengajuan = this.$route.params.id;
-
-          
+          let timeJam = moment(values.jamAdd).format("HH:mm:ss")
           axios.post('rundown', {
                     idpengajuan: idpengajuan,
                     day: values.dayAdd,
                     deskripsi: values.eventAdd,
                     hari: values.tglAdd,
                     idwidyaiswara: values.widyaiswara,
-                    jam: values.jamAdd
+                    jam: timeJam
 
                 })
                 .then(result => {
