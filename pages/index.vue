@@ -34,7 +34,7 @@
                     <template slot="cover">
                       <div
                         class="mD-cover__room mD-cover__room-1"
-                        style="backgroundImage: url('/campus/1/C1.JPG')"
+                        style="backgroundImage: url('/campus/1/kampus.JPG')"
                       >
                         <div class="mD-cover__room-caption d-flex align-items-center">
                           <div class="items">
@@ -62,7 +62,7 @@
                     <template slot="cover">
                       <div
                         class="mD-cover__room mD-cover__room-2"
-                        style="backgroundImage: url('/campus/2/C2.JPG')"
+                        style="backgroundImage: url('/campus/2/kampus22.JPG')"
                       >
                         <div class="mD-cover__room-caption d-flex align-items-center">
                           <div class="items">
