@@ -102,7 +102,7 @@
             </div>
             <a-card class="ant-card__schedule" :bordered="false">
               
-              <a-table :columns="columns" :dataSource="live" class="components-table-demo-nested" rowKey="id"
+              <a-table :columns="columns" :dataSource="live" class="ant-table__schedule components-table-demo-nested" rowKey="id"
                 @expand="show" >
                 <span slot="tglmulai" slot-scope="text, record">
                   <span>{{moment(record.tglmulai, "YYYY-MM-DD").format('ddd')}}, {{moment(record.tglmulai, "YYYY-MM-DD").format('ll')}}</span>
