@@ -100,15 +100,10 @@
                 Periode {{ bulanlalu }} - {{ bulanini }}
               </h2>
             </div>
-
             <a-card class="ant-card__schedule" :bordered="false">
-              <a-table
-                class="ant-table__schedule"
-                :columns="columns"
-                :dataSource="live"
-                :scroll="{ x: 980 }"
-                rowKey="id"
-              >
+              
+              <a-table :columns="columns" :dataSource="live" class="components-table-demo-nested" rowKey="id"
+                @expand="show" >
                 <span slot="tglmulai" slot-scope="text, record">
                   <span>{{moment(record.tglmulai, "YYYY-MM-DD").format('ddd')}}, {{moment(record.tglmulai, "YYYY-MM-DD").format('ll')}}</span>
                 </span>
@@ -118,8 +113,31 @@
                 <span slot="namakampus" slot-scope="text, record">
                   <span>BPSDM {{record.namakampus}}</span>
                 </span>
+
+                <a-table
+                  slot="expandedRowRender"
+                  slot-scope="text, record"
+                  :columns="rKolom"
+                  :dataSource="rData"
+                  :pagination="false"
+                  rowKey = "id"
+                  
+                >
+                <span slot="hari" slot-scope="text, record">
+                  <span>{{moment(record.hari, "YYYY-MM-DD").format('ddd')}}, {{moment(record.hari, "YYYY-MM-DD").format('ll')}}</span>
+                </span>
+                <span slot="jam" slot-scope="text, record">
+                  <span v-if="record.jam != null">{{moment(record.jam, "HH:mm").format('HH:mm')}}</span>
+                  <span v-else> -- </span>
+                </span>
+                <span slot="deskripsi" slot-scope="text, record">
+                  <span class="text-capitalize">{{ record.deskripsi }}</span>
+                  </span>
+                  
+                </a-table>
               </a-table>
             </a-card>
+            
           </a-col>
         </a-row>
       </div>
@@ -131,6 +149,7 @@
 </template>
 <script>
 import moment from "moment";
+import axios from 'axios';
 const columns = [
   {
     title: "ID",
@@ -177,24 +196,23 @@ const columns = [
   }
 ];
 
-const latsar = [
-  {
-    provinsi: "Kab. Bulukumba",
-    nama: "Latsar",
-    angkatan: "28",
-    pembukaan: "2019-08-01",
-    penutupan: "2019-09-30",
-    tempat: "BPSDM",
-    campus: "Kampus 1"
-  }
+const rKolom = [
+  { title: "Tgl Kegiatan", dataIndex: "hari", key: "hari", scopedSlots: { customRender: "hari" }},
+  { title: "Waktu / Jam", dataIndex: "jam", key: "jam", scopedSlots: { customRender: "jam" }},
+  { title: "Kegiatan / Materi", dataIndex: "deskripsi", key: "deksripsi", scopedSlots: { customRender: "deskripsi" }},
+  { title: "Widyaiswara / Fasilitator", dataIndex: "nama", key: "nama" }
 ];
+
 export default {
   name: "onepages",
   layout: "login",
   data() {
     return {
+      data: [],
       live: [],
-      latsar,
+      rData: [],
+      child: [],
+      rKolom,
       columns,
       bulanini: "",
       bulanlalu: ""
@@ -209,10 +227,30 @@ export default {
         .endOf("month")
         .format("MMMM");
       this.bulanini = moment().format("MMMM YYYY");
+      
     });
+    
+
+    
+
   },
   methods: {
-    moment
+    moment,
+    show(row, index){
+
+      if(row === true){
+
+        let idpengajuan = index.id
+        axios.get(`rundown/${idpengajuan}`).then(res => {
+               this.rData = res.data.values   
+        });
+
+      }
+      else {
+        this.rData = []
+      }
+      
+    }
   }
 };
 </script>
