@@ -2,7 +2,7 @@
   <a-layout class="ant-layout--onepages">
     <a-layout-content>
       <div class="ant-carousel--slide">
-        <a-carousel vertical autoplay effect="fade">
+        <a-carousel vertical effect="fade">
           <div
             class="ant-carousel--slide-images"
             style="backgroundImage: url('https://images.unsplash.com/photo-1568284440614-7155befdc39d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2855&q=80')"
@@ -22,6 +22,70 @@
             </nuxt-link>
           </a-button>
         </div>
+      </div>
+
+      <div class="mD-card__room">
+        <a-row type="flex" justify="space-around" align="middle">
+          <a-col :xs="24" :sm="24" :md="20" :lg="20">
+            <a-row :gutter="16">
+              <a-col :xs="24" :sm="12" :md="12">
+                <nuxt-link to="/room/campus/1">
+                  <a-card hoverable :bordered="false">
+                    <template slot="cover">
+                      <div
+                        class="mD-cover__room mD-cover__room-1"
+                        style="backgroundImage: url('/campus/1/kampus.JPG')"
+                      >
+                        <div class="mD-cover__room-caption d-flex align-items-center">
+                          <div class="items">
+                            <h2>Campus I BPSDM</h2>
+                            <a-breadcrumb separator="|">
+                              <a-breadcrumb-item>Ruang Kelas</a-breadcrumb-item>
+                              <a-breadcrumb-item>Ruang Makan</a-breadcrumb-item>
+                              <a-breadcrumb-item>Ruang Belajar</a-breadcrumb-item>
+                              <a-breadcrumb-item>Ruang Aula</a-breadcrumb-item>
+                              <a-breadcrumb-item>Ruang Fitness</a-breadcrumb-item>
+                            </a-breadcrumb>
+                            <a-button>
+                              <nuxt-link to="/room/campus/1">Lihat Detail</nuxt-link>
+                            </a-button>
+                          </div>
+                        </div>
+                      </div>
+                    </template>
+                  </a-card>
+                </nuxt-link>
+              </a-col>
+              <a-col :xs="24" :sm="12" :md="12">
+                <nuxt-link to="/room/campus/2">
+                  <a-card hoverable :bordered="false">
+                    <template slot="cover">
+                      <div
+                        class="mD-cover__room mD-cover__room-2"
+                        style="backgroundImage: url('/campus/2/kampus22.JPG')"
+                      >
+                        <div class="mD-cover__room-caption d-flex align-items-center">
+                          <div class="items">
+                            <h2>Campus II BPSDM</h2>
+                            <a-breadcrumb separator="|">
+                              <a-breadcrumb-item>Ruang Kelas</a-breadcrumb-item>
+                              <a-breadcrumb-item>Ruang Makan</a-breadcrumb-item>
+                              <a-breadcrumb-item>Ruang Belajar</a-breadcrumb-item>
+                              <a-breadcrumb-item>Ruang Aula</a-breadcrumb-item>
+                            </a-breadcrumb>
+                            <a-button>
+                              <nuxt-link to="/room/campus/2">Lihat Detail</nuxt-link>
+                            </a-button>
+                          </div>
+                        </div>
+                      </div>
+                    </template>
+                  </a-card>
+                </nuxt-link>
+              </a-col>
+            </a-row>
+          </a-col>
+        </a-row>
       </div>
 
       <div class="ant-items--body">
@@ -59,174 +123,6 @@
           </a-col>
         </a-row>
       </div>
-
-      <div class="ant-items--body">
-        <a-row type="flex" justify="space-around" align="middle">
-          <a-col :xs="24" :sm="24" :md="20" :lg="20">
-            <div class="heading">
-              <div class="divider"></div>
-              <h2>
-                Tempat Kegiatan
-                <strong>Campus I</strong>
-              </h2>
-            </div>
-
-            <div class="items-images">
-              <a-row :gutter="8">
-                <a-col :xs="24" :sm="24" :md="8">
-                  <a-row>
-                    <a-col :span="24">
-                      <div class="items-images-small">
-                        <div class="items-cover" style="backgroundImage: url('/campus/1/kelas1.JPG')"></div>
-                      </div>
-                    </a-col>
-                    <a-col :span="24">
-                      <div class="items-images-small">
-                        <div class="items-cover" style="backgroundImage: url('/campus/1/kelas2.JPG')"></div>
-                      </div>
-                    </a-col>
-                  </a-row>
-                </a-col>
-                <a-col :xs="24" :sm="24" :md="8">
-                  <div class="items-images-large">
-                    <div class="items-cover" style="backgroundImage: url('/campus/1/kampus.JPG')"></div>
-                  </div>
-                </a-col>
-                <a-col :xs="24" :sm="24" :md="8">
-                  <a-row>
-                    <a-col :span="24">
-                      <div class="items-images-small">
-                        <div class="items-cover" style="backgroundImage: url('/campus/1/kamar.JPG')"></div>
-                      </div>
-                    </a-col>
-                    <a-col :span="24">
-                      <div class="items-images-small">
-                        <div class="items-cover" style="backgroundImage: url('/campus/1/kelas3.JPG')"></div>
-                      </div>
-                    </a-col>
-                  </a-row>
-                </a-col>
-              </a-row>
-              <a-row :gutter="8">
-                <a-col :xs="24" :sm="24" :md="8">
-                  <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/1/ruangmakan1.JPG')"></div>
-                  </div>
-                </a-col>
-                <a-col :xs="24" :sm="24" :md="8">
-                  <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/1/aula.JPG')"></div>
-                  </div>
-                </a-col>
-                <a-col :xs="24" :sm="24" :md="8">
-                  <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/1/ruangmakan2.JPG')"></div>
-                  </div>
-                </a-col>
-              </a-row>
-            </div>
-          </a-col>
-        </a-row>
-      </div>
-
-      <div class="banners">
-        <a-row type="flex" justify="space-around" align="middle">
-          <a-col :xs="24" :sm="24" :md="20" :lg="20">
-            <h2>Sukseskan Kegiatan Mu Dengan Fasilitas dan Pelayanan Terbaik</h2>
-            <a-button size="large">
-              <nuxt-link to="/login">
-                Buat Pengajuan Sekarang
-                <a-icon type="right" />
-              </nuxt-link>
-            </a-button>
-          </a-col>
-        </a-row>
-      </div>
-
-      <div class="ant-items--body">
-        <a-row type="flex" justify="space-around" align="middle">
-          <a-col :xs="24" :sm="24" :md="20" :lg="20">
-            <div class="heading">
-              <div class="divider"></div>
-              <h2>
-                Tempat Kegiatan
-                <strong>Campus II</strong>
-              </h2>
-            </div>
-
-            <div class="items-images">
-              <a-row :gutter="8">
-                <a-col :xs="24" :sm="24" :md="16">
-                  <div class="items-images-large">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/kampus21.JPG')"></div>
-                  </div>
-                </a-col>
-                <a-col :xs="24" :sm="24" :md="8">
-                  <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/kamar1.JPG')"></div>
-                  </div>
-
-                  <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/kamar2.JPG')"></div>
-                  </div>
-                </a-col>
-              </a-row>
-
-              <a-row :gutter="8">
-                <a-col :xs="24" :sm="24" :md="8">
-                  <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/ruangmakan.JPG')"></div>
-                  </div>
-                </a-col>
-                <a-col :xs="24" :sm="24" :md="8">
-                  <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/kelas1.JPG')"></div>
-                  </div>
-                </a-col>
-                <a-col :xs="24" :sm="24" :md="8">
-                  <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/kelas2.JPG')"></div>
-                  </div>
-                </a-col>
-              </a-row>
-
-              <a-row :gutter="8">
-                <a-col :xs="24" :sm="24" :md="8">
-                  <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/kampus22.JPG')"></div>
-                  </div>
-
-                  <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/kelas1.JPG')"></div>
-                  </div>
-                </a-col>
-                <a-col :xs="24" :sm="24" :md="16">
-                  <div class="items-images-large">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/kelas2.JPG')"></div>
-                  </div>
-                </a-col>
-              </a-row>
-
-              <a-row :gutter="8">
-                <a-col :xs="24" :sm="24" :md="16">
-                  <div class="items-images-large">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/kelas3.JPG')"></div>
-                  </div>
-                </a-col>
-                <a-col :xs="24" :sm="24" :md="8">
-                  <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/kelas4.JPG')"></div>
-                  </div>
-
-                  <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/kampus21.JPG')"></div>
-                  </div>
-                </a-col>
-              </a-row>
-            </div>
-          </a-col>
-        </a-row>
-      </div>
     </a-layout-content>
     <a-layout-footer>
       <span>&copy; 2019 SIPP BPSDM</span>
@@ -249,7 +145,7 @@ const columns = [
   {
     title: "Nama Kegiatan",
     dataIndex: "jenisdiklat",
-    key: "jenisdiklat",
+    key: "jenisdiklat"
   },
   {
     title: "Angkatan",
