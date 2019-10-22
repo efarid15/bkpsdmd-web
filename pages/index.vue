@@ -77,31 +77,31 @@
                   <a-row>
                     <a-col :span="24">
                       <div class="items-images-small">
-                        <div class="items-cover" style="backgroundImage: url('/campus/1/1.JPG')"></div>
+                        <div class="items-cover" style="backgroundImage: url('/campus/1/kelas1.JPG')"></div>
                       </div>
                     </a-col>
                     <a-col :span="24">
                       <div class="items-images-small">
-                        <div class="items-cover" style="backgroundImage: url('/campus/1/2.JPG')"></div>
+                        <div class="items-cover" style="backgroundImage: url('/campus/1/kelas2.JPG')"></div>
                       </div>
                     </a-col>
                   </a-row>
                 </a-col>
                 <a-col :xs="24" :sm="24" :md="8">
                   <div class="items-images-large">
-                    <div class="items-cover" style="backgroundImage: url('/campus/1/C1.JPG')"></div>
+                    <div class="items-cover" style="backgroundImage: url('/campus/1/kampus.JPG')"></div>
                   </div>
                 </a-col>
                 <a-col :xs="24" :sm="24" :md="8">
                   <a-row>
                     <a-col :span="24">
                       <div class="items-images-small">
-                        <div class="items-cover" style="backgroundImage: url('/campus/1/3.JPG')"></div>
+                        <div class="items-cover" style="backgroundImage: url('/campus/1/kamar.JPG')"></div>
                       </div>
                     </a-col>
                     <a-col :span="24">
                       <div class="items-images-small">
-                        <div class="items-cover" style="backgroundImage: url('/campus/1/4.JPG')"></div>
+                        <div class="items-cover" style="backgroundImage: url('/campus/1/kelas3.JPG')"></div>
                       </div>
                     </a-col>
                   </a-row>
@@ -110,17 +110,17 @@
               <a-row :gutter="8">
                 <a-col :xs="24" :sm="24" :md="8">
                   <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/1/5.JPG')"></div>
+                    <div class="items-cover" style="backgroundImage: url('/campus/1/ruangmakan1.JPG')"></div>
                   </div>
                 </a-col>
                 <a-col :xs="24" :sm="24" :md="8">
                   <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/1/C2.JPG')"></div>
+                    <div class="items-cover" style="backgroundImage: url('/campus/1/aula.JPG')"></div>
                   </div>
                 </a-col>
                 <a-col :xs="24" :sm="24" :md="8">
                   <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/1/6.JPG')"></div>
+                    <div class="items-cover" style="backgroundImage: url('/campus/1/ruangmakan2.JPG')"></div>
                   </div>
                 </a-col>
               </a-row>
@@ -158,16 +158,16 @@
               <a-row :gutter="8">
                 <a-col :xs="24" :sm="24" :md="16">
                   <div class="items-images-large">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/C1.JPG')"></div>
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/kampus21.JPG')"></div>
                   </div>
                 </a-col>
                 <a-col :xs="24" :sm="24" :md="8">
                   <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/1.JPG')"></div>
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/kamar1.JPG')"></div>
                   </div>
 
                   <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/2.JPG')"></div>
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/kamar2.JPG')"></div>
                   </div>
                 </a-col>
               </a-row>
@@ -175,17 +175,17 @@
               <a-row :gutter="8">
                 <a-col :xs="24" :sm="24" :md="8">
                   <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/3.JPG')"></div>
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/ruangmakan.JPG')"></div>
                   </div>
                 </a-col>
                 <a-col :xs="24" :sm="24" :md="8">
                   <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/4.JPG')"></div>
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/kelas1.JPG')"></div>
                   </div>
                 </a-col>
                 <a-col :xs="24" :sm="24" :md="8">
                   <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/5.JPG')"></div>
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/kelas2.JPG')"></div>
                   </div>
                 </a-col>
               </a-row>
@@ -193,16 +193,16 @@
               <a-row :gutter="8">
                 <a-col :xs="24" :sm="24" :md="8">
                   <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/C2.JPG')"></div>
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/kampus22.JPG')"></div>
                   </div>
 
                   <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/6.JPG')"></div>
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/kelas1.JPG')"></div>
                   </div>
                 </a-col>
                 <a-col :xs="24" :sm="24" :md="16">
                   <div class="items-images-large">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/7.JPG')"></div>
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/kelas2.JPG')"></div>
                   </div>
                 </a-col>
               </a-row>
@@ -210,16 +210,16 @@
               <a-row :gutter="8">
                 <a-col :xs="24" :sm="24" :md="16">
                   <div class="items-images-large">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/8.JPG')"></div>
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/kelas3.JPG')"></div>
                   </div>
                 </a-col>
                 <a-col :xs="24" :sm="24" :md="8">
                   <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/9.JPG')"></div>
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/kelas4.JPG')"></div>
                   </div>
 
                   <div class="items-images-small">
-                    <div class="items-cover" style="backgroundImage: url('/campus/2/10.JPG')"></div>
+                    <div class="items-cover" style="backgroundImage: url('/campus/2/kampus21.JPG')"></div>
                   </div>
                 </a-col>
               </a-row>
