@@ -101,9 +101,15 @@
               </h2>
             </div>
             <a-card class="ant-card__schedule" :bordered="false">
+
+              <div>
+                <strong>Status :</strong>
+                <div v-if="$nuxt.isOnline"><a-badge status="success" text="Online" /></div>
+                 <div v-else><a-badge status="error" text="Offline" /></div>
+              </div> <br />
               
               <a-table :columns="columns" :dataSource="live" class="ant-table__schedule components-table-demo-nested" rowKey="id"
-                @expand="show" >
+                @expand="show" @expandIcon="customExpandIcon(props)">
                 <span slot="tglmulai" slot-scope="text, record">
                   <span>{{moment(record.tglmulai, "YYYY-MM-DD").format('ddd')}}, {{moment(record.tglmulai, "YYYY-MM-DD").format('ll')}}</span>
                 </span>
@@ -152,11 +158,6 @@ import moment from "moment";
 import axios from 'axios';
 const columns = [
   {
-    title: "ID",
-    dataIndex: "id",
-    key: "id"
-  },
-  {
     title: "BKD Kab/Kota",
     dataIndex: "namabkd",
     key: "namabkd"
@@ -202,6 +203,7 @@ const rKolom = [
   { title: "Kegiatan / Materi", dataIndex: "deskripsi", key: "deksripsi", scopedSlots: { customRender: "deskripsi" }},
   { title: "Widyaiswara / Fasilitator", dataIndex: "nama", key: "nama" }
 ];
+
 
 export default {
   name: "onepages",
@@ -250,7 +252,21 @@ export default {
         this.rData = []
       }
       
+    },
+
+    customExpandIcon(props) {
+      console.log(props)
+      if (props.expanded) {
+        return <a style={{ color: 'black' }} onClick={e => {
+            props.onExpand(props.record, e);
+        }}><Icon type="minus-circle" /></a>
+      } else {
+        return <a style={{ color: 'black' }} onClick={e => {
+            props.onExpand(props.record, e);
+        }}><Icon type="plus-circle" /></a>
+      }
     }
+
   }
 };
 </script>
