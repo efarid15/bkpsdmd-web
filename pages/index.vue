@@ -101,15 +101,25 @@
               </h2>
             </div>
             <a-card class="ant-card__schedule" :bordered="false">
-
               <div>
                 <strong>Status :</strong>
-                <div v-if="$nuxt.isOnline"><a-badge status="success" text="Online" /></div>
-                 <div v-else><a-badge status="error" text="Offline" /></div>
-              </div> <br />
-              
-              <a-table :columns="columns" :dataSource="live" class="ant-table__schedule components-table-demo-nested" rowKey="id"
-                @expand="show" @expandIcon="customExpandIcon(props)">
+                <div v-if="$nuxt.isOnline">
+                  <a-badge status="success" text="Online" />
+                </div>
+                <div v-else>
+                  <a-badge status="error" text="Offline" />
+                </div>
+              </div>
+              <br />
+
+              <a-table
+                :columns="columns"
+                :dataSource="live"
+                class="ant-table__schedule components-table-demo-nested"
+                rowKey="id"
+                @expand="show"
+                @expandIcon="customExpandIcon(props)"
+              >
                 <span slot="tglmulai" slot-scope="text, record">
                   <span>{{moment(record.tglmulai, "YYYY-MM-DD").format('ddd')}}, {{moment(record.tglmulai, "YYYY-MM-DD").format('ll')}}</span>
                 </span>
@@ -126,24 +136,21 @@
                   :columns="rKolom"
                   :dataSource="rData"
                   :pagination="false"
-                  rowKey = "id"
-                  
+                  rowKey="id"
                 >
-                <span slot="hari" slot-scope="text, record">
-                  <span>{{moment(record.hari, "YYYY-MM-DD").format('ddd')}}, {{moment(record.hari, "YYYY-MM-DD").format('ll')}}</span>
-                </span>
-                <span slot="jam" slot-scope="text, record">
-                  <span v-if="record.jam != null">{{moment(record.jam, "HH:mm").format('HH:mm')}}</span>
-                  <span v-else> -- </span>
-                </span>
-                <span slot="deskripsi" slot-scope="text, record">
-                  <span class="text-capitalize">{{ record.deskripsi }}</span>
+                  <span slot="hari" slot-scope="text, record">
+                    <span>{{moment(record.hari, "YYYY-MM-DD").format('ddd')}}, {{moment(record.hari, "YYYY-MM-DD").format('ll')}}</span>
                   </span>
-                  
+                  <span slot="jam" slot-scope="text, record">
+                    <span v-if="record.jam != null">{{moment(record.jam, "HH:mm").format('HH:mm')}}</span>
+                    <span v-else>--</span>
+                  </span>
+                  <span slot="deskripsi" slot-scope="text, record">
+                    <span class="text-capitalize">{{ record.deskripsi }}</span>
+                  </span>
                 </a-table>
               </a-table>
             </a-card>
-            
           </a-col>
         </a-row>
       </div>
@@ -155,7 +162,7 @@
 </template>
 <script>
 import moment from "moment";
-import axios from 'axios';
+import axios from "axios";
 const columns = [
   {
     title: "BKD Kab/Kota",
@@ -198,16 +205,51 @@ const columns = [
 ];
 
 const rKolom = [
-  { title: "Tgl Kegiatan", dataIndex: "hari", key: "hari", scopedSlots: { customRender: "hari" }},
-  { title: "Waktu / Jam", dataIndex: "jam", key: "jam", scopedSlots: { customRender: "jam" }},
-  { title: "Kegiatan / Materi", dataIndex: "deskripsi", key: "deksripsi", scopedSlots: { customRender: "deskripsi" }},
+  {
+    title: "Tgl Kegiatan",
+    dataIndex: "hari",
+    key: "hari",
+    scopedSlots: { customRender: "hari" }
+  },
+  {
+    title: "Waktu / Jam",
+    dataIndex: "jam",
+    key: "jam",
+    scopedSlots: { customRender: "jam" }
+  },
+  {
+    title: "Kegiatan / Materi",
+    dataIndex: "deskripsi",
+    key: "deksripsi",
+    scopedSlots: { customRender: "deskripsi" }
+  },
   { title: "Widyaiswara / Fasilitator", dataIndex: "nama", key: "nama" }
 ];
-
 
 export default {
   name: "onepages",
   layout: "login",
+  head() {
+    return {
+      title: this.meta.title,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: this.meta.description
+        },
+        { hid: "og:type", property: "og:type", content: this.meta.type },
+        { hid: "og:title", property: "og:title", content: this.meta.title },
+        {
+          hid: "og:description",
+          property: "og:description",
+          content: this.meta.description
+        },
+        { hid: "og:url", property: "og:url", content: this.meta.url },
+        { hid: "og:image", property: "og:image", content: this.meta.image }
+      ]
+    };
+  },
   data() {
     return {
       data: [],
@@ -217,7 +259,15 @@ export default {
       rKolom,
       columns,
       bulanini: "",
-      bulanlalu: ""
+      bulanlalu: "",
+      meta: {
+        title: "SIPP BPSDM - Badan Pengembangan Sumber Daya Manusia",
+        description:
+          "Situs Resmi Badan Pengembangan Sumber Daya Manusia Pemerintah Provinsi Sulawesi Selatan",
+        type: "Beranda",
+        url: "https://sipp-bpsdm.sulselprov.go.id",
+        image: "https://sipp-bpsdm.sulselprov.go.id/campus/1/kampus.JPG"
+      }
     };
   },
   mounted() {
@@ -229,44 +279,47 @@ export default {
         .endOf("month")
         .format("MMMM");
       this.bulanini = moment().format("MMMM YYYY");
-      
     });
-    
-
-    
-
   },
   methods: {
     moment,
-    show(row, index){
-
-      if(row === true){
-
-        let idpengajuan = index.id
+    show(row, index) {
+      if (row === true) {
+        let idpengajuan = index.id;
         axios.get(`rundown/${idpengajuan}`).then(res => {
-               this.rData = res.data.values   
+          this.rData = res.data.values;
         });
-
+      } else {
+        this.rData = [];
       }
-      else {
-        this.rData = []
-      }
-      
     },
 
     customExpandIcon(props) {
-      console.log(props)
+      console.log(props);
       if (props.expanded) {
-        return <a style={{ color: 'black' }} onClick={e => {
-            props.onExpand(props.record, e);
-        }}><Icon type="minus-circle" /></a>
+        return (
+          <a
+            style={{ color: "black" }}
+            onClick={e => {
+              props.onExpand(props.record, e);
+            }}
+          >
+            <Icon type="minus-circle" />
+          </a>
+        );
       } else {
-        return <a style={{ color: 'black' }} onClick={e => {
-            props.onExpand(props.record, e);
-        }}><Icon type="plus-circle" /></a>
+        return (
+          <a
+            style={{ color: "black" }}
+            onClick={e => {
+              props.onExpand(props.record, e);
+            }}
+          >
+            <Icon type="plus-circle" />
+          </a>
+        );
       }
     }
-
   }
 };
 </script>
